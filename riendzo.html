@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riendzo — Descobre, compreende e vive Moçambique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-night: #14182B;
+    --ink-night-2: #1C2140;
+    --paper: #F1E8D6;
+    --paper-dim: #E4D9C1;
+    --ink-dark: #221C14;
+
+    --c-historia: #B84A34;
+    --c-musica: #E0A63A;
+    --c-gastronomia: #CC7A2E;
+    --c-turismo: #1E7A7A;
+    --c-servicos: #3E5C82;
+    --c-entretenimento: #8C3B5E;
+    --c-blog: #5C7A3D;
+    --c-ai: #35C9C9;
+
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink-dark);
+    font-family:var(--sans);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--ink-night);
+    border-bottom:1px solid rgba(241,232,214,0.14);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .logo{
+    font-family:var(--serif);font-size:1.5rem;color:var(--paper);
+    letter-spacing:0.02em;
+  }
+  .logo em{color:var(--c-ai);font-style:italic;}
+  nav.links{display:flex;gap:26px;align-items:center;flex-wrap:wrap;}
+  nav.links a{
+    color:var(--paper-dim);font-size:0.92rem;font-weight:500;
+    padding:6px 2px;border-bottom:2px solid transparent;
+    transition:border-color .18s ease, color .18s ease;
+  }
+  nav.links a:hover{color:var(--paper);border-color:var(--c-musica);}
+  .nav-cta{
+    background:var(--c-ai);color:var(--ink-night);
+    padding:9px 18px;border-radius:3px;font-weight:700;font-size:0.9rem;
+    white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(53,201,201,0.35);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--paper);font-size:1.6rem;cursor:pointer;}
+
+  @media (max-width:900px){
+    nav.links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      background:var(--ink-night);flex-direction:column;gap:0;
+      border-bottom:1px solid rgba(241,232,214,0.14);
+    }
+    nav.links.open{display:flex;}
+    nav.links a{padding:14px 32px;width:100%;border-bottom:1px solid rgba(241,232,214,0.08);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;background:var(--ink-night);color:var(--paper);
+    padding:100px 0 90px;overflow:hidden;
+  }
+  .hero-pattern{
+    position:absolute;inset:0;opacity:0.16;pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:760px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:0.82rem;color:var(--c-musica);
+    display:flex;align-items:center;gap:10px;margin-bottom:28px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--c-musica);display:inline-block;}
+  h1.headline{
+    font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.06;letter-spacing:-0.01em;margin-bottom:28px;
+  }
+  h1.headline .line{display:block;opacity:0;transform:translateY(18px);animation:rise .7s ease forwards;}
+  h1.headline .line:nth-child(2){animation-delay:.12s;}
+  h1.headline .line:nth-child(3){animation-delay:.24s;font-style:italic;color:var(--c-turismo);}
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
+
+  .hero p.lead{
+    font-size:1.12rem;color:var(--paper-dim);max-width:520px;margin-bottom:40px;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn-primary{
+    background:var(--paper);color:var(--ink-night);padding:14px 26px;
+    border-radius:3px;font-weight:700;font-size:0.95rem;
+    transition:transform .15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid rgba(241,232,214,0.4);color:var(--paper);
+    padding:14px 26px;border-radius:3px;font-weight:600;font-size:0.95rem;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-ghost:hover{border-color:var(--c-ai);background:rgba(53,201,201,0.08);}
+
+  .hero-meta{
+    display:flex;gap:36px;flex-wrap:wrap;
+    border-top:1px solid rgba(241,232,214,0.16);padding-top:24px;
+    font-family:var(--mono);font-size:0.8rem;color:var(--paper-dim);
+  }
+  .hero-meta b{display:block;font-family:var(--serif);font-size:1.6rem;color:var(--paper);font-style:normal;}
+
+  /* ---------- INTRO STRIP ---------- */
+  .intro{padding:80px 0 50px;}
+  .intro .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;}
+  .intro h2{
+    font-family:var(--serif);font-weight:400;font-size:2rem;line-height:1.2;
+  }
+  .intro p{color:#4a3f30;font-size:1.02rem;max-width:52ch;}
+  .intro p + p{margin-top:14px;}
+  @media (max-width:800px){.intro .wrap{grid-template-columns:1fr;gap:20px;}}
+
+  /* ---------- CATEGORY GRID ---------- */
+  .categories{padding:40px 0 100px;}
+  .cat-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  }
+  .cat-grid .plate:nth-child(7){grid-column:1 / -1;}
+  @media (max-width:760px){
+    .cat-grid{grid-template-columns:1fr;}
+    .cat-grid .plate:nth-child(7){grid-column:auto;}
+  }
+  .plate{
+    background:#fff;border:1px solid rgba(34,28,20,0.1);
+    border-left:4px solid var(--accent, var(--c-historia));
+    padding:32px;border-radius:2px;
+    display:flex;gap:22px;align-items:flex-start;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .plate:hover{background:#fffdf8;}
+  .plate .icon{
+    flex-shrink:0;width:42px;height:42px;color:var(--accent, var(--c-historia));
+  }
+  .plate .coord{
+    font-family:var(--mono);font-size:0.72rem;color:var(--accent, var(--c-historia));
+    margin-bottom:6px;letter-spacing:0.02em;
+  }
+  .plate h3{
+    font-family:var(--serif);font-weight:400;font-size:1.5rem;margin-bottom:8px;
+  }
+  .plate p{color:#5a5040;font-size:0.95rem;}
+
+  /* ---------- AI FEATURE ---------- */
+  .ai-feature{
+    background:var(--ink-night);color:var(--paper);padding:100px 0;
+    position:relative;overflow:hidden;
+  }
+  .ai-glow{
+    position:absolute;top:-120px;right:-120px;width:420px;height:420px;
+    background:radial-gradient(circle, rgba(53,201,201,0.28), transparent 70%);
+    pointer-events:none;
+  }
+  .ai-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+  @media (max-width:860px){.ai-inner{grid-template-columns:1fr;gap:44px;}}
+
+  .ai-eyebrow{
+    font-family:var(--mono);font-size:0.82rem;color:var(--c-ai);
+    display:flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .ai-eyebrow::before{content:'';width:26px;height:1px;background:var(--c-ai);display:inline-block;}
+  .ai-feature h2{
+    font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4vw,2.8rem);
+    line-height:1.15;margin-bottom:20px;
+  }
+  .ai-feature h2 em{color:var(--c-ai);font-style:italic;}
+  .ai-feature > .wrap > p{color:var(--paper-dim);max-width:44ch;margin-bottom:32px;}
+  .ai-list{list-style:none;display:flex;flex-direction:column;gap:16px;margin-bottom:34px;}
+  .ai-list li{
+    display:flex;gap:14px;font-size:0.95rem;color:var(--paper-dim);
+  }
+  .ai-list li::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--c-ai);
+    margin-top:8px;flex-shrink:0;
+  }
+  .ai-list b{color:var(--paper);font-weight:600;}
+  .ai-note{
+    font-family:var(--mono);font-size:0.78rem;color:var(--paper-dim);
+    border-top:1px solid rgba(241,232,214,0.16);padding-top:18px;
+  }
+
+  .chat-mock{
+    background:var(--ink-night-2);border:1px solid rgba(53,201,201,0.25);
+    border-radius:6px;padding:26px;
+  }
+  .chat-mock .chat-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:20px;
+    font-family:var(--mono);font-size:0.78rem;color:var(--paper-dim);
+  }
+  .chat-mock .dot{width:8px;height:8px;border-radius:50%;background:var(--c-ai);}
+  .bubble{
+    padding:14px 16px;border-radius:5px;font-size:0.92rem;margin-bottom:12px;max-width:88%;
+  }
+  .bubble.user{background:rgba(241,232,214,0.08);color:var(--paper);margin-left:auto;}
+  .bubble.ai{background:rgba(53,201,201,0.12);color:var(--paper);border:1px solid rgba(53,201,201,0.3);}
+
+  /* ---------- CLOSING CTA ---------- */
+  .closing{padding:90px 0;text-align:left;}
+  .closing .wrap{
+    display:flex;justify-content:space-between;align-items:center;gap:40px;
+    border-top:1px solid rgba(34,28,20,0.14);border-bottom:1px solid rgba(34,28,20,0.14);
+    padding:50px 32px;flex-wrap:wrap;
+  }
+  .closing h2{font-family:var(--serif);font-weight:400;font-size:2.1rem;max-width:14ch;}
+  .closing .btn-primary{background:var(--ink-night);color:var(--paper);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink-night);color:var(--paper-dim);padding:50px 0 30px;}
+  .footer-top{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;
+    padding-bottom:30px;border-bottom:1px solid rgba(241,232,214,0.12);margin-bottom:22px;
+  }
+  .footer-logo{font-family:var(--serif);font-size:1.3rem;color:var(--paper);}
+  .footer-links{display:flex;gap:40px;flex-wrap:wrap;}
+  .footer-links .col{display:flex;flex-direction:column;gap:9px;font-size:0.88rem;}
+  .footer-links .col span{font-family:var(--mono);font-size:0.7rem;color:var(--c-musica);margin-bottom:6px;}
+  .footer-bottom{
+    display:flex;justify-content:space-between;font-size:0.8rem;flex-wrap:wrap;gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">Riendzo<em>.</em></a>
+    <nav class="links" id="navLinks">
+      <a href="#top">Início</a>
+      <a href="#historia">História</a>
+      <a href="#musica">Música</a>
+      <a href="#gastronomia">Gastronomia</a>
+      <a href="#turismo">Turismo</a>
+      <a href="#servicos">Serviços Públicos</a>
+      <a href="#entretenimento">Entretenimento</a>
+      <a href="#blog">Blog</a>
+    </nav>
+    <a href="#ai" class="nav-cta">Riendzo AI</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <svg class="hero-pattern" width="100%" height="100%" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="zigzag" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M0 40 L20 0 L40 40 L60 0 L80 40" fill="none" stroke="#F1E8D6" stroke-width="1.5"/>
+        <path d="M0 80 L20 40 L40 80 L60 40 L80 80" fill="none" stroke="#F1E8D6" stroke-width="1.5"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="600" fill="url(#zigzag)"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Moçambique · plataforma digital</div>
+    <h1 class="headline">
+      <span class="line">Descobre, compreende</span>
+      <span class="line">e vive um país inteiro</span>
+      <span class="line">num só lugar.</span>
+    </h1>
+    <p class="lead">Riendzo reúne história, música, gastronomia, turismo, serviços públicos e entretenimento moçambicanos — e uma camada de inteligência artificial que ajuda a encontrar o que precisas, na hora.</p>
+    <div class="hero-actions">
+      <a href="#historia" class="btn-primary">Explorar as 8 áreas</a>
+      <a href="#ai" class="btn-ghost">Falar com a Riendzo AI</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>8</b>áreas do país</div>
+      <div><b>1</b>plataforma</div>
+      <div><b>∞</b>histórias, sons e sabores</div>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <h2>Um país tem mais do que se vê à primeira vista.</h2>
+    <div>
+      <p>Moçambique é história oral e arquivo, é timbila e marrabenta, é matapa e xima, é Ilha de Moçambique e Parque Nacional de Gorongosa, é balcão de atendimento e bilhete de identidade, é teatro, cinema e festa popular.</p>
+      <p>Riendzo organiza tudo isto em oito portas de entrada — cada uma com a sua cor, o seu tom e a sua função — para que descobrir o país seja tão simples como abrir uma página.</p>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="wrap cat-grid">
+
+    <article class="plate" id="historia" style="--accent:var(--c-historia)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 10c6-4 12-4 15 0 3-4 9-4 15 0v22c-6-4-12-4-15 0-3-4-9-4-15 0V10Z"/>
+        <path d="M21 10v22"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 001 · Memória</div>
+        <h3>História</h3>
+        <p>Do povoamento antigo à independência, da luta armada aos dias de hoje — factos, arquivos e memória oral organizados por época e região.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="musica" style="--accent:var(--c-musica)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="12" cy="30" r="5"/>
+        <circle cx="30" cy="26" r="5"/>
+        <path d="M17 30V10l18-4v20"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 002 · Som</div>
+        <h3>Música</h3>
+        <p>Timbila, marrabenta, pandza e as novas vozes moçambicanas — playlists, biografias e as histórias por trás dos ritmos que atravessam o país.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="gastronomia" style="--accent:var(--c-gastronomia)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="21" cy="21" r="15"/>
+        <path d="M21 10v11l7 5"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 003 · Sabor</div>
+        <h3>Gastronomia</h3>
+        <p>Matapa, caril de caranguejo, xima e piri-piri — receitas por província, ingredientes locais e os restaurantes que guardam a tradição.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="turismo" style="--accent:var(--c-turismo)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M21 4v34M6 12l30 6-30 6"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 004 · Destino</div>
+        <h3>Turismo</h3>
+        <p>Da Ilha de Moçambique ao Arquipélago de Bazaruto, de Gorongosa às praias de Tofo — roteiros, mapas e dicas para viajar dentro do país.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="servicos" style="--accent:var(--c-servicos)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 18l15-12 15 12"/>
+        <path d="M9 18v16h24V18"/>
+        <path d="M18 34V22h6v12"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 005 · Cidadania</div>
+        <h3>Serviços Públicos</h3>
+        <p>BI, passaporte, registos, impostos e saúde pública — passo a passo claro sobre onde ir, o que levar e quanto tempo demora.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="entretenimento" style="--accent:var(--c-entretenimento)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 16c4-8 26-8 30 0-4 8-26 8-30 0Z"/>
+        <circle cx="14" cy="16" r="1.6" fill="currentColor" stroke="none"/>
+        <circle cx="28" cy="16" r="1.6" fill="currentColor" stroke="none"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 006 · Cultura viva</div>
+        <h3>Entretenimento</h3>
+        <p>Cinema, teatro, festivais e vida noturna — o que está a acontecer esta semana em Maputo, Beira, Nampula e mais além.</p>
+      </div>
+    </article>
+
+    <article class="plate" id="blog" style="--accent:var(--c-blog)">
+      <svg class="icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6">
+        <rect x="7" y="6" width="28" height="30" rx="1"/>
+        <path d="M13 15h16M13 21h16M13 27h10"/>
+      </svg>
+      <div>
+        <div class="coord">MZ · 007 · Opinião</div>
+        <h3>Blog</h3>
+        <p>Análises, entrevistas e reportagens sobre o país em transformação — escritas por moçambicanos, para quem quer entender mais fundo.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="ai-feature" id="ai">
+  <div class="ai-glow"></div>
+  <div class="wrap ai-inner">
+    <div>
+      <div class="ai-eyebrow">MZ · 008 · Camada inteligente</div>
+      <h2>Uma <em>inteligência</em> que já conhece o país.</h2>
+      <p>Riendzo AI lê as sete áreas da plataforma e responde em segundos — em português, sobre Moçambique, sem rodeios.</p>
+      <ul class="ai-list">
+        <li><b>Respostas com contexto local</b> — história, cultura e serviços, cruzados numa só resposta.</li>
+        <li><b>Roteiros e recomendações</b> — pede um plano de viagem ou um jantar típico e recebe algo pronto a usar.</li>
+        <li><b>Guia de trâmites</b> — pergunta o que precisas para tratar de um documento e recebe os passos certos.</li>
+      </ul>
+      <a href="#" class="btn-primary" style="background:var(--c-ai);color:var(--ink-night);">Experimentar Riendzo AI</a>
+      <div class="ai-note" style="margin-top:28px;">Uso básico gratuito · funcionalidades avançadas por subscrição Riendzo AI Plus</div>
+    </div>
+    <div class="chat-mock">
+      <div class="chat-head"><span class="dot"></span>Riendzo AI</div>
+      <div class="bubble user">Quero passar um fim de semana em Inhambane. O que recomendas?</div>
+      <div class="bubble ai">Começa pela Ilha de Josina Machel de barco, depois segue para Tofo ao final da tarde para ver o pôr do sol na praia. No jantar, prova um caril de caranguejo — é a especialidade da zona.</div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Moçambique tem muito para contar.</h2>
+    <a href="#top" class="btn-primary">Começar a explorar</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-logo">Riendzo</div>
+      <div class="footer-links">
+        <div class="col">
+          <span>Descobrir</span>
+          <a href="#historia">História</a>
+          <a href="#musica">Música</a>
+          <a href="#gastronomia">Gastronomia</a>
+          <a href="#turismo">Turismo</a>
+        </div>
+        <div class="col">
+          <span>Viver</span>
+          <a href="#servicos">Serviços Públicos</a>
+          <a href="#entretenimento">Entretenimento</a>
+          <a href="#blog">Blog</a>
+          <a href="#ai">Riendzo AI</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Riendzo. Feito em Moçambique.</span>
+      <span>Maputo · Beira · Nampula</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>

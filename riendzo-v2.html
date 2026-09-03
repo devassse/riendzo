@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riendzo — Dossiê de Moçambique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand: #EFE3C8;
+    --sand-2: #E5D5AF;
+    --ink: #2B2116;
+    --ink-soft: #59503F;
+    --indigo: #23407A;
+    --indigo-dark: #16294F;
+    --paprika: #D2491F;
+    --cream: #F8F2E2;
+
+    --c-historia: #B84A34;
+    --c-turismo: #1E7A7A;
+    --c-servicos: #3E5C82;
+    --c-artistas: #E0A63A;
+    --c-cultura: #8C3B5E;
+    --c-gastronomia: #CC7A2E;
+    --c-blog: #5C7A3D;
+    --c-ai: #35C9C9;
+
+    --serif: 'Newsreader', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--sand);color:var(--ink);font-family:var(--sans);line-height:1.55;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;background:var(--sand);
+    border-bottom:1px solid rgba(43,33,22,0.16);
+  }
+  .nav-inner{max-width:1140px;margin:0 auto;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;}
+  .logo{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--ink);}
+  .logo span{color:var(--paprika);}
+  nav.links{display:flex;gap:24px;flex-wrap:wrap;}
+  nav.links a{font-size:0.9rem;font-weight:500;color:var(--ink-soft);border-bottom:2px solid transparent;padding:4px 0;transition:border-color .15s ease,color .15s ease;}
+  nav.links a:hover{color:var(--ink);border-color:var(--paprika);}
+  .nav-cta{background:var(--indigo);color:var(--cream);padding:9px 18px;border-radius:2px;font-weight:600;font-size:0.88rem;}
+  .nav-toggle{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;}
+  @media (max-width:920px){
+    nav.links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--sand);flex-direction:column;border-bottom:1px solid rgba(43,33,22,0.16);}
+    nav.links.open{display:flex;}
+    nav.links a{padding:14px 32px;border-bottom:1px solid rgba(43,33,22,0.08);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO / COVER ---------- */
+  .hero{padding:70px 0 60px;border-bottom:1px solid rgba(43,33,22,0.16);}
+  .hero-meta{
+    font-family:var(--mono);font-size:0.78rem;color:var(--indigo);
+    display:flex;gap:10px;align-items:center;margin-bottom:26px;
+  }
+  .hero-meta::before{content:'';width:24px;height:1px;background:var(--indigo);}
+  h1.headline{
+    font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,6vw,4.4rem);
+    line-height:1.08;max-width:14ch;margin-bottom:26px;
+  }
+  h1.headline i{color:var(--paprika);font-style:italic;}
+  .hero p.lead{font-size:1.08rem;color:var(--ink-soft);max-width:56ch;margin-bottom:36px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+  .btn-primary{background:var(--ink);color:var(--cream);padding:14px 26px;border-radius:2px;font-weight:600;font-size:0.94rem;transition:background .15s ease;}
+  .btn-primary:hover{background:var(--indigo-dark);}
+  .btn-outline{border:1px solid var(--ink);padding:14px 26px;border-radius:2px;font-weight:600;font-size:0.94rem;color:var(--ink);transition:background .15s ease;}
+  .btn-outline:hover{background:rgba(43,33,22,0.06);}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{font-family:var(--mono);font-size:0.76rem;color:var(--ink-soft);border:1px solid rgba(43,33,22,0.25);padding:6px 12px;border-radius:20px;}
+
+  /* ---------- OBJECTIVES ---------- */
+  .objectives{padding:80px 0;border-bottom:1px solid rgba(43,33,22,0.16);}
+  .obj-head{max-width:640px;margin-bottom:50px;}
+  .obj-head .tag{font-family:var(--mono);font-size:0.78rem;color:var(--indigo);margin-bottom:14px;display:block;}
+  .obj-head h2{font-family:var(--serif);font-weight:500;font-size:2.1rem;margin-bottom:14px;}
+  .obj-head p{color:var(--ink-soft);}
+
+  .obj-item{
+    display:grid;grid-template-columns:100px 1fr;gap:28px;
+    padding:34px 0;border-top:1px solid rgba(43,33,22,0.16);
+  }
+  .obj-item:last-child{border-bottom:1px solid rgba(43,33,22,0.16);}
+  .obj-num{font-family:var(--mono);font-size:0.92rem;color:var(--paprika);padding-top:4px;}
+  .obj-body h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;margin-bottom:8px;}
+  .obj-body p.desc{color:var(--ink-soft);margin-bottom:18px;max-width:60ch;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:9px;}
+  .tag-row span{
+    background:var(--cream);border:1px solid rgba(43,33,22,0.18);
+    padding:6px 13px;border-radius:20px;font-size:0.84rem;color:var(--ink);
+  }
+  @media (max-width:640px){.obj-item{grid-template-columns:1fr;gap:10px;}}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-section{padding:80px 0;background:var(--indigo-dark);color:var(--cream);}
+  .timeline-section .obj-head{margin-bottom:60px;}
+  .timeline-section .obj-head .tag{color:var(--c-ai);}
+  .timeline-section .obj-head p{color:rgba(248,242,226,0.72);}
+
+  .timeline{position:relative;padding-left:34px;}
+  .timeline::before{
+    content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;
+    background:rgba(248,242,226,0.25);
+  }
+  .t-item{position:relative;padding-bottom:44px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:'';position:absolute;left:-34px;top:4px;width:13px;height:13px;
+    border-radius:50%;background:var(--c-ai);border:3px solid var(--indigo-dark);
+    box-shadow:0 0 0 1px rgba(53,201,201,0.5);
+  }
+  .t-era{font-family:var(--mono);font-size:0.76rem;color:var(--c-ai);margin-bottom:5px;}
+  .t-title{font-family:var(--serif);font-size:1.4rem;font-weight:500;}
+
+  /* ---------- 8 AREAS FILMSTRIP ---------- */
+  .areas{padding:80px 0;border-bottom:1px solid rgba(43,33,22,0.16);}
+  .area-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(43,33,22,0.16);}
+  .area-swatch{
+    background:var(--sand);padding:26px 20px;min-height:150px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    border-top:4px solid var(--accent);transition:background .15s ease;
+  }
+  .area-swatch:hover{background:var(--cream);}
+  .area-swatch .num{font-family:var(--mono);font-size:0.74rem;color:var(--accent);}
+  .area-swatch h4{font-family:var(--serif);font-weight:500;font-size:1.15rem;margin-top:14px;}
+  @media (max-width:900px){.area-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.area-grid{grid-template-columns:1fr;}}
+
+  /* ---------- AI PANEL ---------- */
+  .ai-panel{padding:90px 0;background:var(--ink);color:var(--cream);}
+  .ai-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  @media (max-width:860px){.ai-inner{grid-template-columns:1fr;gap:36px;}}
+  .ai-panel .tag{font-family:var(--mono);font-size:0.78rem;color:var(--paprika);margin-bottom:16px;display:block;}
+  .ai-panel h2{font-family:var(--serif);font-weight:500;font-size:2.2rem;line-height:1.2;margin-bottom:18px;}
+  .ai-panel h2 i{color:var(--c-ai);font-style:italic;}
+  .ai-panel p.desc{color:rgba(248,242,226,0.72);max-width:44ch;margin-bottom:26px;}
+  .ai-panel .btn-primary{background:var(--c-ai);color:var(--indigo-dark);}
+  .ai-mock{background:rgba(248,242,226,0.05);border:1px solid rgba(53,201,201,0.3);border-radius:4px;padding:24px;}
+  .ai-mock .head{font-family:var(--mono);font-size:0.76rem;color:rgba(248,242,226,0.6);margin-bottom:16px;}
+  .ai-mock .q{font-size:0.92rem;color:rgba(248,242,226,0.9);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(248,242,226,0.12);}
+  .ai-mock .a{font-size:0.92rem;color:var(--cream);}
+
+  /* ---------- CLOSING / FOOTER ---------- */
+  .closing{padding:70px 0;display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;border-bottom:1px solid rgba(43,33,22,0.16);}
+  .closing h2{font-family:var(--serif);font-weight:500;font-size:1.9rem;max-width:16ch;}
+
+  footer{padding:44px 0 28px;}
+  .footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:0.84rem;color:var(--ink-soft);}
+  .footer-inner .logo{font-size:1.15rem;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">Riendzo<span>.</span></a>
+    <nav class="links" id="navLinks">
+      <a href="#objetivos">Objetivos</a>
+      <a href="#historia">Linha do tempo</a>
+      <a href="#areas">As 8 áreas</a>
+      <a href="#ai">Riendzo AI</a>
+    </nav>
+    <a href="#ai" class="nav-cta">Riendzo AI</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-meta">Dossiê Riendzo · edição 01</div>
+    <h1 class="headline">O arquivo vivo <i>de Moçambique</i></h1>
+    <p class="lead">Um só lugar para preservar conhecimento, promover turismo, facilitar o acesso a serviços públicos e dar palco aos artistas e à cultura moçambicana — com uma camada de inteligência artificial a ajudar em tudo isto.</p>
+    <div class="hero-actions">
+      <a href="#objetivos" class="btn-primary">Ver os objetivos</a>
+      <a href="#historia" class="btn-outline">Ver a linha do tempo</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">História</span>
+      <span class="chip">Turismo</span>
+      <span class="chip">Serviços públicos</span>
+      <span class="chip">Artistas</span>
+      <span class="chip">Cultura & entretenimento</span>
+    </div>
+  </div>
+</section>
+
+<section class="objectives" id="objetivos">
+  <div class="wrap">
+    <div class="obj-head">
+      <span class="tag">Objetivos específicos</span>
+      <h2>Cinco compromissos orientam a plataforma</h2>
+      <p>Cada objetivo define uma responsabilidade concreta da Riendzo perante o país e as pessoas que o habitam.</p>
+    </div>
+
+    <div class="obj-item">
+      <div class="obj-num">3.1</div>
+      <div class="obj-body">
+        <h3>Preservar conhecimento</h3>
+        <p class="desc">Documentar o que corre o risco de se perder — para que continue acessível às próximas gerações.</p>
+        <div class="tag-row">
+          <span>História</span><span>Culturas</span><span>Línguas</span><span>Tradições</span>
+          <span>Música</span><span>Gastronomia</span><span>Personalidades</span><span>Património</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-item">
+      <div class="obj-num">3.2</div>
+      <div class="obj-body">
+        <h3>Promover turismo</h3>
+        <p class="desc">Facilitar a descoberta do país, dentro e fora de Moçambique.</p>
+        <div class="tag-row">
+          <span>Destinos</span><span>Praias</span><span>Ilhas</span><span>Parques</span>
+          <span>Reservas</span><span>Cidades</span><span>Hotéis</span><span>Restaurantes</span>
+          <span>Atrações</span><span>Experiências</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-item">
+      <div class="obj-num">3.3</div>
+      <div class="obj-body">
+        <h3>Facilitar acesso à informação pública</h3>
+        <p class="desc">Centralizar informação sobre serviços públicos essenciais, num único ponto de consulta.</p>
+        <div class="tag-row">
+          <span>BI</span><span>NUIT</span><span>Passaporte</span><span>DIRE</span>
+          <span>Migração</span><span>Outros serviços públicos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-item">
+      <div class="obj-num">3.4</div>
+      <div class="obj-body">
+        <h3>Promover artistas nacionais</h3>
+        <p class="desc">Criar um espaço dedicado a quem faz a cultura moçambicana acontecer.</p>
+        <div class="tag-row">
+          <span>Artistas históricos</span><span>Velha guarda</span><span>Nova geração</span>
+          <span>Músicos independentes</span><span>Grupos</span><span>Produtores</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-item">
+      <div class="obj-num">3.5</div>
+      <div class="obj-body">
+        <h3>Promover cultura e entretenimento</h3>
+        <p class="desc">Documentar e divulgar o que acontece nas ruas, praças e palcos do país.</p>
+        <div class="tag-row">
+          <span>Festas</span><span>Eventos</span><span>Brincadeiras tradicionais</span>
+          <span>Manifestações culturais</span><span>Festivais</span><span>Atividades locais</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section" id="historia">
+  <div class="wrap">
+    <div class="obj-head">
+      <span class="tag">Linha do tempo</span>
+      <h2>Do passado antigo ao Moçambique de hoje</h2>
+      <p>Nove momentos que atravessam a formação do país — a espinha dorsal da secção História.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item"><div class="t-era">Era 1</div><div class="t-title">Antiguidade</div></div>
+      <div class="t-item"><div class="t-era">Era 2</div><div class="t-title">Povos e sociedades pré-coloniais</div></div>
+      <div class="t-item"><div class="t-era">Era 3</div><div class="t-title">Comércio no Oceano Índico</div></div>
+      <div class="t-item"><div class="t-era">Era 4</div><div class="t-title">Presença portuguesa</div></div>
+      <div class="t-item"><div class="t-era">Era 5</div><div class="t-title">Período colonial</div></div>
+      <div class="t-item"><div class="t-era">Era 6</div><div class="t-title">Luta de Libertação</div></div>
+      <div class="t-item"><div class="t-era">Era 7</div><div class="t-title">25 de Junho de 1975</div></div>
+      <div class="t-item"><div class="t-era">Era 8</div><div class="t-title">Moçambique independente</div></div>
+      <div class="t-item"><div class="t-era">Era 9</div><div class="t-title">Moçambique contemporâneo</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="areas" id="areas">
+  <div class="wrap">
+    <div class="obj-head">
+      <span class="tag">A plataforma</span>
+      <h2>Oito áreas, um só país</h2>
+    </div>
+  </div>
+  <div class="area-grid">
+    <div class="area-swatch" style="--accent:var(--c-historia)"><span class="num">01</span><h4>História</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-artistas)"><span class="num">02</span><h4>Música</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-gastronomia)"><span class="num">03</span><h4>Gastronomia</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-turismo)"><span class="num">04</span><h4>Turismo</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-servicos)"><span class="num">05</span><h4>Serviços Públicos</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-cultura)"><span class="num">06</span><h4>Entretenimento</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-blog)"><span class="num">07</span><h4>Blog</h4></div>
+    <div class="area-swatch" style="--accent:var(--c-ai)"><span class="num">08</span><h4>Riendzo AI</h4></div>
+  </div>
+</section>
+
+<section class="ai-panel" id="ai">
+  <div class="wrap ai-inner">
+    <div>
+      <span class="tag">A camada inteligente</span>
+      <h2>Pergunta a Moçambique <i>diretamente</i>.</h2>
+      <p class="desc">Riendzo AI cruza história, turismo, serviços públicos e cultura para responder em segundos — e vai crescendo com cada nova pergunta.</p>
+      <a href="#" class="btn-primary">Falar com a Riendzo AI</a>
+    </div>
+    <div class="ai-mock">
+      <div class="head">Riendzo AI</div>
+      <div class="q">Que documentos preciso para renovar o passaporte?</div>
+      <div class="a">Precisas do BI atualizado, do passaporte anterior e do comprovativo de pagamento. O processo demora, em média, entre 10 a 15 dias úteis nos balcões do SENAMI.</div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap closing">
+    <h2>O país cabe numa plataforma.</h2>
+    <a href="#top" class="btn-primary">Voltar ao início</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span class="logo">Riendzo</span>
+    <span>© 2026 Riendzo. Feito em Moçambique.</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>
