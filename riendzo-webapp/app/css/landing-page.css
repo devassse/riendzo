@@ -493,7 +493,7 @@ button {
     padding: 0 24px;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 988px) {
     .nav-items {
         display: none;
     }
