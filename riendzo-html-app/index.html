@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riendzo — Descubra Moçambique. Viva a jornada.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Riendzo<em>.</em></a>
+    <nav class="links" id="navLinks">
+      <a href="index.html" class="active">Início</a>
+      <a href="historia.html">História</a>
+      <a href="musica.html">Música</a>
+      <a href="gastronomia.html">Gastronomia</a>
+      <a href="turismo.html">Turismo</a>
+      <a href="servicos-publicos.html">Serviços Públicos</a>
+      <a href="entretenimento.html">Entretenimento</a>
+      <a href="blog.html">Blog</a>
+      <a href="riendzo-ai.html">Riendzo AI</a>
+    </nav>
+    <a href="riendzo-ai.html" class="nav-cta">Riendzo AI</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hero-pattern" width="100%" height="100%" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="zigzag" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M0 40 L20 0 L40 40 L60 0 L80 40" fill="none" stroke="#F1E8D6" stroke-width="1.5"/>
+        <path d="M0 80 L20 40 L40 80 L60 40 L80 80" fill="none" stroke="#F1E8D6" stroke-width="1.5"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="600" fill="url(#zigzag)"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Moçambique · plataforma digital</div>
+    <h1 class="headline">Descubra Moçambique. <i>Viva a jornada.</i></h1>
+    <p class="lead">Histórias, lugares, sabores, música e experiências — reunidos numa só plataforma, com a Riendzo AI para ajudar a planear cada passo.</p>
+    <form class="search-form" onsubmit="return false;">
+      <input type="text" placeholder="O que quer descobrir? Ex: praias em Inhambane">
+      <button type="submit" class="btn-primary">Pesquisar</button>
+    </form>
+    <div class="hero-meta">
+      <div><b>8</b>áreas do país</div>
+      <div><b>10</b>províncias</div>
+      <div><b>1</b>assistente de viagens</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head" style="color:var(--turismo)">
+      <span class="tag">Explorar Moçambique</span>
+      <h2 style="color:var(--ink)">Escolha uma província</h2>
+      <p>Cada província reúne destinos, história, cultura, gastronomia, artistas, eventos e serviços num só lugar.</p>
+    </div>
+    <div class="province-list">
+      <button class="pill-btn">Niassa</button>
+      <button class="pill-btn">Cabo Delgado</button>
+      <button class="pill-btn">Nampula</button>
+      <button class="pill-btn">Zambézia</button>
+      <button class="pill-btn">Tete</button>
+      <button class="pill-btn">Manica</button>
+      <button class="pill-btn">Sofala</button>
+      <button class="pill-btn">Gaza</button>
+      <button class="pill-btn">Inhambane</button>
+      <button class="pill-btn">Maputo</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head" style="color:var(--historia)">
+      <span class="tag">A plataforma</span>
+      <h2 style="color:var(--ink)">As oito portas de Moçambique</h2>
+      <p>Conhecer, explorar e viver o país — organizado em oito áreas, cada uma com a sua própria identidade.</p>
+    </div>
+    <div class="grid-2">
+      <a class="plate" style="--accent:var(--historia)" href="historia.html">
+        <div class="coord">MZ · 001 · Memória</div><h3>📜 História</h3>
+        <p>Povos, línguas, período colonial e a linha do tempo do país.</p>
+      </a>
+      <a class="plate" style="--accent:var(--musica)" href="musica.html">
+        <div class="coord">MZ · 002 · Som</div><h3>🎵 Música</h3>
+        <p>Portal do artista, discografias e géneros moçambicanos.</p>
+      </a>
+      <a class="plate" style="--accent:var(--gastronomia)" href="gastronomia.html">
+        <div class="coord">MZ · 003 · Sabor</div><h3>🍲 Gastronomia</h3>
+        <p>Pratos, ingredientes e sabores por região do país.</p>
+      </a>
+      <a class="plate" style="--accent:var(--turismo)" href="turismo.html">
+        <div class="coord">MZ · 004 · Destino</div><h3>🏝️ Turismo</h3>
+        <p>Destinos, praias, ilhas, parques, hotéis e restaurantes.</p>
+      </a>
+      <a class="plate" style="--accent:var(--servicos)" href="servicos-publicos.html">
+        <div class="coord">MZ · 005 · Cidadania</div><h3>🏛️ Serviços Públicos</h3>
+        <p>BI, NUIT, passaporte, DIRE e migração — passo a passo.</p>
+      </a>
+      <a class="plate" style="--accent:var(--entretenimento)" href="entretenimento.html">
+        <div class="coord">MZ · 006 · Cultura viva</div><h3>🎭 Entretenimento</h3>
+        <p>Eventos, festas, festivais e brincadeiras tradicionais.</p>
+      </a>
+      <a class="plate" style="--accent:var(--blog)" href="blog.html">
+        <div class="coord">MZ · 007 · Opinião</div><h3>📰 Blog</h3>
+        <p>Notícias, curiosidades, cultura e vida quotidiana.</p>
+      </a>
+      <a class="plate" style="--accent:var(--ai)" href="riendzo-ai.html">
+        <div class="coord">MZ · 008 · Camada inteligente</div><h3>🤖 Riendzo AI</h3>
+        <p>O assistente que transforma perguntas em roteiros.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" style="border-bottom:none;">
+  <div class="wrap ai-inner">
+    <div>
+      <div class="eyebrow">Camada inteligente</div>
+      <h2 style="font-family:var(--serif);font-size:2.4rem;margin-bottom:18px;line-height:1.15;">Diga o que procura.<br><i style="color:var(--ai)">Nós ajudamos a descobrir.</i></h2>
+      <p style="color:var(--paper-dim);max-width:44ch;margin-bottom:28px;">Pergunte sobre destinos, história ou orçamento de viagem e receba roteiros personalizados em segundos.</p>
+      <a href="riendzo-ai.html" class="btn-primary" style="background:var(--ai);color:var(--night);">Experimentar Riendzo AI</a>
+    </div>
+    <div class="chat-mock">
+      <div class="chat-head">Riendzo AI</div>
+      <div class="bubble user">Tenho 40.000 MT e 5 dias. Gosto de praia e cultura.</div>
+      <div class="bubble ai">Sugiro Maputo (2 dias, centro histórico e gastronomia) seguido de Inhambane (3 dias, praia e cultura local) — dentro do orçamento indicado.</div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-logo">Riendzo</div>
+      <div class="footer-links">
+        <div class="col">
+          <span>Descobrir</span>
+          <a href="historia.html">História</a>
+          <a href="musica.html">Música</a>
+          <a href="gastronomia.html">Gastronomia</a>
+          <a href="turismo.html">Turismo</a>
+        </div>
+        <div class="col">
+          <span>Viver</span>
+          <a href="servicos-publicos.html">Serviços Públicos</a>
+          <a href="entretenimento.html">Entretenimento</a>
+          <a href="blog.html">Blog</a>
+          <a href="riendzo-ai.html">Riendzo AI</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Riendzo. Feito em Moçambique.</span>
+      <span>Maputo · Beira · Nampula</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
