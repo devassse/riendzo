@@ -178,15 +178,36 @@ export default function RiendzoNavbar() {
             História, cultura e serviços — <span>tudo o que é moçambicano, num só lugar.</span>
           </h1>
           <p>
-            O Riendzo combina conteúdo, descoberta, informação prática, turismo e inteligência artificial numa 
+            O Riendzo combina conteúdo, descoberta, informação prática, turismo e inteligência artificial numa
             única experiência digital.
           </p>
         </div>
       </div>
 
-          
+
       <p className={heroStyles.footnote}>
-        <span className={heroStyles.eyebrow}>🇲🇿 Plataforma Digital para Descobrir Moçambique</span>
+        <span className={heroStyles.eyebrow}>🇲🇿 Plataforma Digital para Descobrir Moçambique</span><br />
+        <a href="#explore" className="scroll-down" aria-label="Scroll down">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 24 24"
+         fill="none">
+
+        <path d="m6 6 6 6 6-6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="m6 12 6 6 6-6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+    </svg>
+
+</a>
       </p>
     </div>
   );
