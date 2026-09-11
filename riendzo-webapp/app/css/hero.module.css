@@ -1,3 +1,4 @@
+
 /* ============ HERO ============ */
 .hero {
   position: relative;
@@ -50,7 +51,7 @@
   border: 1px solid rgba(0, 174, 251, 0.25);
   padding: 6px 14px;
   border-radius: 999px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .hero h1 {
   font-family: 'Baloo 2';
