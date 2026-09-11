@@ -178,6 +178,18 @@ const TIMELINE: TimelineEntry[] = [
         image: '/ancient-history/new-horizon.jpeg',
         icon: <IconCaravel />,
     },
+    {
+        era: '1505 D.C.',
+        title: 'A Ocupação Portuguesa',
+        description:
+            'Em 1505, durante a expedição de Francisco de Almeida, os portugueses começaram a estabelecer uma presença mais permanente na Ilha de Moçambique. A construção de estruturas militares e comerciais marcou uma mudança importante: o contacto inicial transformava-se numa tentativa de domínio estratégico da região.',
+        detailTitle: 'A Ocupação',
+        detail:
+            'Os portugueses não chegaram a uma terra sem história; chegaram a uma sociedade já integrada numa das maiores redes comerciais do mundo.',
+        tags: ['Nova Era', 'Francisco de Almeida', '1505'],
+        image: '/ancient-history/chegada-dos-portugueses.jpg',
+        icon: <IconCaravel />,
+    },
 ];
 
 /* ---------------------------------------------------------------- */
