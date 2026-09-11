@@ -282,7 +282,14 @@ function RegisterRow({ entry, index }: { entry: Entry; index: number }) {
                 </div>
 
                 <p className="clear-both mt-5 font-['Manrope'] text-[13px] text-[#7a2e2e]/80">
-                    {entry.tags.join('  ·  ')}
+                    {entry.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className="rounded-full border border-[#7a2e2e]/80 bg-white/[0.04] px-2.5 py-1 text-xs text-[#7a2e2e]  cursor-pointer mr-2"
+                            >
+                                {tag}
+                            </span>
+                        ))}
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">

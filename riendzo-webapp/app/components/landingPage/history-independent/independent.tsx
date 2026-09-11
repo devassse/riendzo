@@ -165,7 +165,7 @@ const PANELS: Panel[] = [
         description:
             'Desde 2017, uma insurgência armada em Cabo Delgado desloca centenas de milhares de pessoas, mesmo junto às maiores reservas de gás do país. Ao mesmo tempo, uma geração nascida depois da guerra cresce numa Maputo cada vez mais jovem, urbana e ligada ao resto do mundo.',
         tags: ['Cabo Delgado', 'Nova geração', 'Presente'],
-        image: '/independent-history/em-curso.webp',
+        image: '/independent-history/em-curso.jpg',
         icon: <IconSunrise />,
         bg: 'yellow',
     },
@@ -263,7 +263,15 @@ function PosterPanel({ panel, index }: { panel: Panel; index: number }) {
                     </p>
 
                     <p className="mt-6 font-['Manrope'] text-[13px] font-medium tracking-[0.14em]" style={{ color: s.accent }}>
-                        {panel.tags.join('   ')}
+                        {/* {panel.tags.join('   ')} */}
+                        {panel.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className="rounded-full border border-[#fff]/80 bg-white/[0.04] px-2.5 py-1 text-xs text-[#fff]  cursor-pointer mr-2"
+                            >
+                                {tag}
+                            </span>
+                        ))}
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-2">
