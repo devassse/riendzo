@@ -5,7 +5,6 @@ import Image from 'next/image';
 // import navStyles from '../../../css/navbar.module.css';
 import navStyles from '@/app/css/navbar.module.css';
 import { NAV_SECTIONS } from '../../utils/riendzo-nav-data';
-import logo from '/logo/logo-slogan-horizontal.webp';
 
 type IndicatorRect = {
   left: number;
@@ -17,6 +16,7 @@ export default function RiendzoNavbar() {
   const [indicator, setIndicator] = useState<IndicatorRect | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
 
   const navItemsRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -72,12 +72,34 @@ export default function RiendzoNavbar() {
     };
   }, []);
 
+  // Go full-width once the hero section (#home) has fully scrolled out of view.
+  useEffect(() => {
+    const heroEl = document.getElementById('home');
+    if (!heroEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // isIntersecting is false both before the hero mounts into view and
+        // after it scrolls away — boundingClientRect.top < 0 tells us it's
+        // specifically scrolled *past* (its bottom has gone above the viewport),
+        // not that we're above it.
+        setScrolled(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(heroEl);
+    return () => observer.disconnect();
+  }, []);
+
   const toggleMobileSection = (id: string) => {
     setMobileSection((cur) => (cur === id ? null : id));
   };
 
   return (
-    <header className={navStyles.navWrap}>
+    <header
+      className={`${navStyles.navWrap} ${scrolled ? navStyles.scrolled : ''}`}
+    >
       <nav className={navStyles.navbar}>
         <div className={navStyles.brand}>
           <Image
