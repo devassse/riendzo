@@ -211,81 +211,104 @@ function useReveal<T extends HTMLElement>() {
 /*  Card                                                              */
 /* ---------------------------------------------------------------- */
 
-function TimelineCard({ entry, index }: { entry: TimelineEntry; index: number }) {
+type Side = 'left' | 'right';
+
+function TimelineCard({
+    entry,
+    index,
+    side,
+    withMobileMarker = false,
+}: {
+    entry: TimelineEntry;
+    index: number;
+    side: Side;
+    withMobileMarker?: boolean;
+}) {
     const { ref, visible } = useReveal<HTMLDivElement>();
-    const isLeft = index % 2 === 0;
     const number = String(index + 1).padStart(2, '0');
+    const isLeft = side === 'left';
 
     return (
-        <div id="explore" className="relative mb-16 pl-16 md:mb-24 md:pl-0">
-            {/* marker dot on the spine */}
+        <div className="relative">
+            {/* mobile marker dot (single-column layout only) */}
+            {withMobileMarker && (
+                <span
+                    className="absolute -left-10 top-10 h-4 w-4 -translate-x-1/2 rounded-full bg-[#00aefb] ring-4 ring-[#050f22] md:hidden"
+                    style={{ boxShadow: '0 0 16px 3px rgba(0,174,251,0.55)' }}
+                    aria-hidden="true"
+                />
+            )}
+
+            {/* desktop marker dot, sits on the outer edge of the card facing the spine */}
             <span
-                className="absolute left-6 top-10 h-4 w-4 -translate-x-1/2 rounded-full bg-[#00aefb] ring-4 ring-[#050f22] md:left-1/2"
+                className={[
+                    'hidden md:block absolute top-10 h-4 w-4 rounded-full bg-[#00aefb] ring-4 ring-[#050f22]',
+                    isLeft ? '-right-[3.35rem]' : '-left-[3.35rem]',
+                ].join(' ')}
                 style={{ boxShadow: '0 0 16px 3px rgba(0,174,251,0.55)' }}
                 aria-hidden="true"
             />
-            {/* connector from spine to card, desktop only */}
+            {/* connector from card edge to the spine */}
             <span
-                className={`hidden md:block absolute top-8 h-px w-10 bg-[#00aefb]/30 ${isLeft ? 'right-1/2 mr-2' : 'left-1/2 ml-2'
-                    }`}
+                className={[
+                    'hidden md:block absolute top-12 h-px w-10 bg-[#00aefb]/30',
+                    isLeft ? '-right-10' : '-left-10',
+                ].join(' ')}
                 aria-hidden="true"
             />
 
-            <div className={`md:flex ${isLeft ? 'md:justify-start' : 'md:justify-end'}`}>
-                <div
-                    ref={ref}
-                    className={[
-                        'md:w-[calc(50%-2.5rem)]',
-                        'overflow-hidden rounded-2xl border border-white/10 bg-[#0d2148]/70 shadow-xl backdrop-blur-sm',
-                        'transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none',
-                        visible
-                            ? 'translate-x-0 translate-y-0 opacity-100'
-                            : `translate-y-6 opacity-0 md:translate-y-0 ${isLeft ? 'md:-translate-x-16' : 'md:translate-x-16'}`,
-                    ].join(' ')}
-                >
-                    {/* banner illustration */}
-                    <div className="relative aspect-[16/9] w-full">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={entry.image} alt={entry.title} className="h-full w-full object-cover" />
+            <div
+                ref={ref}
+                className={[
+                    'overflow-hidden rounded-2xl border border-white/10 bg-[#0d2148]/70 shadow-xl backdrop-blur-sm',
+                    'transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none',
+                    visible
+                        ? 'translate-x-0 translate-y-0 opacity-100'
+                        : `translate-y-6 opacity-0 md:translate-y-0 ${isLeft ? 'md:-translate-x-10' : 'md:translate-x-10'}`,
+                ].join(' ')}
+            >
+                {/* banner illustration */}
+                <div className="relative aspect-[16/9] w-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={entry.image} alt={entry.title} className="h-full w-full object-cover" />
+                </div>
+
+                <div className="p-6">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#00aefb]/30 bg-[#00aefb]/10 px-3 py-1 text-xs font-semibold text-[#00aefb]">
+                        {number} · {entry.era}
+                    </span>
+                    <h3 className="mt-3 font-['Baloo_2'] text-xl font-bold text-[#eaf2ff]">{entry.title}</h3>
+                    <p className="mt-2 font-['Manrope'] text-[15px] leading-relaxed text-[#9fb3d1]">
+                        {entry.description}
+                    </p>
+
+                    {/* secondary in-content detail: icon + extra fact */}
+                    <div className="mt-4 flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                        <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-[#00aefb]/10 text-[#00aefb]">
+                            <div className="h-5 w-5">{entry.icon}</div>
+                        </div>
+                        <div>
+                            <p className="text-xs font-semibold uppercase tracking-wide text-[#00aefb]">
+                                {entry.detailTitle}
+                            </p>
+                            <p className="mt-1 text-sm leading-relaxed text-[#9fb3d1]">{entry.detail}</p>
+                        </div>
                     </div>
 
-                    <div className="p-6">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-[#00aefb]/30 bg-[#00aefb]/10 px-3 py-1 text-xs font-semibold text-[#00aefb]">
-                            {number} · {entry.era}
-                        </span>
-                        <h3 className="mt-3 font-['Baloo_2'] text-xl font-bold text-[#eaf2ff]">{entry.title}</h3>
-                        <p className="mt-2 font-['Manrope'] text-[15px] leading-relaxed text-[#9fb3d1]">
-                            {entry.description}
-                        </p>
-
-                        {/* secondary in-content detail: icon + extra fact */}
-                        <div className="mt-4 flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                            <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-[#00aefb]/10 text-[#00aefb]">
-                                <div className="h-5 w-5">{entry.icon}</div>
-                            </div>
-                            <div>
-                                <p className="text-xs font-semibold uppercase tracking-wide text-[#00aefb]">
-                                    {entry.detailTitle}
-                                </p>
-                                <p className="mt-1 text-sm leading-relaxed text-[#9fb3d1]">{entry.detail}</p>
-                            </div>
-                        </div>
-
-                        <div className="mt-4 flex flex-wrap gap-2">
-                            {entry.tags.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-[#9fb3d1]"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                            <a href="#" className="text-[#00aefb] hover:text-[#00aefb]/80 italic text-sm">
-                                Ler mais ...
-                            </a>
-                        </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                        {entry.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-[#9fb3d1]"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                        <a href="#" className="text-[#00aefb] hover:text-[#00aefb]/80 italic text-sm">
+                            Ler mais ...
+                        </a>
                     </div>
                 </div>
             </div>
@@ -298,32 +321,58 @@ function TimelineCard({ entry, index }: { entry: TimelineEntry; index: number })
 /* ---------------------------------------------------------------- */
 
 export default function Ancient() {
+    const leftEntries = TIMELINE.filter((_, i) => i % 2 === 0);
+    const rightEntries = TIMELINE.filter((_, i) => i % 2 !== 0);
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#5e8ed8] via-[#6d84a8] to-[#3674d3] py-2">
             <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
-      `}</style>
+    `}</style>
 
             <div className="flex flex-col items-center justify-center px-6 pt-20 text-center">
                 <span className="inline-flex items-center gap-2 rounded-full border border-[#02557a]/25 bg-[#00aefb]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#8cdcff]">
                     Linha do tempo
                 </span>
                 <h1 className="mt-4 font-['Baloo_2'] text-6xl font-bold text-[#eaf2ff]">História Antiga</h1>
-                <p className="mt-1 max-w-xl font-['Manrope'] text-2xl text-[#ffffff]">
+                <p className="mt-1 max-w-xl font-['Manrope'] text-lg text-[#ffffff]">
                     Explore a rica história antiga de Moçambique.
                 </p>
             </div>
 
-            <div className="relative mx-auto mt-20 max-w-6xl px-6 pb-24">
+            <div id="explore" className="relative mx-auto mt-20 max-w-6xl px-6 pb-24">
                 {/* the timeline spine */}
                 <div
                     className="absolute left-6 top-0 h-full w-[2px] bg-gradient-to-b from-[#00aefb] via-[#0a56c7] to-transparent md:left-1/2"
                     aria-hidden="true"
                 />
 
-                {TIMELINE.map((entry, index) => (
-                    <TimelineCard key={entry.title} entry={entry} index={index} />
-                ))}
+                {/* MOBILE: single stacked column */}
+                <div className="flex flex-col gap-16 pl-16 md:hidden">
+                    {TIMELINE.map((entry, index) => (
+                        <TimelineCard
+                            key={entry.title}
+                            entry={entry}
+                            index={index}
+                            side="left"
+                            withMobileMarker
+                        />
+                    ))}
+                </div>
+
+                {/* DESKTOP: two independent columns, right column offset down to cascade */}
+                <div className="hidden md:grid md:grid-cols-2 md:gap-x-16">
+                    <div className="flex flex-col gap-16">
+                        {leftEntries.map((entry, i) => (
+                            <TimelineCard key={entry.title} entry={entry} index={i * 2} side="left" />
+                        ))}
+                    </div>
+                    <div className="flex flex-col gap-16 md:mt-40">
+                        {rightEntries.map((entry, i) => (
+                            <TimelineCard key={entry.title} entry={entry} index={i * 2 + 1} side="right" />
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import pageStyles from './css/page.module.css';
 import Ancient from './components/landingPage/history-ancient/ancient';
 import Colonial from './components/landingPage/history-colonial/colonial';
-import Independent from './components/landingPage/history-mz-independent/independent';
+import Independent from './components/landingPage/history-independent/independent';
 import RiendzoNavbar from './components/landingPage/navbar-hero/riendzo-navbar';
 import RiendzoHero from './components/landingPage/navbar-hero/riendzo-hero';
 

@@ -4,6 +4,12 @@
   top: 0;
   z-index: 100;
   padding: 14px 20px;
+  transition: padding 0.35s var(--ease);
+}
+
+/* Full-width state, applied once the hero (#home) has scrolled past */
+.navWrap.scrolled {
+  padding: 0;
 }
 
 .navbar {
@@ -19,6 +25,22 @@
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  transition:
+    max-width 0.36s var(--ease),
+    border-radius 0.36s var(--ease),
+    border-color 0.36s var(--ease),
+    padding 0.36s var(--ease),
+    box-shadow 0.36s var(--ease);
+}
+
+.navWrap.scrolled .navbar {
+  max-width: 100%;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  padding: 10px 24px;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.35);
 }
 
 .brand {
@@ -440,7 +462,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .page * {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
