@@ -327,7 +327,7 @@ export default function Colonial() {
             </div>
 
             {/* the register */}
-            <div className="mx-auto max-w-3xl px-6 py-4 sm:px-10">
+            <div className="mx-auto max-w-6xl px-6 py-4 sm:px-10">
                 {REGISTO.map((entry, i) => (
                     <RegisterRow key={entry.year} entry={entry} index={i} />
                 ))}

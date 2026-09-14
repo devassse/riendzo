@@ -1,0 +1,21 @@
+{
+  "Navigation": {
+    "home": "Início",
+    "history": "História",
+    "music": "Música",
+    "tourism": "Turismo",
+    "gastronomy": "Gastronomia",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "História de Moçambique",
+    "ancient": "História Antiga",
+    "colonial": "Período Colonial",
+    "modern": "Moçambique Moderno"
+  },
+  "Hero":{
+    "title": "História, Cultura e Serviços",
+    "subtitle": "Tudo Que É Moçambicano, Em Um Só Lugar.",
+    "description": "Riendzo combina conteúdo, descoberta, informação prática, turismo e inteligência artificial em uma única experiência digital."
+  }
+}

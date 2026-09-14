@@ -1,0 +1,22 @@
+{
+  "Navigation": {
+    "home": "kusunguleni",
+    "history": "Matimu",
+    "music": "Vuyimbeleri",
+    "tourism": "Vutleketli",
+    "gastronomy": "Swakudya",
+    "portal": "Portal"
+  },
+
+  "History": {
+    "title": "Matimu ya Mozambique",
+    "ancient": "Matimu ya khale",
+    "colonial": "Nkarhi wa vukoloni",
+    "modern": "Mozambique wa manguva lawa"
+  },
+  "Hero":{
+    "title": "Matimu, Vutomi na Switirhisiwa",
+    "subtitle": "Hinkwalaho Laha Ku Huma Ka Mozambique, Ehenhla Ka Xikolo.",
+    "description": "Riendzo yi hlanganisa leswi nga eka yona, ku kuma, vutivi bya nkoka, vutleketli na vutivi bya masungulo eka ntlawa wun'wana wa digital."
+  }
+}
