@@ -50,10 +50,10 @@ export const NAV_SECTIONS: NavSection[] = [
     emoji: '📜',
     label: 'História',
     links: [
-      { icon: <IconScroll />, title: 'Cronologia de Moçambique', desc: 'Dos reinos antigos à independência nacional.', href: '#' },
-      { icon: <IconCrown />, title: 'Reinos e Impérios', desc: 'Monomotapa e o comércio suaíli na costa.', href: '#' },
+      { icon: <IconScroll />, title: 'Cronologia de Moçambique', desc: 'Dos reinos antigos à Independência nacional.', href: '#' },
+      { icon: <IconCrown />, title: 'Reinos e Impérios', desc: 'Antes da ocupação dos exploradores Portugueses.', href: '#' },
+      { icon: <IconLandmark />, title: 'Ocupação colonial', desc: 'Período de dominação portuguesa do território moçambicano.', href: '#' },
       { icon: <IconFlag />, title: 'Luta pela Independência', desc: 'De Eduardo Mondlane à proclamação de 1975.', href: '#' },
-      { icon: <IconLandmark />, title: 'Património Mundial', desc: 'Ilha de Moçambique e a Cidade de Pedra e Cal.', href: '#' },
     ],
   },
   {

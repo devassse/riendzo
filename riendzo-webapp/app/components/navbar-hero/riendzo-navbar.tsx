@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-// import navStyles from '../../../css/navbar.module.css';
+import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import navStyles from '@/app/css/navbar.module.css';
-import { NAV_SECTIONS } from '../../utils/riendzo-nav-data';
+import { NAV_SECTIONS } from '../utils/riendzo-nav-data';
+import { useLocale } from 'next-intl';
 
 type IndicatorRect = {
   left: number;
@@ -12,11 +13,16 @@ type IndicatorRect = {
 };
 
 export default function RiendzoNavbar() {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [indicator, setIndicator] = useState<IndicatorRect | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
 
   const navItemsRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -55,6 +61,11 @@ export default function RiendzoNavbar() {
       setOpenMenu(null);
       setIndicator(null);
     }, 160);
+  };
+
+  const switchLanguage = (locale: 'pt' | 'en' | 'ts') => {
+    router.replace(pathname, { locale });
+    setLanguageOpen(false);
   };
 
   useEffect(() => {
@@ -130,9 +141,8 @@ export default function RiendzoNavbar() {
           {NAV_SECTIONS.map((section) => (
             <div
               key={section.id}
-              className={`${navStyles.navItem} ${
-                openMenu === section.id ? navStyles.open : ''
-              }`}
+              className={`${navStyles.navItem} ${openMenu === section.id ? navStyles.open : ''
+                }`}
               onMouseEnter={() => openItem(section.id)}
             >
               <button
@@ -156,7 +166,7 @@ export default function RiendzoNavbar() {
 
               <div className={navStyles.mega}>
                 {section.links.map((link) => (
-                  <a
+                  <Link
                     key={link.title}
                     className={navStyles.megaLink}
                     href={link.href}
@@ -169,34 +179,67 @@ export default function RiendzoNavbar() {
                       <h4>{link.title}</h4>
                       <p>{link.desc}</p>
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
           ))}
         </div>
 
-        <button
-          className={navStyles.aiPill}
-          onClick={() =>
-            alert(
-              'Riendzo AI: "Olá! Posso ajudar-te a planear a tua viagem por Moçambique." 🤖'
-            )
-          }
-        >
+        <Link href="/portal" className={navStyles.aiPill}>
           <span className={navStyles.aiDot} />
           Riendzo AI
-        </button>
+        </Link>
 
         <button
-          className={`${navStyles.burger} ${
-            mobileOpen ? navStyles.active : ''
-          }`}
+          className={`${navStyles.burger} ${mobileOpen ? navStyles.active : ''
+            }`}
           aria-label="Abrir menu"
           onClick={() => setMobileOpen((v) => !v)}
         >
           <span className={navStyles.burgerBar} />
         </button>
+
+        {/* Language switcher */}
+        <div className={navStyles.languageSwitcher}>
+          <button
+            type="button"
+            className={navStyles.languageButton}
+            onClick={() => setLanguageOpen((v) => !v)}
+            aria-expanded={languageOpen}
+            aria-label="Selecionar idioma"
+          >
+            <span>{locale.toUpperCase()}</span>
+            <i className={navStyles.languageChev} />
+          </button>
+
+          {languageOpen && (
+            <div className={navStyles.languageMenu}>
+              <button
+                type="button"
+                className={navStyles.languageOption}
+                onClick={() => switchLanguage('pt')}
+              >
+              Português
+              </button>
+
+              <button
+                type="button"
+                className={navStyles.languageOption}
+                onClick={() => switchLanguage('en')}
+              >
+              English
+              </button>
+              <button
+                type="button"
+                className={navStyles.languageOption}
+                onClick={() => switchLanguage('ts')}
+              >
+              Tsonga
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
 
       {mobileOpen && (
@@ -204,9 +247,8 @@ export default function RiendzoNavbar() {
           {NAV_SECTIONS.map((section) => (
             <div
               key={section.id}
-              className={`${navStyles.mItem} ${
-                mobileSection === section.id ? navStyles.open : ''
-              }`}
+              className={`${navStyles.mItem} ${mobileSection === section.id ? navStyles.open : ''
+                }`}
             >
               <button
                 className={navStyles.mTrigger}
@@ -218,9 +260,9 @@ export default function RiendzoNavbar() {
 
               <div className={navStyles.mSub}>
                 {section.links.map((link) => (
-                  <a key={link.title} href={link.href}>
+                  <Link key={link.title} href={link.href}>
                     {link.title}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
