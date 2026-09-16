@@ -45,7 +45,7 @@ export default async function RiendzoHero() {
 
       <div className={heroStyles.footnote}>
         <span className={heroStyles.eyebrow}>
-          🇲🇿 Plataforma Digital para Descobrir Moçambique
+          🇲🇿 {t('bottomNote')}
         </span>
         <br />
         <a

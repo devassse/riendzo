@@ -191,6 +191,7 @@ export default function RiendzoNavbar() {
           Riendzo AI
         </Link>
 
+        {/* Mobile Humburguer Menu */}
         <button
           className={`${navStyles.burger} ${mobileOpen ? navStyles.active : ''
             }`}
@@ -235,7 +236,7 @@ export default function RiendzoNavbar() {
                 className={navStyles.languageOption}
                 onClick={() => switchLanguage('ts')}
               >
-              Tsonga
+              Xichangana
               </button>
             </div>
           )}
