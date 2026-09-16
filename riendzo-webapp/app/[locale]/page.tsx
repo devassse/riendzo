@@ -1,25 +1,24 @@
-// import RiendzoNavbar from '@/app/components/landingPage/navbar-hero/riendzo-navbar';
-
-// export default function Page() {
-//   return <RiendzoNavbar />;
-// }
 import pageStyles from '@/app/css/page.module.css';
-import Ancient from '@/app/[locale]/(pages)/historia/antiga/ancient';
-import Colonial from '@/app/[locale]/(pages)/historia/colonial/colonial';
-import Independent from '@/app/[locale]/(pages)/historia/moderna/independent';
-import RiendzoNavbar from '@/app/components/navbar-hero/riendzo-navbar';
-import RiendzoHero from '@/app/components/navbar-hero/riendzo-hero';
+import RiendzoNavbar from '@/app/components/navbar-hero-footer/riendzo-navbar';
+import RiendzoHero from '@/app/components/navbar-hero-footer/riendzo-hero';
+import Pleasure from '@/app/[locale]/(pages)/home/pleasure';
+import BriefHistory from './(pages)/home/breaf-history';
+import Entretainment from './(pages)/home/entretainment';
+import PublicServices from './(pages)/home/public-services';
+import RiendzoFooter from '../components/navbar-hero-footer/riendzo-footer';
 
 export default function Page() {
   return (
     <div className={pageStyles.page}>
       <RiendzoNavbar />
+      <RiendzoHero />
       <main>
-        <RiendzoHero />
-        <Ancient />
-        <Colonial />
-        <Independent />
+        <Pleasure />
+        <BriefHistory />
+        <PublicServices />
+        <Entretainment />
       </main>
+      <RiendzoFooter />
     </div>
   );
 }

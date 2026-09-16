@@ -63,7 +63,7 @@ export default function RiendzoNavbar() {
     }, 160);
   };
 
-  const switchLanguage = (locale: 'pt' | 'en' | 'ts') => {
+  const switchLanguage = (locale: 'pt' | 'en' | 'ts' | 'se' | 'kh') => {
     router.replace(pathname, { locale });
     setLanguageOpen(false);
   };
@@ -112,7 +112,7 @@ export default function RiendzoNavbar() {
       className={`${navStyles.navWrap} ${scrolled ? navStyles.scrolled : ''}`}
     >
       <nav className={navStyles.navbar}>
-        <div className={navStyles.brand}>
+        <Link href="/" className={navStyles.brand}>
           <Image
             src="/logo/logo-slogan-horizontal.webp"
             alt="Riendzo — Assistente de Viagens"
@@ -120,7 +120,7 @@ export default function RiendzoNavbar() {
             height={42}
             priority
           />
-        </div>
+        </Link>
 
         <div
           className={navStyles.navItems}
@@ -221,7 +221,7 @@ export default function RiendzoNavbar() {
                 className={navStyles.languageOption}
                 onClick={() => switchLanguage('pt')}
               >
-              Português
+                Português
               </button>
 
               <button
@@ -229,14 +229,28 @@ export default function RiendzoNavbar() {
                 className={navStyles.languageOption}
                 onClick={() => switchLanguage('en')}
               >
-              English
+                English
               </button>
               <button
                 type="button"
                 className={navStyles.languageOption}
                 onClick={() => switchLanguage('ts')}
               >
-              Xichangana
+                Xichangana
+              </button>
+              <button
+                type="button"
+                className={navStyles.languageOption}
+                onClick={() => switchLanguage('se')}
+              >
+                Cisena
+              </button>
+              <button
+                type="button"
+                className={navStyles.languageOption}
+                onClick={() => switchLanguage('kh')}
+              >
+                Emakhuwa
               </button>
             </div>
           )}

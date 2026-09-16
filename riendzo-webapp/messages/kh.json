@@ -1,0 +1,22 @@
+{
+    "Navigation": {
+        "home": "Eniyerera",
+        "history": "Malapo",
+        "music": "Nimimo",
+        "tourism": "Oloka",
+        "gastronomy": "Yakulya",
+        "portal": "Portal"
+    },
+    "History": {
+        "title": "Malapo a Moçambique",
+        "ancient": "Malapo Akhalelo",
+        "colonial": "Nthamwene ya Ukoloni",
+        "modern": "Moçambique wa Lelo"
+    },
+    "Hero": {
+        "title": "Malapo, Nthowa na Nturukhu",
+        "subtitle": "Yonthe ya Moçambique, okhala muthukumano mmoha.",
+        "description": "Riendzo enavanha malove, okhaliherya osyaka, muthukumano wa maana, oloka ni maarupelo a makina muthukumano mmoha wa dijitali.",
+        "bottomNote": "Pulatifomu ya Dijitali ya Osyaka Moçambique"
+    }
+}

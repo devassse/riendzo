@@ -1,0 +1,22 @@
+{
+    "Navigation": {
+        "home": "Mwinjiro",
+        "history": "Mbiri",
+        "music": "Nyimbo",
+        "tourism": "Ulendo",
+        "gastronomy": "Kudya",
+        "portal": "Portal"
+    },
+    "History": {
+        "title": "Mbiri ya Moçambique",
+        "ancient": "Mbiri ya Kale",
+        "colonial": "Nthawi ya Ukoloni",
+        "modern": "Moçambique ya Lero"
+    },
+    "Hero": {
+        "title": "Mbiri, Chikhalidwe ndi Ntchito",
+        "subtitle": "Zonse za Moçambique, pamalo amodzi.",
+        "description": "Riendzo isanganiza nkhani, kupeza zinthu zatsopano, uthenga wothandiza, ulendo ndi nzeru zopangidwa ndi makompyuta pamodzi.",
+        "bottomNote": "Pulatifomu ya Dijito Yodziwira Moçambique"
+    }
+}

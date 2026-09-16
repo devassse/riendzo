@@ -50,10 +50,10 @@ export const NAV_SECTIONS: NavSection[] = [
     emoji: '📜',
     label: 'História',
     links: [
-      { icon: <IconScroll />, title: 'Cronologia de Moçambique', desc: 'Dos reinos antigos à Independência nacional.', href: '#' },
-      { icon: <IconCrown />, title: 'Reinos e Impérios', desc: 'Antes da ocupação dos exploradores Portugueses.', href: '#' },
-      { icon: <IconLandmark />, title: 'Ocupação colonial', desc: 'Período de dominação portuguesa do território moçambicano.', href: '#' },
-      { icon: <IconFlag />, title: 'Luta pela Independência', desc: 'De Eduardo Mondlane à proclamação de 1975.', href: '#' },
+      { icon: <IconScroll />, title: 'Cronologia de Moçambique', desc: 'Dos reinos antigos à Independência nacional.', href: '/historia' },
+      { icon: <IconCrown />, title: 'Reinos e Impérios', desc: 'Antes da ocupação dos exploradores Portugueses.', href: '/historia/antiga' },
+      { icon: <IconLandmark />, title: 'Ocupação colonial', desc: 'Período de dominação portuguesa do território moçambicano.', href: '/historia/colonial' },
+      { icon: <IconFlag />, title: 'Luta pela Independência', desc: 'De Eduardo Mondlane à proclamação de 1975.', href: '/historia/moderna' },
     ],
   },
   {
