@@ -5,7 +5,7 @@
   max-width: 1440px;
   margin: 1vh auto;
   padding: 64px 24px;
-  height: 80vh;
+  height: 77vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@
   margin-bottom: 20px;
 }
 .hero h1 {
-  font-family: 'Baloo 2';
+  font-family: var(--font-baloo);
   font-weight: 700;
   font-size: clamp(34px, 5vw, 58px);
   line-height: 1.08;

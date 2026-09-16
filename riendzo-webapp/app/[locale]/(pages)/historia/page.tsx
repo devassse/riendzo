@@ -1,17 +1,24 @@
-import {getTranslations} from 'next-intl/server';
+import pageStyles from '@/app/css/page.module.css';
+import RiendzoHistoryHero from '@/app/[locale]/(pages)/historia/history-hero';
+import Ancient from '@/app/[locale]/(pages)/historia/antiga/ancient';
+import MaisSobre from '@/app/[locale]/(pages)/historia//antiga/mais-sobre';
+import Colonial from '@/app/[locale]/(pages)/historia/colonial/colonial';
+import Independent from '@/app/[locale]/(pages)/historia/moderna/independent';
+import RiendzoNavbar from '@/app/components/navbar-hero-footer/riendzo-navbar';
+import PrimeirosHabitantesPage from './antiga/sections/primeiros-habitantes';
 
-export default async function HistoriaPage() {
-  const t = await getTranslations('History');
-
+export default async function Page() {
   return (
-    <main>
-      <h1>{t('title')}</h1>
-
-      <ul>
-        <li>{t('ancient')}</li>
-        <li>{t('colonial')}</li>
-        <li>{t('modern')}</li>
-      </ul>
-    </main>
+    <div className={pageStyles.page}>
+      <RiendzoNavbar />
+      <main>
+        <RiendzoHistoryHero />
+        <MaisSobre />
+        <Ancient />
+        <Colonial />
+        <Independent />
+        <PrimeirosHabitantesPage/>
+      </main>
+    </div>
   );
 }

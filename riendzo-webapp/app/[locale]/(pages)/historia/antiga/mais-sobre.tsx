@@ -1,5 +1,6 @@
 'use client';
 
+import { Link } from '@/i18n/navigation';
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode, SVGProps } from 'react';
 
@@ -65,13 +66,6 @@ const IconRiverPath = (p: SVGProps<SVGSVGElement>) => (
         <path d="M3 6c3 0 3 3 6 3s3-3 6-3 3 3 6 3" />
         <path d="M3 12c3 0 3 3 6 3s3-3 6-3 3 3 6 3" />
         <path d="M3 18c3 0 3 3 6 3s3-3 6-3 3 3 6 3" />
-    </Base>
-);
-
-const IconGold = (p: SVGProps<SVGSVGElement>) => (
-    <Base {...p}>
-        <path d="M6 3h12l3 5-9 13L3 8l3-5z" />
-        <path d="M3 8h18M9 3l3 5 3-5" />
     </Base>
 );
 
@@ -216,111 +210,69 @@ function RealmPlate({ realm }: { realm: Realm }) {
         <div
             ref={ref}
             className={[
-                'bg-[#241d16] px-6 pb-7 pt-5 sm:px-7',
+                'rounded-4xl bg-[#241d16] px-6 pb-7 pt-5 sm:px-7',
                 'transition-opacity duration-700 ease-out motion-reduce:transition-none',
                 visible ? 'opacity-100' : 'opacity-0',
             ].join(' ')}
         >
-            <ChevronRule className="mb-5" />
+            <ChevronRule className="mt-4 mb-10" />
 
             <div className="flex items-start gap-4">
                 <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full border border-[#c99a3d]/50 text-[#c99a3d]">
                     <span className="h-5 w-5">{realm.icon}</span>
                 </span>
                 <div>
-                    <p className="font-['Karla'] text-xs font-semibold uppercase tracking-[0.16em] text-[#c99a3d]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#c99a3d]">
                         {realm.number} · {realm.region}
                     </p>
-                    <h3 className="mt-1 font-['Bitter'] text-2xl font-bold leading-snug text-[#ecdfc4]">
+                    <h3 className="mt-1 font-baloo text-2xl font-bold leading-snug text-[#ecdfc4]">
                         {realm.title}
                     </h3>
                 </div>
             </div>
 
-            <p className="mt-4 font-['Karla'] text-[15px] leading-relaxed text-[#c7b89a]">
+            <p className="mt-4 text-[15px] leading-relaxed text-[#c7b89a]">
                 {realm.description}
             </p>
 
-            <p className="mt-4 border-l-2 border-[#b8592f] pl-3 font-['Karla'] text-sm italic leading-relaxed text-[#a89478]">
+            <p className="mt-4 border-l-2 border-[#b8592f] pl-3 text-sm italic leading-relaxed text-[#a89478]">
                 {realm.domain}
+            </p>
+            <p className="mt-6 text-sm text-[#a89478]">
+                <Link href="#" className="font-semibold text-[#c99a3d] underline">
+                    Ler mais ...
+                </Link>
             </p>
         </div>
     );
 }
 
 /* ---------------------------------------------------------------- */
-/*  Page                                                              */
+/*  Page             bae0fc                                                 */
 /* ---------------------------------------------------------------- */
 
 export default function ReinosEImperios() {
     return (
-        <div className="min-h-screen bg-[#1c1712]">
-            <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap');
-      `}</style>
+        <div className="min-h-screen bg-[#ecdfc4]" id="ancient">
 
             {/* header */}
-            <div className="px-6 pb-14 pt-24 text-center sm:pb-16">
-                <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-[#c99a3d]/60 text-[#c99a3d]">
-                    <IconGold className="h-6 w-6" />
-                </span>
-                <h1 className="mt-5 font-['Bitter'] text-5xl font-bold text-[#ecdfc4] sm:text-6xl">
+            <div className="px-6 pb-14 pt-16 text-center sm:pb-16">
+                <h1 className="mt-2 text-3xl font-bold text-[#1c1712] sm:text-6xl">
                     Reinos e Impérios
                 </h1>
-                <div className="mx-auto mt-6 max-w-xs">
-                    <ChevronRule />
-                </div>
-                <p className="mx-auto mt-6 max-w-2xl font-['Karla'] text-lg leading-relaxed text-[#c7b89a]">
-                    Antes das caravelas, já existiam impérios, reinos e grandes centros comerciais. Do ouro de
-                    Mutapa às cidades suaílis do Índico, diferentes povos construíram sociedades, culturas e redes
-                    comerciais que ligavam o interior de África ao mundo oriental.
+                
+                <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[#1c1712]">
+                    Antes das caravelas, já existiam impérios, reinos e grandes centros comerciais.
                 </p>
             </div>
 
-            {/* historiographical note */}
-            <div className="mx-auto max-w-2xl px-6 pb-16">
-                <div className="border border-[#c99a3d]/40 bg-[#241d16] px-5 py-4">
-                    <p className="font-['Karla'] text-xs font-semibold uppercase tracking-[0.16em] text-[#c99a3d]">
-                        Nota histórica
-                    </p>
-                    <p className="mt-2 font-['Karla'] text-sm italic leading-relaxed text-[#a89478]">
-                        "Moçambique" como Estado e território colonial ainda não existia nesta época. Fala-se aqui
-                        da região que hoje corresponde a Moçambique e das sociedades que nela viviam ou que
-                        mantinham influência sobre ela — não de fronteiras que só seriam traçadas séculos depois.
-                    </p>
-                </div>
-            </div>
-
             {/* atlas grid */}
-            <div className="mx-auto max-w-5xl px-6 pb-8 sm:px-10">
-                <div className="grid gap-px overflow-hidden bg-[#c99a3d]/15 sm:grid-cols-2">
+            <div className="mx-auto max-w-6xl px-6 pb-8 sm:px-10">
+                <div className="grid gap-6 overflow-hidden sm:grid-cols-2">
                     {REALMS.map((realm) => (
                         <RealmPlate key={realm.number} realm={realm} />
                     ))}
                 </div>
-            </div>
-
-            {/* chronological chain, kept small and separate from the atlas above */}
-            <div className="mx-auto max-w-4xl px-6 py-16 sm:px-10">
-                <p className="mb-5 text-center font-['Karla'] text-xs font-semibold uppercase tracking-[0.16em] text-[#c99a3d]">
-                    Linha de sucessão sugerida
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
-                    {SEQUENCE.map((step, i) => (
-                        <div key={step} className="flex items-center gap-2">
-                            <span className="font-['Karla'] text-sm text-[#ecdfc4]">{step}</span>
-                            {i < SEQUENCE.length - 1 && (
-                                <span className="font-['Karla'] text-[#c99a3d]">→</span>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className="border-t border-[#c99a3d]/15 px-6 py-10 text-center">
-                <p className="font-['Karla'] text-xs uppercase tracking-[0.2em] text-[#a89478]">
-                    Antes de Moçambique — os povos e os reinos que vieram primeiro
-                </p>
             </div>
         </div>
     );

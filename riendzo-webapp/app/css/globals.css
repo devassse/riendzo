@@ -1,9 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Baloo 2';
+  src: url('/fonts/baloo2/baloo2_variable_font_wght.ttf') format('truetype');
+  font-weight: 400 800; /* Baloo 2's supported wght range */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Montserrat — variable, normal */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/montserrat_variable_font_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Montserrat's supported wght range */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Montserrat — variable, italic */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/montserrat_italic_variable_font_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-baloo: 'Baloo 2', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
 }
 
 @theme inline {
@@ -31,4 +58,8 @@
 .scroll-down svg {
     width: 100%;
     height: 100%;
+}
+
+h1 {
+    font-family: var(--font-baloo);
 }

@@ -1,10 +1,31 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(1100px 520px at 12% -10%,
+            rgba(10, 86, 199, 0.35),
+            transparent 60%),
+        radial-gradient(900px 500px at 90% 0%,
+            rgba(0, 174, 251, 0.16),
+            transparent 55%),
+        var(--navy-950);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-montserrat);
+    font-style: normal;
+    font-weight: 400;
+}
+
 .page {
     --navy-950: #050f22;
     --navy-900: #081833;
     --navy-800: #0d2148;
     --navy-700: #132c5c;
-    --main-blue: rgb(0, 88, 183);
-    --blue: rgb(10, 86, 199);
+    --main-blue: #0058b7;
+    --blue: #0a56c7;
     --blue-bright: #1f6fe0;
     --cyan: #00aefb;
     --gold: #f2a93b;
@@ -25,7 +46,7 @@
             transparent 55%),
         var(--navy-950);
     color: var(--ink);
-    font-family: "Manrope", system-ui, sans-serif;
+    font-family: "Montserrat", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -37,17 +58,15 @@
     font-family: inherit;
 }
 
-body {
-    background:
-        radial-gradient(1100px 520px at 12% -10%,
-            rgba(10, 86, 199, 0.35),
-            transparent 60%),
-        radial-gradient(900px 500px at 90% 0%,
-            rgba(0, 174, 251, 0.16),
-            transparent 55%),
-        var(--navy-950);
-    color: var(--ink);
-    font-family: "Manrope", system-ui, sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+.font-baloo {
+    font-family: var(--font-baloo), sans-serif;
+}
+
+.font-montserrat {
+    font-family: var(--font-montserrat), sans-serif;
+}
+
+.font-montserrat-italic {
+    font-family: var(--font-montserrat), sans-serif;
+    font-style: italic;
 }
