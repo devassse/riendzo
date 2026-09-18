@@ -222,9 +222,9 @@ export default function RiendzoFooter() {
 
                         <span>
                             Desenvolvido com <span className="text-red-400">♥</span> por{' '}
-                            <span className="font-medium text-[#0058b7]/65">
+                            <a href='https://joaodevsonmucavel.vercel.app/' target="_blank" className="font-medium text-[#0058b7]/65 hover:text-[#0058b7]" style={{textDecoration:"underline"}}>
                                 Keoma Software, Inc.
-                            </span>
+                            </a>
                         </span>
                     </div>
                 </div>
