@@ -5,7 +5,7 @@ export default function RiendzoFooter() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-[#f9f9f9] text-[#0058b7] border-t border-[#00aefb]/10 ">
+        <footer className="bg-[#f9f9f9] text-[#0058b7] border-t border-[#00aefb]/50 ">
             <div className="mx-auto max-w-6xl px-6 sm:px-10">
 
                 {/* Main footer */}
