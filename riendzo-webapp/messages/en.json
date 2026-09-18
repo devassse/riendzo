@@ -18,5 +18,34 @@
     "subtitle": "Everything That Is Mozambican, In One Place.",
     "description": "Riendzo combines content, discovery, practical information, tourism and artificial intelligence into a single digital experience.",
     "bottomNote": "Digital Platform for Discovering Mozambique"
+  },
+  "Music": {
+    "title": "Mozambican Music",
+    "subtitle": "Sounds, Stories and Artists of Mozambique",
+    "description": "Explore the rhythms, artists, albums and stories that have shaped the musical identity of Mozambique.",
+
+    "artists": {
+      "label": "ARTISTS",
+      "title": "Mozambican Artists",
+      "description": "Biographies, careers and works of Mozambican musicians."
+    },
+
+    "discographies": {
+      "label": "WORKS",
+      "title": "Albums & Discographies",
+      "description": "Explore albums, singles and the musical works of each artist."
+    },
+
+    "genres": {
+      "label": "RHYTHMS",
+      "title": "Genres & Rhythms",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house and more."
+    },
+
+    "history": {
+      "label": "MEMORY",
+      "title": "History of Music",
+      "description": "Discover the evolution of Mozambican music across generations."
+    }
   }
 }

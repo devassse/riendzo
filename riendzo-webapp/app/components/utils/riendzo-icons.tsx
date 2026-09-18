@@ -182,3 +182,26 @@ export const IconVoice = (p: SVGProps<SVGSVGElement>) => (
     <path d="M5 12a7 7 0 0 0 14 0M12 19v2" />
   </Icon>
 );
+
+export const IconDisc = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="2.5" />
+    <path d="M12 3v2" />
+  </Icon>
+);
+
+export const IconHistory = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M3 12a9 9 0 1 0 3-6.7" />
+    <path d="M3 4v5h5" />
+    <path d="M12 7v5l3 2" />
+  </Icon>
+);
+
+export const IconArtist = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <circle cx="12" cy="7" r="3" />
+    <path d="M5 21a7 7 0 0 1 14 0" />
+  </Icon>
+);
