@@ -10,8 +10,8 @@ export default async function Page() {
   return (
     <div className={pageStyles.page}>
       <RiendzoNavbar />
+      <RiendzoHistoryHero />
       <main>
-        <RiendzoHistoryHero />
         <MaisSobre />
         <Ancient />
         <Colonial />

@@ -28,6 +28,9 @@ import {
   IconCulture,
   IconPlane,
   IconVoice,
+  IconDisc,
+  IconHistory,
+  IconArtist
 } from './riendzo-icons';
 
 export type NavLink = {
@@ -57,16 +60,36 @@ export const NAV_SECTIONS: NavSection[] = [
     ],
   },
   {
-    id: 'musica',
-    emoji: '🎵',
-    label: 'Música',
-    links: [
-      { icon: <IconNote />, title: 'Marrabenta', desc: 'O ritmo que nasceu nos bairros de Lourenço Marques.', href: '#' },
-      { icon: <IconXylophone />, title: 'Timbila', desc: 'Xilofones Chopi, património imaterial da UNESCO.', href: '#' },
-      { icon: <IconWave />, title: 'Pandza & Afro-house', desc: 'Os sons da nova geração moçambicana.', href: '#' },
-      { icon: <IconStar />, title: 'Artistas em Destaque', desc: 'Biografias, playlists e novos lançamentos.', href: '#' },
-    ],
-  },
+  id: 'musica',
+  emoji: '🎵',
+  label: 'Música',
+  links: [
+    {
+      icon: <IconArtist />,
+      title: 'Artistas Moçambicanos',
+      desc: 'Biografias, carreiras, fotografias, álbuns e principais obras.',
+      href: '/musica',
+    },
+    {
+      icon: <IconDisc />,
+      title: 'Discografias',
+      desc: 'Explore álbuns, singles e lançamentos por artista e por época.',
+      href: '#',
+    },
+    {
+      icon: <IconNote />,
+      title: 'Géneros Musicais',
+      desc: 'Marrabenta, Pandza, Timbila, Xigubo, Afro-house e muito mais.',
+      href: '#',
+    },
+    {
+      icon: <IconHistory />,
+      title: 'Evolução Musical',
+      desc: 'Como os sons de Moçambique mudaram ao longo das gerações.',
+      href: '#',
+    },
+  ],
+},
   {
     id: 'gastronomia',
     emoji: '🍲',

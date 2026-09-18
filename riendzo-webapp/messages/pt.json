@@ -18,5 +18,34 @@
     "subtitle": "Tudo Que É Moçambicano, Em Um Só Lugar.",
     "description": "Riendzo combina conteúdo, descoberta, informação prática, turismo e inteligência artificial em uma única experiência digital.",
     "bottomNote": "Plataforma Digital para Descobrir Moçambique"
+  },
+  "Music": {
+    "title": "Música Moçambicana",
+    "subtitle": "Sons, Histórias e Artistas de Moçambique",
+    "description": "Explore os ritmos, artistas, álbuns e histórias que moldaram a identidade musical de Moçambique.",
+
+    "artists": {
+      "label": "ARTISTAS",
+      "title": "Artistas Moçambicanos",
+      "description": "Biografias, carreiras e obras dos músicos moçambicanos."
+    },
+
+    "discographies": {
+      "label": "OBRAS",
+      "title": "Álbuns & Discografias",
+      "description": "Explore álbuns, singles e as principais obras musicais de cada artista."
+    },
+
+    "genres": {
+      "label": "RITMOS",
+      "title": "Géneros & Ritmos",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house e muito mais."
+    },
+
+    "history": {
+      "label": "MEMÓRIA",
+      "title": "História da Música",
+      "description": "Descubra a evolução da música moçambicana através das gerações."
+    }
   }
 }

@@ -18,5 +18,36 @@
         "subtitle": "Yonthe ya Moçambique, okhala muthukumano mmoha.",
         "description": "Riendzo enavanha malove, okhaliherya osyaka, muthukumano wa maana, oloka ni maarupelo a makina muthukumano mmoha wa dijitali.",
         "bottomNote": "Pulatifomu ya Dijitali ya Osyaka Moçambique"
+    },
+
+
+    "Music": {
+    "title": "Risimu ra Mozambique",
+    "subtitle": "Mimpfumawulo, Matimu ni Vayimbeleri va Mozambique",
+    "description": "Kuma mimpfumawulo, vayimbeleri, ma-album ni matimu lama nga vumba ndhavuko wa risimu ra Mozambique.",
+
+    "artists": {
+      "label": "VAYIMBELERI",
+      "title": "Vayimbeleri va Mozambique",
+      "description": "Matimu ya vona, mintirho ni mintirho ya vutshila ya vayimbeleri va Mozambique."
+    },
+
+    "discographies": {
+      "label": "MINTIRHO",
+      "title": "Ma-album ni Discografia",
+      "description": "Kuma ma-album, ti-single ni mintirho ya risimu ya vayimbeleri."
+    },
+
+    "genres": {
+      "label": "MIMPfumawulo",
+      "title": "Tinxaka ta Risimu ni Mimpfumawulo",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni swin'wana."
+    },
+
+    "history": {
+      "label": "MATIMU",
+      "title": "Matimu ya Risimu",
+      "description": "Kuma ndlela leyi risimu ra Mozambique ri nga kula ha yona eka switukulwana swo hambana."
     }
+  }
 }
