@@ -343,9 +343,9 @@ export default function Ancient() {
     `}</style>
 
             <div className="flex flex-col items-center justify-center px-6 pt-20 text-center">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#02557a]/25 bg-[#00aefb]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#8cdcff]">
+                {/* <span className="inline-flex items-center gap-2 rounded-full border border-[#02557a]/25 bg-[#00aefb]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#8cdcff]">
                     Linha do tempo
-                </span>
+                </span> */}
                 <h1 className="mt-4 font-['Baloo_2'] text-6xl font-bold text-[#eaf2ff]">História Antiga</h1>
                 <p className="mt-1 max-w-xl font-['Manrope'] text-lg text-[#ffffff]">
                     Explore a rica história antiga de Moçambique.
