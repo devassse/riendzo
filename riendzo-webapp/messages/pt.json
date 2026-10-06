@@ -30,6 +30,26 @@
       "description": "Biografias, carreiras e obras dos músicos moçambicanos."
     },
 
+    "artistsSection": {
+      "title": "Artistas Moçambicanos",
+      "description": "Breves descrições dos artistas e músicos de Moçambique",
+      "songs": "Songs",
+      "viewProfile": "Ver Perfil",
+      "chips": {
+        "marrabenta": "Marrabenta",
+        "pandza": "Pandza",
+        "afroHouse": "Afro-House",
+        "hipHop": "Hip-Hop"
+      },
+      "filters": {
+        "all": "Todos",
+        "filters": "Filtros",
+        "results": "Resultados",
+        "search": "Pesquisar",
+        "noResults": "Sem Resultados"
+      }
+    },
+
     "discographies": {
       "label": "OBRAS",
       "title": "Álbuns & Discografias",

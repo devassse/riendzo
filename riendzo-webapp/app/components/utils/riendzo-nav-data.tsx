@@ -56,7 +56,7 @@ export const NAV_SECTIONS: NavSection[] = [
       { icon: <IconScroll />, title: 'Cronologia de Moçambique', desc: 'Dos reinos antigos à Independência nacional.', href: '/historia' },
       { icon: <IconCrown />, title: 'Reinos e Impérios', desc: 'Antes da ocupação dos exploradores Portugueses.', href: '/historia/antiga' },
       { icon: <IconLandmark />, title: 'Ocupação colonial', desc: 'Período de dominação portuguesa do território moçambicano.', href: '/historia/colonial' },
-      { icon: <IconFlag />, title: 'Luta pela Independência', desc: 'De Eduardo Mondlane à proclamação de 1975.', href: '/historia/moderna' },
+      { icon: <IconFlag />, title: 'História Moderna', desc: 'Um país rumo ao Progresso.', href: '/historia/moderna' },
     ],
   },
   {
@@ -65,28 +65,28 @@ export const NAV_SECTIONS: NavSection[] = [
   label: 'Música',
   links: [
     {
+      icon: <IconHistory />,
+      title: 'Evolução Musical',
+      desc: 'Como os sons de Moçambique mudaram ao longo das gerações.',
+      href: '/musica',
+    },
+    {
       icon: <IconArtist />,
       title: 'Artistas Moçambicanos',
       desc: 'Biografias, carreiras, fotografias, álbuns e principais obras.',
-      href: '/musica',
+      href: '/musica/artistas',
     },
     {
       icon: <IconDisc />,
       title: 'Discografias',
       desc: 'Explore álbuns, singles e lançamentos por artista e por época.',
-      href: '#',
+      href: '/musica/discografias',
     },
     {
       icon: <IconNote />,
       title: 'Géneros Musicais',
       desc: 'Marrabenta, Pandza, Timbila, Xigubo, Afro-house e muito mais.',
-      href: '#',
-    },
-    {
-      icon: <IconHistory />,
-      title: 'Evolução Musical',
-      desc: 'Como os sons de Moçambique mudaram ao longo das gerações.',
-      href: '#',
+      href: '/musica/generos',
     },
   ],
 },

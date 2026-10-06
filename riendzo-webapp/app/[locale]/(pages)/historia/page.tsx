@@ -5,6 +5,7 @@ import MaisSobre from '@/app/[locale]/(pages)/historia//antiga/mais-sobre';
 import Colonial from '@/app/[locale]/(pages)/historia/colonial/colonial';
 import Independent from '@/app/[locale]/(pages)/historia/moderna/independent';
 import RiendzoNavbar from '@/app/components/navbar-hero-footer/riendzo-navbar';
+import RiendzoFooter from '@/app/components/navbar-hero-footer/riendzo-footer';
 
 export default async function Page() {
   return (
@@ -17,6 +18,7 @@ export default async function Page() {
         <Colonial />
         <Independent />
       </main>
+      <RiendzoFooter/>
     </div>
   );
 }
