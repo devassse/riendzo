@@ -13,7 +13,7 @@
     "colonial": "Colonial Period",
     "modern": "Modern Mozambique"
   },
-  "Hero":{
+  "Hero": {
     "title": "History, Culture and Services",
     "subtitle": "Everything That Is Mozambican, In One Place.",
     "description": "Riendzo combines content, discovery, practical information, tourism and artificial intelligence into a single digital experience.",
@@ -28,6 +28,26 @@
       "label": "ARTISTS",
       "title": "Mozambican Artists",
       "description": "Biographies, careers and works of Mozambican musicians."
+    },
+
+    "artistsSection": {
+      "title": "Mozambican Artists",
+      "description": "Brief descriptions of artists and musicians from Mozambique",
+      "songs": "Songs",
+      "viewProfile": "View Profile",
+      "chips": {
+        "marrabenta": "Marrabenta",
+        "pandza": "Pandza",
+        "afroHouse": "Afro-House",
+        "hipHop": "Hip-Hop"
+      },
+      "filters": {
+        "all": "All",
+        "filters": "Filters",
+        "results": "Results",
+        "search": "Search",
+        "noResults": "No Results"
+      }
     },
 
     "discographies": {
