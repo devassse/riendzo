@@ -95,10 +95,10 @@ export const NAV_SECTIONS: NavSection[] = [
     emoji: '🍲',
     label: 'Gastronomia',
     links: [
-      { icon: <IconPot />, title: 'Receitas Tradicionais', desc: 'Matapa, xima e caril de amendoim.', href: '#' },
-      { icon: <IconShrimp />, title: 'Frutos do Mar', desc: 'Camarão à moçambicana e siri-siri da costa.', href: '#' },
-      { icon: <IconChili />, title: 'Piri-piri & Especiarias', desc: 'A herança viva da rota das especiarias.', href: '#' },
-      { icon: <IconGlass />, title: 'Bebidas Locais', desc: 'Tipo Tinto, 2M e sumos tropicais.', href: '#' },
+      { icon: <IconPot />, title: 'Receitas Tradicionais', desc: 'Matapa, xima e caril de amendoim.', href: '/gastronomia/receitas' },
+      { icon: <IconShrimp />, title: 'Frutos do Mar', desc: 'Camarão à moçambicana e siri-siri da costa.', href: '/gastronomia/mariscos' },
+      { icon: <IconChili />, title: 'Piri-piri & Especiarias', desc: 'A herança viva da rota das especiarias.', href: '/gastronomia/especiarias' },
+      { icon: <IconGlass />, title: 'Bebidas Locais', desc: 'Tipo Tinto, 2M e sumos tropicais.', href: '/gastronomia/bebidas' },
     ],
   },
   {
