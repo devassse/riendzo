@@ -67,5 +67,27 @@
       "title": "History of Music",
       "description": "Discover the evolution of Mozambican music across generations."
     }
+  },
+
+  "gastronomy": {
+    "title": "Gastronomy",
+    "description": "A taste of Mozambique: traditional dishes, local flavours, and culinary traditions from across the country",
+    "recipesSection": {
+      "title": "Traditional Recips",
+      "description": "A taste of Mozambique: traditional dishes, local flavours, and culinary traditions from across the country",
+      "seach": "Search",
+      "all": "All",
+      "categories": {
+        "seafood": "Seafood",
+        "meat": "Meat",
+        "curry": "Curry",
+        "vegetables": "Vegetables",
+        "sides": "Sides",
+        "snacks": "Snacks",
+        "sauces": "Sauces",
+        "desserts": "Desserts",
+        "drinks": "Drinks"
+      }
+    }
   }
 }

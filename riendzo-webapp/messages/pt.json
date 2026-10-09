@@ -67,5 +67,24 @@
       "title": "História da Música",
       "description": "Descubra a evolução da música moçambicana através das gerações."
     }
+  },
+  "gastronomy": {
+    "recipesSection": {
+      "title": "Receitas Tradicionais",
+      "description": "Description",
+      "seach": "Search",
+      "all": "All",
+      "categories": {
+        "seafood": "Seafood",
+        "meat": "Meat",
+        "curry": "Curry",
+        "vegetables": "Vegetables",
+        "sides": "Sides",
+        "snacks": "Snacks",
+        "sauces": "Sauces",
+        "dessersts": "Desserts",
+        "drinks": "Drinks"
+      }
+    }
   }
 }
