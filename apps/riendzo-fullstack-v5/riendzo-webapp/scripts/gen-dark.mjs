@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+/**
+ * Generates app/css/dark.css: the dark version of every colour written as a Tailwind class in the code
+ * (bg-[#f3f6fb], text-[#0b1220], border-[#0b1220]/10, hover:bg-[#eef2f8], from-[#…]…).
+ * It is applied when <html data-theme="dark">. Run again after adding new colours:  npm run theme:dark
+ */
+import fs from "node:fs";
+import path from "node:path";
+
+const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..");
+const files = [];
+(function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+        const p = path.join(d, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (/\.(tsx|ts|jsx|js)$/.test(e.name)) files.push(p);
+    }
+})(path.join(ROOT, "app"));
+
+const RE = /(?<![\w\-\[\]#])((?:[a-z0-9-]+:)*)(bg|text|border|from|via|to|ring|fill|stroke)-(?:\[(#[0-9a-fA-F]{3,8})\]|(white))(?:\/(\d{1,3}))?(?![\w-])/g;
+const found = new Map();
+for (const f of files) {
+    const src = fs.readFileSync(f, "utf8");
+    for (const m of src.matchAll(RE)) {
+        const [full, variants, util, hex, white, alpha] = m;
+        if (white && util !== "bg") continue; // only bg-white is a "light surface"; text-white stays white
+        if (white && alpha) continue; // translucent white = glass over dark: keep
+        found.set(full, { variants, util, color: hex ?? "#ffffff", alpha: alpha ? Number(alpha) / 100 : undefined, isWhite: Boolean(white) });
+    }
+}
+
+/* ---- colour maths ---- */
+function parse(hex) {
+    let h = hex.slice(1);
+    if (h.length === 3 || h.length === 4) h = [...h].map((c) => c + c).join("");
+    const n = (i) => parseInt(h.slice(i, i + 2), 16);
+    return { r: n(0), g: n(2), b: n(4), a: h.length === 8 ? n(6) / 255 : 1 };
+}
+function toHsl({ r, g, b }) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+    const d = max - min;
+    if (!d) return { h: 0, s: 0, l };
+    const s = d / (1 - Math.abs(2 * l - 1));
+    let h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return { h: (h * 60 + 360) % 360, s, l };
+}
+const hsl = (h, s, l, a) => `hsl(${Math.round(h)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%${a !== undefined && a < 1 ? ` / ${+a.toFixed(3)}` : ""})`;
+
+/** Dark equivalent of a colour used for `kind` (surface | text | border); null = keep it as is. */
+function dark(kind, c, alpha) {
+    const { h, s, l } = toHsl(c);
+    const a = alpha ?? c.a;
+    if (kind === "surface") {
+        if (l < 0.8) return null; // brand colours, dark sections, mid tones
+        return hsl(h, Math.min(s, 0.6) * 0.55, 0.095 + (1 - l) * 0.6, a);
+    }
+    if (kind === "text") {
+        if (l >= 0.78) return null; // already light (text on dark sections)
+        if (s > 0.45 && l > 0.12) return hsl(h, Math.min(1, s), Math.min(0.75, Math.max(0.62, l + 0.3)), a); // brand accents get lighter
+        return hsl(h, s * 0.3, 0.95 - 0.55 * Math.min(l, 0.5), a); // neutrals: inverted, keeping hierarchy
+    }
+    if (kind === "border") {
+        if (l >= 0.78) return `rgba(255,255,255,${(0.12 * (alpha ?? 1)).toFixed(3)})`;
+        if (l <= 0.4 && s < 0.5) return `rgba(255,255,255,${Math.min(0.28, 0.25 * (alpha ?? 1) + 0.05).toFixed(3)})`;
+        return null;
+    }
+    return null;
+}
+
+const MEDIA = { sm: 640, md: 768, lg: 1024, xl: 1280, "2xl": 1536 };
+const STATES = { hover: ":hover", focus: ":focus", "focus-visible": ":focus-visible", "focus-within": ":focus-within", active: ":active", disabled: ":disabled" };
+const esc = (s) => s.replace(/([^a-zA-Z0-9_-])/g, "\\$1");
+
+const base = [], states = [], responsive = {};
+for (const [cls, { variants, util, color, alpha, isWhite }] of found) {
+    const vs = variants.split(":").filter(Boolean);
+    if (vs.some((v) => !(v in MEDIA) && !(v in STATES))) continue; // group-*, peer-*, aria-*… are not handled
+    const c = parse(color);
+    const kind = util === "bg" || util === "from" || util === "via" || util === "to" ? "surface" : util === "border" ? "border" : util === "text" || util === "fill" || util === "stroke" || util === "ring" ? "text" : null;
+    const value = isWhite ? "hsl(222 40% 11%)" : dark(kind, c, alpha);
+    if (!value) continue;
+    const decl = { bg: `background-color:${value}`, text: `color:${value}`, border: `border-color:${value}`, from: `--tw-gradient-from:${value}`, via: `--tw-gradient-via:${value}`, to: `--tw-gradient-to:${value}`, ring: `--tw-ring-color:${value}`, fill: `fill:${value}`, stroke: `stroke:${value}` }[util];
+    const state = vs.filter((v) => v in STATES).map((v) => STATES[v]).join("");
+    const media = vs.find((v) => v in MEDIA);
+    const rule = `html[data-theme="dark"] .${esc(cls)}${state}{${decl}}`;
+    if (media) (responsive[media] ??= []).push(rule);
+    else (state ? states : base).push(rule);
+}
+
+const header = `/* GENERATED by scripts/gen-dark.mjs (npm run theme:dark). Do not edit by hand.
+   Dark theme: <html data-theme="dark">. ${base.length + states.length + Object.values(responsive).flat().length} rules. */
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"] input, html[data-theme="dark"] textarea, html[data-theme="dark"] select { color-scheme: dark; }
+html[data-theme="dark"] input::placeholder, html[data-theme="dark"] textarea::placeholder { color: rgba(200,212,235,0.45); }
+html[data-theme="dark"] .rich, html[data-theme="dark"] .rich p, html[data-theme="dark"] .rich li { color: #d3dcee; }
+html[data-theme="dark"] .rich h1, html[data-theme="dark"] .rich h2, html[data-theme="dark"] .rich h3, html[data-theme="dark"] .rich strong { color: #f1f5ff; }
+html[data-theme="dark"] .rich a { color: #6db3ff; }
+html[data-theme="dark"] iframe { color-scheme: normal; }
+`;
+const out = [header, ...base, ...states];
+for (const [k, px] of Object.entries(MEDIA)) if (responsive[k]) out.push(`@media (min-width:${px}px){`, ...responsive[k], "}");
+fs.writeFileSync(path.join(ROOT, "app/css/dark.css"), out.join("\n") + "\n");
+console.log(`dark.css: ${found.size} colour classes found, ${base.length + states.length + Object.values(responsive).flat().length} rules written`);

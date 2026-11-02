@@ -1,0 +1,46 @@
+# Desenvolvimento:  docker compose up -d db      (só a base de dados; a API corre com npm run dev)
+# Tudo em Docker:   docker compose up -d --build (base de dados + API)
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: riendzo-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: riendzo
+      POSTGRES_PASSWORD: riendzo
+      POSTGRES_DB: riendzo
+    ports:
+      - "5433:5432"
+    volumes:
+      - riendzo-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riendzo -d riendzo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    container_name: riendzo-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://riendzo:riendzo@localhost:5432/riendzo?schema=public
+      PORT: 4000
+      NODE_ENV: production
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env (32+ caracteres)}
+      SERVICE_API_KEY: ${SERVICE_API_KEY:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?defina ADMIN_PASSWORD no .env}
+      UPLOADS_DIR: /data/uploads
+    ports:
+      - "4000:4000"
+    volumes:
+      - riendzo-uploads:/data/uploads
+
+volumes:
+  riendzo-pgdata:
+  riendzo-uploads:

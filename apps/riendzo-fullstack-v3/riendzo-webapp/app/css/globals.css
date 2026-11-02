@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Baloo 2';
+  src: url('/fonts/baloo2/baloo2_variable_font_wght.ttf') format('truetype');
+  font-weight: 400 800; /* Baloo 2's supported wght range */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Montserrat — variable, normal */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/montserrat_variable_font_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Montserrat's supported wght range */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Montserrat — variable, italic */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/montserrat_italic_variable_font_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-baloo: 'Baloo 2', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* TODO: Activate this Styles for DARK MODE ENABLEMENT */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+.scroll-down {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+}
+
+.scroll-down svg {
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    font-family: var(--font-baloo);
+}
+/* ---------- Rich text (BackOffice editor output) ---------- */
+.rich { font-size: 0.95rem; line-height: 1.75; color: #1b2433; overflow-wrap: anywhere; }
+.rich > * + * { margin-top: 0.9em; }
+.rich h2 { font-family: var(--font-baloo, inherit); font-size: 1.35rem; font-weight: 700; line-height: 1.25; margin-top: 1.4em; color: #0b1220; }
+.rich h3, .rich h4 { font-family: var(--font-baloo, inherit); font-size: 1.1rem; font-weight: 600; margin-top: 1.2em; color: #0b1220; }
+.rich ul, .rich ol { padding-left: 1.4rem; }
+.rich ul { list-style: disc; }
+.rich ol { list-style: decimal; }
+.rich li + li { margin-top: 0.3em; }
+.rich a { color: #0054b5; text-decoration: underline; text-underline-offset: 2px; }
+.rich blockquote { border-left: 4px solid #01adfb; padding: 0.2rem 0 0.2rem 1rem; color: #3c4658; font-style: italic; }
+.rich img { max-width: 100%; height: auto; border-radius: 1rem; }
+.rich figure { margin-left: 0; margin-right: 0; }
+.rich figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: #5b6478; text-align: center; }
+.rich iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 1rem; background: #0b1220; }
+.rich hr { border: 0; border-top: 1px solid #0b122018; }
+.rich code, .rich pre { background: #eef2f8; border-radius: 0.4rem; padding: 0.1rem 0.35rem; font-size: 0.85em; }
+
+/* ---------- Music: equalizer + slow spin ---------- */
+@keyframes eq { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.eq-bar { transform-origin: bottom; animation: eq 1.1s ease-in-out infinite; }
+.spin-slow { animation: spin-slow 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .eq-bar, .spin-slow { animation: none; } }

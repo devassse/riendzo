@@ -1,0 +1,254 @@
+// Riendzo API — modelo de dados (PostgreSQL)
+//
+// Conteúdo: cada entrada de cada menu (praias, receitas, artistas, bancos…) é uma linha
+// em `items`. Os campos usados para filtrar/ordenar/pesquisar são colunas; o resto do
+// conteúdo (ofertas, blocos, álbuns, horários…) fica em `data` (JSONB), exatamente no
+// formato que o frontend já usa (CatalogItem / Recipe / Artist).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CollectionKind {
+  catalog
+  recipe
+  artist
+}
+
+enum ItemStatus {
+  published
+  draft
+}
+
+enum Role {
+  admin
+  editor
+  owner
+}
+
+enum MemberStatus {
+  active
+  suspended
+}
+
+/// Grupos do menu (História, Música, Gastronomia…)
+model Group {
+  id          String       @id
+  label       String
+  emoji       String
+  color       String
+  publicPath  String       @map("public_path")
+  position    Int          @default(0)
+  collections Collection[]
+
+  @@map("groups")
+}
+
+/// Definição de cada menu de conteúdo (equivale a lib/cms/collections.ts)
+model Collection {
+  id           String         @id
+  kind         CollectionKind
+  groupId      String         @map("group_id")
+  group        Group          @relation(fields: [groupId], references: [id])
+  label        String
+  singular     String
+  description  String
+  publicPath   String         @map("public_path")
+  color        String
+  tagList      String?        @map("tag_list")
+  categoryList String?        @map("category_list")
+  tagLabel     String?        @map("tag_label")
+  contact      Boolean        @default(false)
+  featured     Boolean        @default(false)
+  directory    Boolean        @default(false)
+  offers       Json?
+  position     Int            @default(0)
+  items        Item[]
+
+  @@map("collections")
+}
+
+/// Uma entrada de conteúdo (praia, receita, artista, banco…)
+model Item {
+  id           String     @id @default(cuid())
+  collectionId String     @map("collection_id")
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  slug         String
+  title        String
+  tag          String     @default("")
+  categories   String[]   @default([])
+  status       ItemStatus @default(published)
+  /// Anúncio pago / destaque (aparece primeiro, "Patrocinado")
+  featured     Boolean    @default(false)
+  /// "Artista da semana"
+  featuredWeek Boolean    @default(false) @map("featured_week")
+  /// Ordem de apresentação (menor = primeiro)
+  position     Int        @default(0)
+  summary      String     @default("")
+  keywords     String[]   @default([])
+  /// Texto normalizado (minúsculas, sem acentos) usado na pesquisa
+  searchText   String     @default("") @map("search_text")
+  /// Conteúdo completo no formato do frontend (sem slug/status/featured/updatedAt)
+  data         Json
+  createdAt    DateTime   @default(now()) @map("created_at")
+  /// Só preenchido quando o conteúdo é editado (como no BackOffice original)
+  updatedAt    DateTime?  @map("updated_at")
+
+  @@unique([collectionId, slug])
+  @@index([collectionId, status, position])
+  @@map("items")
+}
+
+/// Listas genéricas (províncias, estilos musicais, tipos de alojamento…)
+model List {
+  id          String      @id
+  label       String
+  description String
+  groupName   String      @map("group_name")
+  entries     ListEntry[]
+
+  @@map("lists")
+}
+
+model ListEntry {
+  id       Int     @id @default(autoincrement())
+  listId   String  @map("list_id")
+  list     List    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  value    String
+  label    String
+  color    String?
+  position Int     @default(0)
+
+  @@unique([listId, value])
+  @@map("list_entries")
+}
+
+/// Marcas "Em breve" nos menus. Chave = id da secção ("turismo") ou href ("/turismo/guias").
+/// A presença da linha significa "em breve".
+model MenuFlag {
+  key String @id
+
+  @@map("menu_flags")
+}
+
+/// Membros do Riendzo AI (registo público)
+model Member {
+  id           String       @id @default(uuid())
+  firstName    String       @map("first_name")
+  lastName     String       @map("last_name")
+  email        String?      @unique
+  /// só dígitos, com indicativo (258…)
+  phone        String?      @unique
+  passwordHash String       @map("password_hash")
+  avatar       String?
+  bio          String?
+  province     String?
+  birthYear    Int?         @map("birth_year")
+  languages    String[]     @default([])
+  interests    String[]     @default([])
+  travelStyle  String?      @map("travel_style")
+  status       MemberStatus @default(active)
+  createdAt    DateTime     @default(now()) @map("created_at")
+  favorites    Favorite[]
+
+  @@map("members")
+}
+
+model Favorite {
+  memberId   String   @map("member_id")
+  member     Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  collection String
+  slug       String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@id([memberId, collection, slug])
+  @@index([memberId, createdAt])
+  @@map("favorites")
+}
+
+/// Utilizadores do BackOffice (além da conta principal definida no .env)
+model AdminUser {
+  id           String    @id @default(uuid())
+  username     String    @unique
+  name         String
+  role         Role
+  /// [{ "collection": "services-banks", "slug": "bci" }] — só para role = owner
+  ownerOf      Json      @default("[]") @map("owner_of")
+  /// Para notificações e recuperação de palavra-passe
+  email        String?   @unique
+  /// só dígitos, com indicativo (258…)
+  phone        String?
+  /// /api/media/<ano>/<ficheiro>
+  avatar       String?
+  passwordHash String    @map("password_hash")
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  lastLogin    DateTime? @map("last_login")
+
+  @@map("admin_users")
+}
+
+/// Mensagens enviadas pelo formulário de contacto
+model InboxMessage {
+  id        String   @id @default(uuid())
+  name      String
+  contact   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("inbox_messages")
+}
+
+/// Registo de atividade do BackOffice
+model Activity {
+  id         Int      @id @default(autoincrement())
+  at         DateTime @default(now())
+  userName   String   @map("user_name")
+  action     String
+  collection String?
+  /// Para as notificações poderem abrir o registo
+  slug       String?
+  title      String?
+
+  @@map("activity")
+}
+
+/// Ficheiros carregados (imagens e áudio). O ficheiro fica em UPLOADS_DIR/<key>.
+model Media {
+  id        String   @id @default(uuid())
+  /// "2026/ab12cd….webp"
+  key       String   @unique
+  name      String
+  size      Int
+  mime      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("media")
+}
+
+/// Definições editáveis no BackOffice: "home" (6 experiências), "history_theme" (cores da Cronologia), "profile_env" (conta principal)
+model Setting {
+  key   String @id
+  value Json
+
+  @@map("settings")
+}
+
+/// Recuperação de palavra-passe: só se guarda o hash do token (SHA-256)
+model PasswordReset {
+  id        String   @id @default(uuid())
+  /// "member" | "staff"
+  kind      String
+  accountId String   @map("account_id")
+  tokenHash String   @unique @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+
+  @@index([kind, accountId])
+  @@map("password_resets")
+}
