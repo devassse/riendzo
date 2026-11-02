@@ -1,0 +1,105 @@
+{
+  "Navigation": {
+    "home": "Mwinjiro",
+    "history": "Mbiri",
+    "music": "Nyimbo",
+    "tourism": "Ulendo",
+    "gastronomy": "Kudya",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "Mbiri ya Moçambique",
+    "ancient": "Mbiri ya Kale",
+    "colonial": "Nthawi ya Ukoloni",
+    "modern": "Moçambique ya Lero",
+    "sections": {
+      "realms": {
+        "title": "Maufumu ndi Maulamuliro",
+        "subtitle": "Zombo zisanafike, kunalipo kale maufumu ndi malo akulu a malonda."
+      },
+      "ancient": {
+        "title": "Mbiri ya Kale",
+        "subtitle": "Dziwani mbiri ya kale ya Moçambique."
+      },
+      "colonial": {
+        "eyebrow": "Mbiri ya ukoloni · 1505 - 1975",
+        "title": "Mbiri ya Ukoloni",
+        "subtitle": "Zaka 450 za ulamuliro wa Chipwitikizi ku Moçambique.",
+        "footer": "Mapeto a mbiri — 25 Juni 1975"
+      },
+      "independent": {
+        "title": "MBIRI YAULERE",
+        "subtitle": "Dziwani mbiri yaulere ya Moçambique — kuyambira 1975 mpaka lero.",
+        "footer": "Moçambique — mbiri yomwe ikupitirira"
+      }
+    }
+  },
+  "Hero": {
+    "title": "Mbiri, Chikhalidwe ndi Ntchito",
+    "subtitle": "Zonse za Moçambique, pamalo amodzi.",
+    "description": "Riendzo isanganiza nkhani, kupeza zinthu zatsopano, uthenga wothandiza, ulendo ndi nzeru zopangidwa ndi makompyuta pamodzi.",
+    "bottomNote": "Pulatifomu ya Dijito Yodziwira Moçambique"
+  },
+  "Music": {
+    "title": "Risimu ra Mozambique",
+    "subtitle": "Mimpfumawulo, Matimu ni Vayimbeleri va Mozambique",
+    "description": "Kuma mimpfumawulo, vayimbeleri, ma-album ni matimu lama nga vumba ndhavuko wa risimu ra Mozambique.",
+    "artists": {
+      "label": "VAYIMBELERI",
+      "title": "Vayimbeleri va Mozambique",
+      "description": "Matimu ya vona, mintirho ni mintirho ya vutshila ya vayimbeleri va Mozambique."
+    },
+    "discographies": {
+      "label": "MINTIRHO",
+      "title": "Ma-album ni Discografia",
+      "description": "Kuma ma-album, ti-single ni mintirho ya risimu ya vayimbeleri."
+    },
+    "genres": {
+      "label": "MIMPfumawulo",
+      "title": "Tinxaka ta Risimu ni Mimpfumawulo",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni swin'wana."
+    },
+    "history": {
+      "label": "MATIMU",
+      "title": "Matimu ya Risimu",
+      "description": "Kuma ndlela leyi risimu ra Mozambique ri nga kula ha yona eka switukulwana swo hambana."
+    }
+  },
+  "Home": {
+    "explore": {
+      "eyebrow": "Fufuzani Moçambique",
+      "title": "Zochitika {count} zosaphonya",
+      "subtitle": "Kuyambira ku nsomba zazikulu za ku Tofo mpaka zilumba zakale kumpoto, zifukwa zabwino zoyendera Moçambique — pamalo amodzi.",
+      "readMore": "Werengani zambiri"
+    },
+    "history": {
+      "title": "Mbiri Yachidule",
+      "subtitle": "Kuyambira Nyengo ya Mwala mpaka Moçambique ya lero, m'mitu {count} — chidule chachangu.",
+      "readMore": "Werengani zambiri"
+    },
+    "services": {
+      "eyebrow": "Kwa nzika",
+      "title": "Ntchito za Boma",
+      "description": "Zikalata, thanzi, maphunziro ndi misonkho — pezani ntchito za boma ndi uthenga wothandiza.",
+      "directions": "Njira",
+      "open": "Tsegulani",
+      "seeAll": "Onani zonse",
+      "exploreAll": "Onani Ntchito zonse za Boma",
+      "open24h": "Maola 24",
+      "emergencyEyebrow": "Zadzidzidzi",
+      "emergencyTitle": "Mukufuna thandizo tsopano?",
+      "emergencyAll": "Onani manambala onse",
+      "emergencyNote": "Manambala angasinthe. Tsimikizirani ndi njira zovomerezeka.",
+      "call": "Imbani"
+    },
+    "entertainment": {
+      "title": "Zosangalatsa",
+      "description": "Dziwani zoti muchite ku Moçambique, kuchokera ku makonsati mpaka maphwando ndi mafilimu.",
+      "explore": "Onani"
+    }
+  },
+  "Topbar": {
+    "search": "Sakani…",
+    "searchButton": "Sakani"
+  }
+}

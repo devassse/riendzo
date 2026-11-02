@@ -1,0 +1,105 @@
+{
+  "Navigation": {
+    "home": "kusunguleni",
+    "history": "Matimu",
+    "music": "Vuyimbeleri",
+    "tourism": "Vutleketli",
+    "gastronomy": "Swakudya",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "Matimu ya Mozambique",
+    "ancient": "Matimu ya khale",
+    "colonial": "Nkarhi wa vukoloni",
+    "modern": "Mozambique wa manguva lawa",
+    "sections": {
+      "realms": {
+        "title": "Tihosi ni Mimfumo",
+        "subtitle": "Ku nga se ta tikharavela, ku sunguleke ku va ni mimfumo, tihosi ni tindhawu ta vuhaxi."
+      },
+      "ancient": {
+        "title": "Matimu ya khale",
+        "subtitle": "Lavisisa matimu ya khale ya Mozambique."
+      },
+      "colonial": {
+        "eyebrow": "Rhijista ya vukoloni · 1505 - 1975",
+        "title": "Matimu ya Vukoloni",
+        "subtitle": "Malembe ya 450 ya vulawuri bya Potugali eMozambique.",
+        "footer": "Makumu ya rhijista — 25 wa Juni 1975"
+      },
+      "independent": {
+        "title": "MATIMU YA XIVUMBA",
+        "subtitle": "Lavisisa matimu ya ntshunxeko ya Mozambique — ku suka hi 1975 ku ya namuntlha.",
+        "footer": "Mozambique — matimu lama ha tshamaka"
+      }
+    }
+  },
+  "Hero": {
+    "title": "Matimu, Ndhavuko ni Vukorhokeri",
+    "subtitle": " Hinkwaswo Swa Ximozambikani, Eka Ndhawu Yin'we.",
+    "description": "Riendzo yi hlanganisa vundzeni, ku kumiwa ka swilo leswintshwa, mahungu ya nkoka, vutleketli ni vutlhari bya ximatsi eka ntokoto wun’we wa xidijitali.",
+    "bottomNote": "Pulatifomo ya Xidijitali yo Vona Mozambique"
+  },
+  "Music": {
+    "title": "Risimu ra Mozambique",
+    "subtitle": "Mimpfumawulo, Matimu ni Vayimbeleri va Mozambique",
+    "description": "Kuma mimpfumawulo, vayimbeleri, ma-album ni matimu lama nga vumba ndhavuko wa risimu ra Mozambique.",
+    "artists": {
+      "label": "VAYIMBELERI",
+      "title": "Vayimbeleri va Mozambique",
+      "description": "Matimu ya vona, mintirho ni mintirho ya vutshila ya vayimbeleri va Mozambique."
+    },
+    "discographies": {
+      "label": "MINTIRHO",
+      "title": "Ma-album ni Discografia",
+      "description": "Kuma ma-album, ti-single ni mintirho ya risimu ya vayimbeleri."
+    },
+    "genres": {
+      "label": "MIMPfumawulo",
+      "title": "Tinxaka ta Risimu ni Mimpfumawulo",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni swin'wana."
+    },
+    "history": {
+      "label": "MATIMU",
+      "title": "Matimu ya Risimu",
+      "description": "Kuma ndlela leyi risimu ra Mozambique ri nga kula ha yona eka switukulwana swo hambana."
+    }
+  },
+  "Home": {
+    "explore": {
+      "eyebrow": "Lavisisa Mozambique",
+      "title": "Swiphiqo swa {count} leswi nga fanelangiki ku tshikiwa",
+      "subtitle": "Ku sukela eka tinhlampfi ta Tofo ku ya eka swihlala swa khale emantshwa, swivangelo swa kahle swo endzela Mozambique — swi hlanganisiwe endhawini yin'we.",
+      "readMore": "Hlaya swo tala"
+    },
+    "history": {
+      "title": "Matimu yo Koma",
+      "subtitle": "Ku suka eka Nkarhi wa Ribye ku ya eka Mozambique ya namuntlha, eka tindzima ta {count} — nkomiso wo hatlisa.",
+      "readMore": "Hlaya swo tala"
+    },
+    "services": {
+      "eyebrow": "Eka muhlaseri",
+      "title": "Vukorhokeri bya Mfumo",
+      "description": "Tidokumente, rihanyo, dyondzo ni mithelo — kuma vukorhokeri bya mfumo, hlaya mahungu ya nkoka u kuma ndlela.",
+      "directions": "Ndlela",
+      "open": "Pfula",
+      "seeAll": "Vona hinkwabyo",
+      "exploreAll": "Lavisisa Vukorhokeri hinkwabyo",
+      "open24h": "Tiawara ta 24",
+      "emergencyEyebrow": "Swihatla",
+      "emergencyTitle": "U lava mpfuno sweswi?",
+      "emergencyAll": "Vona tinomboro hinkwato",
+      "emergencyNote": "Tinomboro ti nga hundzuka hi ndhawu kumbe hi nkarhi. Tiyisisa eka tindlela ta ximfumo.",
+      "call": "Tshama"
+    },
+    "entertainment": {
+      "title": "Ntsako",
+      "description": "Kuma leswi u nga swi endla eMozambique, ku sukela eka swiyimbelelo ku ya eka mintlango ni tifilimi.",
+      "explore": "Lavisisa"
+    }
+  },
+  "Topbar": {
+    "search": "Lavisisa…",
+    "searchButton": "Lavisisa"
+  }
+}

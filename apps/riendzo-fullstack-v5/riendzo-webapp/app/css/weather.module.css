@@ -1,0 +1,172 @@
+/* Hero weather card: compact and translucent so the hero video stays visible */
+.card {
+  --wx-bg: #2b8fb4;
+  width: min(236px, 100%);
+  margin: -34px auto 14px;
+  padding: 11px 16px 10px;
+  border-radius: 16px;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(28, 127, 166, 0.5) 0%, rgba(46, 152, 189, 0.42) 55%, rgba(70, 174, 203, 0.36) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  backdrop-filter: blur(8px) saturate(1.2);
+  box-shadow: 0 10px 26px -14px rgba(0, 30, 60, 0.55);
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.temp {
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 30, 60, 0.25));
+}
+.card .cond,
+.card .range {
+  margin: 0;
+  max-width: none;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.card .cond { margin-top: 6px; font-size: 16px; }
+.card .range { font-size: 13px; }
+.card .place {
+  margin: 4px 0 0;
+  max-width: none;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+a.link { display: block; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+a.link:hover, a.link:focus-visible { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(0, 30, 60, 0.65); }
+a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Reserves the space while loading (no layout jump) */
+.skeleton {
+  min-height: 128px;
+  background: linear-gradient(135deg, rgba(28, 127, 166, 0.35), rgba(70, 174, 203, 0.35));
+  animation: wxPulse 1.4s ease-in-out infinite;
+}
+@keyframes wxPulse { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+/* Fixed utility bar above the header */
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  height: 34px;
+  background: #050b1a;
+  border-bottom: 1px solid #0f1b3a;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+.inner {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+}
+.weather {
+  display: inline-flex;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.weather:hover, .weather:focus-visible { color: #00aefb; }
+.weatherIcon { color: #f5b942; --wx-bg: #050b1a; }
+.right a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.right a:hover,
+.right a:focus-visible { color: #00aefb; }
+/* Search in the top bar */
+.search {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: border-color 0.2s, background 0.2s;
+}
+.search:focus-within { border-color: #00aefb; background: rgba(255, 255, 255, 0.12); }
+.search input {
+  width: 190px;
+  height: 100%;
+  padding: 0 4px 0 12px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 12.5px;
+}
+.search input::placeholder { color: rgba(255, 255, 255, 0.55); }
+.search button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+.search button:hover { color: #00aefb; }
+/* @media (max-width: 640px) {
+  .search input { width: 96px; }
+  .inner { padding: 0 12px; }
+  .date { display: none; }
+  .left { gap: 10px; }
+  .right { gap: 14px; }
+} */
+/* Phones: the bar breaks into two lines (date + weather, then search + theme + social networks)
+   instead of overflowing, and it scrolls away with the page so the header can stick to the top alone. */
+@media (max-width: 841px) {
+  .bar {
+    position: static;
+    height: auto;
+  }
+  .inner {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 6px 12px;
+  }
+  .left,
+  .right {
+    width: 100%;
+    flex-wrap: wrap;
+    white-space: normal;
+    gap: 6px 14px;
+    font-size: 12px;
+  }
+  .right { justify-content: space-between; flex-wrap: nowrap; gap: 10px; }
+  .search { flex: 1 1 auto; min-width: 0; }
+  .search input { width: 100%; min-width: 0; }
+}

@@ -1,0 +1,102 @@
+/* Hero weather card */
+.card {
+  --wx-bg: #2b8fb4;
+  width: min(300px, 100%);
+  margin: 0 auto 22px;
+  padding: 16px 22px 14px;
+  border-radius: 18px;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(135deg, #1c7fa6 0%, #2e98bd 55%, #46aecb 100%);
+  box-shadow: 0 14px 34px -14px rgba(0, 40, 70, 0.6);
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.temp {
+  font-size: 76px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 10px rgba(0, 30, 60, 0.3));
+}
+.card .cond,
+.card .range {
+  margin: 0;
+  max-width: none;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.card .cond { margin-top: 10px; font-size: 22px; }
+.card .range { font-size: 18px; }
+.card .place {
+  margin: 6px 0 0;
+  max-width: none;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+/* Reserves the space while loading (no layout jump) */
+.skeleton {
+  min-height: 168px;
+  background: linear-gradient(135deg, rgba(28, 127, 166, 0.35), rgba(70, 174, 203, 0.35));
+  animation: wxPulse 1.4s ease-in-out infinite;
+}
+@keyframes wxPulse { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+/* Fixed utility bar above the header */
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  height: 34px;
+  background: #050b1a;
+  border-bottom: 1px solid #0f1b3a;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+.inner {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+}
+.weather {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.weatherIcon { color: #f5b942; --wx-bg: #050b1a; }
+.right a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.right a:hover,
+.right a:focus-visible { color: #00aefb; }
+@media (max-width: 640px) {
+  .inner { padding: 0 12px; }
+  .date { display: none; }
+  .left { gap: 10px; }
+  .right { gap: 14px; }
+}
