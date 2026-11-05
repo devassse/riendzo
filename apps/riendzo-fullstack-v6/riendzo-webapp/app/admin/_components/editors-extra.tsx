@@ -203,9 +203,34 @@ export function VideosEditor({ value, onChange, creators }: { value: CatalogVide
 /* ----------------------------------- Contacts ----------------------------------- */
 
 export function ContactEditor({ value, onChange, errors }: { value: CatalogContact; onChange: (v: CatalogContact) => void; errors: Record<string, string> }) {
-    const f = (k: keyof CatalogContact, label: string, ph: string, hint?: string) => (
-        <Field label={label} error={errors[k]} hint={hint}><input className={inputClass} value={value[k] ?? ""} placeholder={ph} onChange={(e) => onChange({ ...value, [k]: e.target.value })} /></Field>
-    );
+    // const f = (k: keyof CatalogContact, label: string, ph: string, hint?: string) => (
+    //     <Field label={label} error={errors[k]} hint={hint}><input className={inputClass} value={value[k] ?? ""} placeholder={ph} onChange={(e) => onChange({ ...value, [k]: e.target.value })} /></Field>
+    // );
+    type ContactTextField =
+    | "phone"
+    | "whatsapp"
+    | "email"
+    | "website"
+    | "address"
+    | "mapUrl"
+    | "facebook"
+    | "instagram";
+
+const f = (
+    k: ContactTextField,
+    label: string,
+    ph: string,
+    hint?: string
+) => (
+    <Field label={label} error={errors[k]} hint={hint}>
+        <input
+            className={inputClass}
+            value={value[k] ?? ""}
+            placeholder={ph}
+            onChange={(e) => onChange({ ...value, [k]: e.target.value })}
+        />
+    </Field>
+);
     return (
         <div className="grid gap-4 sm:grid-cols-2">
             {f("phone", "Telefone", "+258 84 123 4567")}
