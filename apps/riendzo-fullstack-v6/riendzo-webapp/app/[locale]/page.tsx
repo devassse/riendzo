@@ -14,8 +14,8 @@ export default function Page() {
       <RiendzoHero />
       <main>
         <Pleasure />
-        <BriefHistory />
         <PublicServices />
+        <BriefHistory />
         <Entretainment />
       </main>
       <RiendzoFooter />
