@@ -1,0 +1,96 @@
+# Produção:  cp .env.example .env  (preencher)  →  ./deploy.sh
+# Serviços: db (PostgreSQL) · api (Express/Prisma) · web (Next.js + BackOffice) · caddy (HTTPS automático)
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-riendzo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      POSTGRES_DB: ${POSTGRES_DB:-riendzo}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./riendzo-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      TRUST_PROXY: 1
+      DATABASE_URL: postgresql://${POSTGRES_USER:-riendzo}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-riendzo}?schema=public
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env (32+ caracteres)}
+      SERVICE_API_KEY: ${SERVICE_API_KEY:?defina SERVICE_API_KEY no .env (24+ caracteres)}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?defina ADMIN_PASSWORD no .env}
+      CORS_ORIGINS: ${SITE_URL:?defina SITE_URL no .env}
+      SITE_URL: ${SITE_URL}
+      UPLOADS_DIR: /app/uploads
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      MAIL_FROM: ${MAIL_FROM:-}
+    volumes:
+      - uploads:/app/uploads
+    # sem "ports": a API só é acessível dentro da rede Docker
+
+  web:
+    build:
+      context: ./riendzo-webapp
+      args:
+        NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+        NEXT_PUBLIC_SOCIAL_FACEBOOK: ${SOCIAL_FACEBOOK:-}
+        NEXT_PUBLIC_SOCIAL_INSTAGRAM: ${SOCIAL_INSTAGRAM:-}
+        NEXT_PUBLIC_SOCIAL_YOUTUBE: ${SOCIAL_YOUTUBE:-}
+        NEXT_PUBLIC_SOCIAL_TIKTOK: ${SOCIAL_TIKTOK:-}
+        NEXT_PUBLIC_SOCIAL_WHATSAPP: ${SOCIAL_WHATSAPP:-}
+        NEXT_PUBLIC_SOCIAL_X: ${SOCIAL_X:-}
+        NEXT_PUBLIC_SOCIAL_LINKEDIN: ${SOCIAL_LINKEDIN:-}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+      RIENDZO_API_URL: http://api:4000
+      RIENDZO_API_KEY: ${SERVICE_API_KEY}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?defina ADMIN_SESSION_SECRET no .env (32+ caracteres)}
+      SETTINGS_SECRET: ${SETTINGS_SECRET:?defina SETTINGS_SECRET no .env (32+ caracteres)}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      MAIL_FROM: ${MAIL_FROM:-}
+    volumes:
+      # conteúdo editado no BackOffice (data/cms) e ficheiros carregados (data/uploads)
+      - webdata:/app/data
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?defina DOMAIN no .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  pgdata:
+  uploads:
+  webdata:
+  caddy_data:
+  caddy_config:

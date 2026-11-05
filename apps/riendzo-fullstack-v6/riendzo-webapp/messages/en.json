@@ -1,0 +1,516 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "history": "History",
+    "music": "Music",
+    "tourism": "Tourism",
+    "gastronomy": "Gastronomy",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "History of Mozambique",
+    "ancient": "Ancient History",
+    "colonial": "Colonial Period",
+    "modern": "Modern Mozambique",
+    "sections": {
+      "realms": {
+        "title": "Kingdoms and Empires",
+        "subtitle": "Before the caravels, there were already empires, kingdoms and great trading centres."
+      },
+      "ancient": {
+        "title": "Ancient History",
+        "subtitle": "Explore the rich ancient history of Mozambique."
+      },
+      "colonial": {
+        "eyebrow": "Colonial record · 1505 - 1975",
+        "title": "Colonial History",
+        "subtitle": "Four and a half centuries of Portuguese rule in Mozambique, from the island fortress to independence.",
+        "footer": "End of the record — 25 June 1975"
+      },
+      "independent": {
+        "title": "INDEPENDENT HISTORY",
+        "subtitle": "Explore the rich independent history of Mozambique — from 1975 to today.",
+        "footer": "Mozambique — a history still being written"
+      }
+    }
+  },
+  "Hero": {
+    "title": "History, Culture and Services",
+    "subtitle": "Everything That Is Mozambican, In One Place.",
+    "description": "Riendzo combines content, discovery, practical information, tourism and artificial intelligence into a single digital experience.",
+    "bottomNote": "Digital Platform for Discovering Mozambique"
+  },
+  "Music": {
+    "title": "Mozambican Music",
+    "subtitle": "Sounds, Stories and Artists of Mozambique",
+    "description": "Explore the rhythms, artists, albums and stories that have shaped the musical identity of Mozambique.",
+    "artists": {
+      "label": "ARTISTS",
+      "title": "Mozambican Artists",
+      "description": "Biographies, careers and works of Mozambican musicians."
+    },
+    "artistsSection": {
+      "title": "Mozambican Artists",
+      "description": "Brief descriptions of artists and musicians from Mozambique",
+      "songs": "Songs",
+      "viewProfile": "View Profile",
+      "chips": {
+        "marrabenta": "Marrabenta",
+        "pandza": "Pandza",
+        "afroHouse": "Afro-House",
+        "hipHop": "Hip-Hop"
+      },
+      "filters": {
+        "all": "All",
+        "filters": "Filters",
+        "results": "Results",
+        "search": "Search",
+        "noResults": "No Results"
+      }
+    },
+    "discographies": {
+      "label": "WORKS",
+      "title": "Albums & Discographies",
+      "description": "Explore albums, singles and the musical works of each artist."
+    },
+    "genres": {
+      "label": "RHYTHMS",
+      "title": "Genres & Rhythms",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house and more."
+    },
+    "history": {
+      "label": "MEMORY",
+      "title": "History of Music",
+      "description": "Discover the evolution of Mozambican music across generations."
+    }
+  },
+  "catalog": {
+    "all": "All",
+    "search": "Search",
+    "noResults": "No results",
+    "results": "{count} results",
+    "page": "Page {count}",
+    "prev": "Previous",
+    "next": "Next",
+    "close": "Close",
+    "open": "View details",
+    "photoSoon": "Photo coming soon",
+    "tip": "Tip",
+    "categoriesAria": "Categories",
+    "paginationAria": "Pagination",
+    "contact": "Contacts",
+    "whatsapp": "WhatsApp",
+    "call": "Call",
+    "sendEmail": "E-mail",
+    "website": "Website",
+    "openMap": "View on map",
+    "videos": "Videos",
+    "featured": "Sponsored",
+    "gallery": "View photos",
+    "addFavorite": "Add to favourites",
+    "removeFavorite": "Remove from favourites",
+    "directions": "Get directions",
+    "openPage": "Open full page",
+    "offersTitle": "Prices and offers",
+    "unavailable": "Unavailable",
+    "openNow": "Open now",
+    "closingSoon": "Closing soon",
+    "closed": "Closed",
+    "opensAt": "Opens at {time}",
+    "open24h": "Open 24 hours",
+    "about": "About",
+    "schedule": "Opening hours",
+    "location": "Location",
+    "share": "Share",
+    "scanQr": "Scan the QR code to open this page on your phone."
+  },
+  "tourism": {
+    "title": "Tourism",
+    "description": "Dream beaches, wildlife parks, historic towns and ready-made routes to plan your trip to Mozambique.",
+    "keywords": {
+      "k1": "Beaches",
+      "k2": "Safari",
+      "k3": "History",
+      "k4": "Adventure"
+    },
+    "hub": {
+      "title": "Explore Mozambique",
+      "description": "Choose where to start: sea, nature, heritage or a full itinerary.",
+      "cta": "Explore"
+    },
+    "pages": {
+      "beaches": {
+        "label": "BEACHES",
+        "title": "Beaches & Islands",
+        "description": "Bazaruto, Tofo, Vilankulo, Ponta d'Ouro and more coasts to dive, relax and sail."
+      },
+      "parks": {
+        "label": "NATURE",
+        "title": "National Parks",
+        "description": "Gorongosa, Niassa, Limpopo and other protected areas for safaris and hikes."
+      },
+      "routes": {
+        "label": "ROUTES",
+        "title": "Suggested Itineraries",
+        "description": "Ready-made day-by-day itineraries for cities, beaches and parks."
+      },
+      "lodging": {
+        "label": "LODGING",
+        "title": "Accommodation",
+        "description": "Hotels, guest houses and lodges with rooms, photos and prices."
+      },
+      "guides": {
+        "label": "GUIDES",
+        "title": "Tour Guides",
+        "description": "Registered guides you can contact by phone or WhatsApp."
+      },
+      "transport": {
+        "label": "TRANSPORT",
+        "title": "Transport & Operators",
+        "description": "Flights, buses, ferries and tour operators."
+      },
+      "rentacar": {
+        "label": "RENT-A-CAR",
+        "title": "Car Rental",
+        "description": "Car hire: fleet, photos, conditions and prices."
+      }
+    }
+  },
+  "services": {
+    "title": "Public Services",
+    "description": "Clear information on documents, health, education and taxes, so you can sort out the essentials with fewer trips.",
+    "keywords": {
+      "k1": "Documents",
+      "k2": "Health",
+      "k3": "Education",
+      "k4": "Taxes"
+    },
+    "hub": {
+      "title": "How can we help?",
+      "description": "Practical, step-by-step guides. Always confirm fees and deadlines with the official bodies.",
+      "cta": "View guide"
+    },
+    "pages": {
+      "documents": {
+        "label": "DOCUMENTS",
+        "title": "Documents & ID",
+        "description": "ID card, passport, certificates, driving licence and other essential documents."
+      },
+      "health": {
+        "label": "HEALTH",
+        "title": "Health",
+        "description": "Health units, vaccination, prevention and emergency numbers."
+      },
+      "education": {
+        "label": "EDUCATION",
+        "title": "Education",
+        "description": "Enrolment, school calendar, higher education and scholarships."
+      },
+      "taxes": {
+        "label": "TAXES",
+        "title": "Taxes & Fees",
+        "description": "NUIT, e-Tributação, personal income tax, VAT and guidance for small businesses."
+      },
+      "banks": {
+        "label": "BANKS",
+        "title": "Banks",
+        "description": "Banks, branches, opening hours and directions."
+      },
+      "commerce": {
+        "label": "SHOPPING",
+        "title": "Markets, Supermarkets & Shops",
+        "description": "Where to buy, with hours, products and prices."
+      },
+      "fuel": {
+        "label": "FUEL",
+        "title": "Fuel Stations",
+        "description": "Petrol stations and services."
+      },
+      "emergency": {
+        "label": "EMERGENCY",
+        "title": "Emergency Services",
+        "description": "Fire brigade, police, ambulances and helplines."
+      },
+      "schools": {
+        "label": "SCHOOLS",
+        "title": "Schools & Literary Centres",
+        "description": "Schools, universities, libraries and cultural centres."
+      },
+      "comms": {
+        "label": "MEDIA",
+        "title": "Telecoms, TV & Radio",
+        "description": "National mobile operators, TV channels and radio stations."
+      },
+      "general": {
+        "label": "GENERAL",
+        "title": "General Services",
+        "description": "Plumbers, electricians, mechanics, cleaning and other everyday professionals."
+      }
+    }
+  },
+  "entertainment": {
+    "title": "Entertainment",
+    "description": "Cinema, festivals, sport and pop culture: what to do, watch and experience in Mozambique.",
+    "keywords": {
+      "k1": "Cinema",
+      "k2": "Festivals",
+      "k3": "Sport",
+      "k4": "Pop culture"
+    },
+    "hub": {
+      "title": "Now showing",
+      "description": "Discover the films, events, football stars and games that shape the country's culture.",
+      "cta": "Explore"
+    },
+    "pages": {
+      "cinema": {
+        "label": "CINEMA",
+        "title": "Cinema & Series",
+        "description": "Filmmakers, films and festivals of Mozambican cinema."
+      },
+      "events": {
+        "label": "EVENTS",
+        "title": "Events",
+        "description": "Festivals, fairs and celebrations throughout the year."
+      },
+      "sports": {
+        "label": "SPORT",
+        "title": "Sport",
+        "description": "Football, athletics, basketball and water sports."
+      },
+      "games": {
+        "label": "POP CULTURE",
+        "title": "Games & Pop Culture",
+        "description": "Traditional games, fashion, hip-hop, street art and slang."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Explained news, culture, travel tips and opinion: stories to get to know Mozambique better.",
+    "keywords": {
+      "k1": "News",
+      "k2": "Culture",
+      "k3": "Travel",
+      "k4": "Opinion"
+    },
+    "hub": {
+      "title": "Read and discover",
+      "description": "Pick a section and dive into Riendzo's stories.",
+      "cta": "Read"
+    },
+    "pages": {
+      "news": {
+        "label": "NEWS",
+        "title": "Latest News",
+        "description": "Explainers on topics shaping Mozambique today."
+      },
+      "culture": {
+        "label": "CULTURE",
+        "title": "Culture",
+        "description": "Traditions, arts and people who tell the story of the country."
+      },
+      "travel": {
+        "label": "TRAVEL",
+        "title": "Travel",
+        "description": "Practical tips to plan and enjoy your trip."
+      },
+      "opinion": {
+        "label": "OPINION",
+        "title": "Opinion",
+        "description": "Columns and ideas on culture, tourism, language and the future."
+      },
+      "creators": {
+        "label": "CREATORS",
+        "title": "Content Creators",
+        "description": "National creators of food, travel, music and more."
+      }
+    }
+  },
+  "gastronomy": {
+    "title": "Gastronomy",
+    "description": "A taste of Mozambique: traditional dishes, seafood, spices and drinks from north to south.",
+    "timeline": {
+      "roots": "Roots",
+      "coast": "Coast",
+      "spices": "Spices",
+      "fusion": "Fusion",
+      "today": "Today"
+    },
+    "dishes": {
+      "label": "DISHES",
+      "title": "Traditional Recipes"
+    },
+    "ingredients": {
+      "label": "RESTAURANTS",
+      "title": "Restaurants"
+    },
+    "drinks": {
+      "label": "DRINKS",
+      "title": "Local Drinks"
+    },
+    "recipes": {
+      "label": "RECIPES",
+      "title": "Seafood"
+    },
+    "hub": {
+      "title": "Explore the Mozambican table",
+      "description": "Recipes, seafood, spices and drinks to cook and discover.",
+      "cta": "Explore"
+    },
+    "recipesSection": {
+      "title": "Traditional Recipes",
+      "description": "Matapa, xima, curries and more: step-by-step recipes from Mozambican kitchens.",
+      "search": "Search",
+      "all": "All",
+      "noResults": "No results",
+      "results": "{count} recipes",
+      "page": "Page {count}",
+      "prev": "Previous",
+      "next": "Next",
+      "close": "Close",
+      "viewRecipe": "View recipe",
+      "photoSoon": "Photo coming soon",
+      "ingredients": "Ingredients",
+      "steps": "Method",
+      "tip": "Tip",
+      "minutes": "{count} min",
+      "servings": "{count} servings",
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      },
+      "categories": {
+        "seafood": "Seafood",
+        "meat": "Meat",
+        "curry": "Curry",
+        "vegetables": "Vegetables",
+        "sides": "Sides",
+        "snacks": "Snacks",
+        "sauces": "Sauces",
+        "desserts": "Desserts",
+        "drinks": "Drinks",
+        "refreshing": "Refreshing",
+        "alcoholic": "Alcoholic",
+        "hot": "Hot"
+      }
+    },
+    "drinksSection": {
+      "title": "Local Drinks",
+      "description": "Tropical juices, teas and drinks to toast: from passion fruit juice to an ice-cold 2M.",
+      "search": "Search",
+      "all": "All",
+      "noResults": "No results",
+      "results": "{count} drinks",
+      "page": "Page {count}",
+      "prev": "Previous",
+      "next": "Next",
+      "close": "Close",
+      "viewRecipe": "View recipe",
+      "photoSoon": "Photo coming soon",
+      "ingredients": "Ingredients",
+      "steps": "Method",
+      "tip": "Tip",
+      "minutes": "{count} min",
+      "servings": "{count} servings",
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      },
+      "categories": {
+        "seafood": "Seafood",
+        "meat": "Meat",
+        "curry": "Curry",
+        "vegetables": "Vegetables",
+        "sides": "Sides",
+        "snacks": "Snacks",
+        "sauces": "Sauces",
+        "desserts": "Desserts",
+        "drinks": "Drinks",
+        "refreshing": "Refreshing",
+        "alcoholic": "Alcoholic",
+        "hot": "Hot"
+      }
+    },
+    "mariscosSection": {
+      "title": "Seafood",
+      "description": "Prawns, crab, lobster and fish: recipes from the coast.",
+      "ingredients": "Ingredients",
+      "steps": "Method",
+      "tip": "Tip",
+      "videos": "Videos",
+      "minutes": "{count} min",
+      "servings": "{count} servings",
+      "videoBy": "by {creator}",
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      },
+      "viewRecipe": "View recipe",
+      "hasVideo": "Has video",
+      "photoSoon": "Photo coming soon",
+      "close": "Close"
+    },
+    "especiariasSection": {
+      "title": "Piri-piri & Spices",
+      "description": "The living legacy of the spice route: flavours, uses and pairings.",
+      "flavor": "Flavour",
+      "uses": "Uses",
+      "pairsWith": "Pairs with",
+      "dishes": "Dishes",
+      "storage": "Storage",
+      "region": "Region",
+      "videos": "Videos",
+      "heat": "Heat {level} of 5",
+      "videoBy": "by {creator}",
+      "viewDetails": "View details",
+      "hasVideo": "Has video",
+      "photoSoon": "Photo coming soon",
+      "close": "Close"
+    },
+    "restaurantsSection": {
+      "title": "Restaurants",
+      "description": "Restaurants with menus, prices, opening hours and their own page. Open one to see the dishes."
+    }
+  },
+  "Home": {
+    "explore": {
+      "eyebrow": "Explore Mozambique",
+      "title": "{count} unmissable experiences",
+      "subtitle": "From whale sharks in Tofo to historic islands in the north, some of the best reasons to visit Mozambique — gathered in one place.",
+      "readMore": "Read more"
+    },
+    "history": {
+      "title": "A Brief History",
+      "subtitle": "From the Stone Age to Mozambique today, in {count} chapters — a quick summary before exploring each era in detail.",
+      "readMore": "Read more"
+    },
+    "services": {
+      "eyebrow": "For citizens",
+      "title": "Public Services",
+      "description": "Documents, health, education and taxes — find public services, read useful information and get directions to the office you need.",
+      "directions": "Get directions",
+      "open": "Open",
+      "seeAll": "See all services",
+      "exploreAll": "Explore all Public Services",
+      "open24h": "24 hours",
+      "emergencyEyebrow": "Emergencies",
+      "emergencyTitle": "Need help right now?",
+      "emergencyAll": "See all contacts",
+      "emergencyNote": "Numbers may vary by area or operator. Please confirm with the official channels.",
+      "call": "Call"
+    },
+    "entertainment": {
+      "title": "Entertainment",
+      "description": "Discover what to do in Mozambique, from concerts to festivals, from games to films.",
+      "explore": "Explore"
+    }
+  },
+  "Topbar": {
+    "search": "Search…",
+    "searchButton": "Search"
+  }
+}
