@@ -476,7 +476,7 @@ export default function PublicServicesView({ categories, emergency, labels }: { 
 
     return (
         <section id="servicos" aria-labelledby="services-title" className="bg-white">
-            <div className="mx-auto max-w-6xl px-6 py-16 sm:px-10 lg:py-20">
+            <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:py-20">
                 <div className="mx-auto flex max-w-4xl flex-col items-center justify-center text-center">
                     <span className="text-xs font-semibold tracking-[0.15em] text-[#05a8e9]">{labels.eyebrow}</span>
                     <h2 id="services-title" className="mt-2 text-4xl font-bold tracking-tight text-[#050f22] sm:text-5xl">{labels.title}</h2>

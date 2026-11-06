@@ -1,9 +1,9 @@
 /* Hero weather card: compact and translucent so the hero video stays visible */
 .card {
   --wx-bg: #2b8fb4;
-  width: min(236px, 100%);
+  width: min(191px, 100%);
   margin: -34px auto 14px;
-  padding: 11px 16px 10px;
+  padding: 6px 14px 6px;
   border-radius: 16px;
   text-align: left;
   color: #fff;

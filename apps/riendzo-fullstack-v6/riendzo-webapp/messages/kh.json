@@ -1,105 +1,516 @@
 {
   "Navigation": {
-    "home": "Eniyerera",
-    "history": "Malapo",
-    "music": "Nimimo",
-    "tourism": "Oloka",
+    "home": "Nuumwa",
+    "history": "Mwaano",
+    "music": "Nimosa",
+    "tourism": "Olakela",
     "gastronomy": "Yakulya",
-    "portal": "Portal"
+    "portal": "Eporo"
   },
   "History": {
-    "title": "Malapo a Moçambique",
-    "ancient": "Malapo Akhalelo",
-    "colonial": "Nthamwene ya Ukoloni",
-    "modern": "Moçambique wa Lelo",
+    "title": "Mwaano wa Moçambique",
+    "ancient": "Mwaano wa khale",
+    "colonial": "Ekhala ya ukoloni",
+    "modern": "Moçambique wa olelo",
     "sections": {
       "realms": {
-        "title": "Mamwene ni Mwene",
-        "subtitle": "Wakhala nthowa na ilha, vaakhala mamwene ni mikhalelo mikhulu."
+        "title": "Emaloko ni Eimpério",
+        "subtitle": "Antes ya makarapela, khawe kakhala eimpério, emaloko ni opuro opakha wa ekalelo ni omakela."
       },
       "ancient": {
-        "title": "Malapo Akhalelo",
-        "subtitle": "Wona malapo a khalai a Moçambique."
+        "title": "Mwaano wa khale",
+        "subtitle": "Mweere mwa mwaano wa khale wa Moçambique."
       },
       "colonial": {
-        "eyebrow": "Okhaliwa wa ukoloni · 1505 - 1975",
-        "title": "Nthamwene ya Ukoloni",
-        "subtitle": "Miyaha 450 ya omutumiha wa Potokeezi ku Moçambique.",
-        "footer": "Omala wa okhaliwa — 25 wa Juni 1975"
+        "eyebrow": "Ekhala ya ukoloni · 1505 - 1975",
+        "title": "Mwaano wa Ukoloni",
+        "subtitle": "Minyaka elaiha ya utawala wa Portugal wa Moçambique, okhuma wa fortaleza ya Ilha mpaka ohiyererya.",
+        "footer": "Omala wa erekodi — 25 ya Junho ya 1975"
       },
       "independent": {
-        "title": "MALAPO A ONYIVALEIHA",
-        "subtitle": "Wona malapo a onyivaleiha a Moçambique — okhuma 1975 mpaka lelo.",
-        "footer": "Moçambique — malapo anakhuma"
+        "title": "MWAANO WA OHIYERERYA",
+        "subtitle": "Mweere mwa mwaano wa Moçambique wa ohiyererya — okhuma 1975 mpaka olelo.",
+        "footer": "Moçambique — mwaano onarowa ohimala"
       }
     }
   },
   "Hero": {
-    "title": "Malapo, Nthowa na Nturukhu",
-    "subtitle": "Yonthe ya Moçambique, okhala muthukumano mmoha.",
-    "description": "Riendzo enavanha malove, okhaliherya osyaka, muthukumano wa maana, oloka ni maarupelo a makina muthukumano mmoha wa dijitali.",
-    "bottomNote": "Pulatifomu ya Dijitali ya Osyaka Moçambique"
+    "title": "Mwaano, Mikhaliro ni Masezerano",
+    "subtitle": "Yothe ya Moçambique, muthinto mmosa.",
+    "description": "Riendzo enakumaniherya eyo, ovaha wa esina, maaxikhuru, olakela, ni inteligência artificial mu ekalelo mmosa ya digital.",
+    "bottomNote": "Plataforma ya Digital ya omwaana Moçambique"
   },
   "Music": {
-    "title": "Risimu ra Mozambique",
-    "subtitle": "Mimpfumawulo, Matimu ni Vayimbeleri va Mozambique",
-    "description": "Kuma mimpfumawulo, vayimbeleri, ma-album ni matimu lama nga vumba ndhavuko wa risimu ra Mozambique.",
+    "title": "Nimosa ya Moçambique",
+    "subtitle": "Iwi, Mwaano ni Atista a Moçambique",
+    "description": "Mweere mwa emirimo, atista, maálbumu ni mwaano saakumiha ekhalelo ya nimosa ya Moçambique.",
     "artists": {
-      "label": "VAYIMBELERI",
-      "title": "Vayimbeleri va Mozambique",
-      "description": "Matimu ya vona, mintirho ni mintirho ya vutshila ya vayimbeleri va Mozambique."
+      "label": "ATISTA",
+      "title": "Atista a Moçambique",
+      "description": "Mwaano wa atista, mitiro ni mithinto sa animosa a Moçambique."
+    },
+    "artistsSection": {
+      "title": "Atista a Moçambique",
+      "description": "Masinoni masha wa atista ni aninimosa a Moçambique",
+      "songs": "Nimosa",
+      "viewProfile": "Ona perfil",
+      "chips": {
+        "marrabenta": "Marrabenta",
+        "pandza": "Pandza",
+        "afroHouse": "Afro-House",
+        "hipHop": "Hip-Hop"
+      },
+      "filters": {
+        "all": "Oothe",
+        "filters": "Mafiltro",
+        "results": "Miholowa",
+        "search": "Othala",
+        "noResults": "Khaavo miholowa"
+      }
     },
     "discographies": {
-      "label": "MINTIRHO",
-      "title": "Ma-album ni Discografia",
-      "description": "Kuma ma-album, ti-single ni mintirho ya risimu ya vayimbeleri."
+      "label": "MITIRO",
+      "title": "Maálbumu ni Discografia",
+      "description": "Mweere mwa maálbumu, singles ni mitiro mikulu ya nimosa ya kila artista."
     },
     "genres": {
-      "label": "MIMPfumawulo",
-      "title": "Tinxaka ta Risimu ni Mimpfumawulo",
-      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni swin'wana."
+      "label": "EMIRIMO",
+      "title": "Emirimo ni Mikhaliro sa Nimosa",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni sinene."
     },
     "history": {
-      "label": "MATIMU",
-      "title": "Matimu ya Risimu",
-      "description": "Kuma ndlela leyi risimu ra Mozambique ri nga kula ha yona eka switukulwana swo hambana."
+      "label": "EHIHIMYA",
+      "title": "Mwaano wa Nimosa",
+      "description": "Mweere mwa omwene wa nimosa ya Moçambique okhuma wa makhalelo akhala mpaka olelo."
+    }
+  },
+  "catalog": {
+    "all": "Oothe",
+    "search": "Othala",
+    "noResults": "Khaavo miholowa",
+    "results": "{count} miholowa",
+    "page": "Epagina {count}",
+    "prev": "Ya khalai",
+    "next": "Ya murima",
+    "close": "Vala",
+    "open": "Ona maaxikhuru",
+    "photoSoon": "Foto enrowa",
+    "tip": "Masina",
+    "categoriesAria": "Makategoriya",
+    "paginationAria": "Mapagina",
+    "contact": "Maweryana",
+    "whatsapp": "WhatsApp",
+    "call": "Teya",
+    "sendEmail": "E-mail",
+    "website": "Website",
+    "openMap": "Ona mapa",
+    "videos": "Mavideo",
+    "featured": "Yavahiwa",
+    "gallery": "Ona mafoto",
+    "addFavorite": "Othapela mu oothanla",
+    "removeFavorite": "Ohiya mu oothanla",
+    "directions": "Ntoonyerya yootthiwa",
+    "openPage": "Ovula epagina yoothe",
+    "offersTitle": "Mitheko ni mavaha",
+    "unavailable": "Khanivikana",
+    "openNow": "Yovuluwiha vano",
+    "closingSoon": "Enavala vakani",
+    "closed": "Yavalihiwe",
+    "opensAt": "Enavula saa {time}",
+    "open24h": "Yovuluwiha esaa 24",
+    "about": "Paahi",
+    "schedule": "Masaa",
+    "location": "Ophiyerya",
+    "share": "Othikela",
+    "scanQr": "Soma QR Code wiira ovule epagina ela mu telefone."
+  },
+  "tourism": {
+    "title": "Olakela",
+    "description": "Miththaka soolaleya, mapaki oothene ni nyama, miri sa khale ni mapuro a olakela wiira mwiireke plano ya orowa Moçambique.",
+    "keywords": {
+      "k1": "Miththaka",
+      "k2": "Safári",
+      "k3": "Mwaano",
+      "k4": "Othama"
+    },
+    "hub": {
+      "title": "Mweere mwa Moçambique",
+      "description": "Hawani epuro ya otthoma: ephare, ekhalelo ya ntthaka, emiththaka sa mwaano wala enakelo yoothe.",
+      "cta": "Mweere"
+    },
+    "pages": {
+      "beaches": {
+        "label": "MITHTHAKA",
+        "title": "Miththaka ni Eisiwa",
+        "description": "Bazaruto, Tofo, Vilankulo, Ponta d'Ouro ni miththaka mikina wiira mwivile, mwiwerye ni orowa mu madiya."
+      },
+      "parks": {
+        "label": "EKHALELO YA NTTHAKA",
+        "title": "Mapaki a Nasyonal",
+        "description": "Gorongosa, Niassa, Limpopo ni mapuro akina oothamihiwa wiira musafári ni othama."
+      },
+      "routes": {
+        "label": "ENAKELo",
+        "title": "Enakelo Sootthariwa",
+        "description": "Mihalelo soothene, nihiku ni nihiku, wa miri, miththaka ni mapaki."
+      },
+      "lodging": {
+        "label": "OPHITTHIWA",
+        "title": "Mapuro a Orara",
+        "description": "Hotéis, guest houses ni lodges ni makameru, mafoto ni mitheko."
+      },
+      "guides": {
+        "label": "ANITOONYERYA",
+        "title": "Anitoonyerya a Olakela",
+        "description": "Anitoonyerya oorejistariwa anrowa owanana niyo mu telefone wala WhatsApp."
+      },
+      "transport": {
+        "label": "ETRANSPORTE",
+        "title": "Etransporte ni Operadores",
+        "description": "Mavoo, autocarros, ferries ni operadores a olakela."
+      },
+      "rentacar": {
+        "label": "RENT-A-CAR",
+        "title": "Rent-a-car",
+        "description": "Othapela mikari: mikari, mafoto, mithinto ni mitheko."
+      }
+    }
+  },
+  "services": {
+    "title": "Masezerano a Público",
+    "description": "Esina yooreera pa mithinto, ekhalelo, esikola ni impostos, wiira mwiireke mithinto soolapela ni ovira olakela.",
+    "keywords": {
+      "k1": "Mithinto",
+      "k2": "Ekhalelo",
+      "k3": "Esikola",
+      "k4": "Impostos"
+    },
+    "hub": {
+      "title": "Ntoonyerya xeeni?",
+      "description": "Mihalelo soolapela ni nthowa. Mwiireke confirmação ya mitheko ni masaa wa miteko sa entidades oficiais.",
+      "cta": "Ona guia"
+    },
+    "pages": {
+      "documents": {
+        "label": "MITHINTO",
+        "title": "Mithinto ni BI",
+        "description": "BI, passaporte, certidões, carta ya condução ni mithinto mikina sa muteko."
+      },
+      "health": {
+        "label": "EKHALELO",
+        "title": "Ekhalelo",
+        "description": "Mapuro a saúde, vacinação, ophavela ni nimero sa emergência."
+      },
+      "education": {
+        "label": "ESIKOLA",
+        "title": "Esikola",
+        "description": "Matrículas, calendário ya esikola, ensino superior ni bolsas ya estudo."
+      },
+      "taxes": {
+        "label": "IMPOSTOS",
+        "title": "Impostos ni Taxas",
+        "description": "NUIT, e-Tributação, IRPS, IVA ni maaxikhuru a makhalelo a negócios khulupale."
+      },
+      "banks": {
+        "label": "MABANCO",
+        "title": "Mabanco",
+        "description": "Mabanco, balcões, masaa ni nthowa ya orowa."
+      },
+      "commerce": {
+        "label": "EKHOMÉRCIO",
+        "title": "Mercados, Supermercados ni M lojas",
+        "description": "Vano vanathapeliwa, ni masaa, mithinto ni mitheko."
+      },
+      "fuel": {
+        "label": "COMBUSTÍVEL",
+        "title": "Mapuro a Combustível",
+        "description": "Mapuro a ovaha combustível ni miteko."
+      },
+      "emergency": {
+        "label": "EMERGÊNCIAS",
+        "title": "Emergências",
+        "description": "Bombeiros, polícia, ambulâncias ni linhas sa otthikela."
+      },
+      "schools": {
+        "label": "ESIKOLA",
+        "title": "Esikola ni Mapuro a Osoma",
+        "description": "Esikola, universidades, bibliotecas ni mapuro a cultura."
+      },
+      "comms": {
+        "label": "MAKOMUNIKASO",
+        "title": "Telefonia, TV ni Rádio",
+        "description": "Operadoras a telefonia, televisões ni rádios a nacional."
+      },
+      "general": {
+        "label": "SOOTHE",
+        "title": "Miteko Soothe",
+        "description": "Canalizadores, eletricistas, mecânicos, olapa ni anamitiko akina a nihiku ni nihiku."
+      }
+    }
+  },
+  "entertainment": {
+    "title": "Othabisa",
+    "description": "Cinema, festivais, desporto ni cultura pop: yoolapela wiira mwiire, mwone ni mukhale mu Moçambique.",
+    "keywords": {
+      "k1": "Cinema",
+      "k2": "Festivais",
+      "k3": "Desporto",
+      "k4": "Cultura pop"
+    },
+    "hub": {
+      "title": "Vano",
+      "description": "Mweere mwa filmes, eventos, anamitiko ni jogos sinavaha cultura ya elapo.",
+      "cta": "Mweere"
+    },
+    "pages": {
+      "cinema": {
+        "label": "CINEMA",
+        "title": "Cinema ni Séries",
+        "description": "Realizadores, filmes ni festivais sa cinema ya Moçambique."
+      },
+      "events": {
+        "label": "EVENTOS",
+        "title": "Eventos",
+        "description": "Festivais, feiras ni miholo sa ohiyererya mu mwaka."
+      },
+      "sports": {
+        "label": "DESPORTO",
+        "title": "Desporto",
+        "description": "Futebol, atletismo, basquetebol ni desportos a ephare."
+      },
+      "games": {
+        "label": "CULTURA POP",
+        "title": "Jogos ni Cultura Pop",
+        "description": "Jogos sa khale, moda, hip-hop, arte ya miri ni esintho."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Makhaniho oothaleliwa, cultura, maaxikhuru a olakela ni maoni: emithinto wiira mwiiveleke Moçambique.",
+    "keywords": {
+      "k1": "Makhaniho",
+      "k2": "Cultura",
+      "k3": "Mithikelo",
+      "k4": "Maoni"
+    },
+    "hub": {
+      "title": "Osoma ni omwaana",
+      "description": "Hawani sekção wiira mwivile mwa mithinto sa Riendzo.",
+      "cta": "Osoma"
+    },
+    "pages": {
+      "news": {
+        "label": "MAKHANIHO",
+        "title": "Makhaniho a Murima",
+        "description": "Mihaka yooreera pa mithinto sinalakhula olelo wa Moçambique."
+      },
+      "culture": {
+        "label": "CULTURA",
+        "title": "Cultura",
+        "description": "Mikhaliro, mithinto sa arte ni anamitiko anasuweliha elapo."
+      },
+      "travel": {
+        "label": "MITHIKELO",
+        "title": "Mithikelo",
+        "description": "Maaxikhuru a muteko wiira mwiireke plano ni okhala mu mithikelo."
+      },
+      "opinion": {
+        "label": "MAONI",
+        "title": "Maoni",
+        "description": "Mihaka ni mithinto pa cultura, olakela, ilimi ni murima."
+      },
+      "creators": {
+        "label": "ANAMWANA",
+        "title": "Anamwene a Conteúdo",
+        "description": "Anamwene a Moçambique a yakulya, mithikelo, nimosa ni sinene."
+      }
+    }
+  },
+  "gastronomy": {
+    "title": "Yakulya",
+    "description": "Mithotho sa Moçambique: yakulya ya khale, mariscos, especiarias ni ma bebida okhuma norte mpaka sul.",
+    "timeline": {
+      "roots": "Mithankelo",
+      "coast": "Ephare",
+      "spices": "Especiarias",
+      "fusion": "Othukana",
+      "today": "Olelo"
+    },
+    "dishes": {
+      "label": "YAKULYA",
+      "title": "Receitas sa Khale"
+    },
+    "ingredients": {
+      "label": "RESTAURANTES",
+      "title": "Restaurantes"
+    },
+    "drinks": {
+      "label": "MA BEBIDA",
+      "title": "Ma Bebida a Muthinto"
+    },
+    "recipes": {
+      "label": "RECEITAS",
+      "title": "Yakulya ya Madiya"
+    },
+    "hub": {
+      "title": "Mweere mwa meza ya Moçambique",
+      "description": "Receitas, mariscos, especiarias ni ma bebida wiira mwiire yakulya ni omwaana.",
+      "cta": "Mweere"
+    },
+    "recipesSection": {
+      "title": "Receitas sa Khale",
+      "description": "Matapa, xima, caril ni sinene: receitas nihiku ni nihiku a yakulya ya Moçambique.",
+      "search": "Othala",
+      "all": "Oothe",
+      "noResults": "Khaavo miholowa",
+      "results": "{count} receitas",
+      "page": "Epagina {count}",
+      "prev": "Ya khalai",
+      "next": "Ya murima",
+      "close": "Vala",
+      "viewRecipe": "Ona receita",
+      "photoSoon": "Foto enrowa",
+      "ingredients": "Mithinto sa oruma",
+      "steps": "Othapela",
+      "tip": "Masina",
+      "minutes": "{count} min",
+      "servings": "Anamwanano {count}",
+      "difficulty": {
+        "easy": "Yoolapela",
+        "medium": "Yaphiro",
+        "hard": "Yovila"
+      },
+      "categories": {
+        "seafood": "Mariscos",
+        "meat": "Nyama",
+        "curry": "Caril",
+        "vegetables": "Mithinto sa ntthaka",
+        "sides": "Yakulya ya othapela",
+        "snacks": "Yakulya vakani",
+        "sauces": "Molhos",
+        "desserts": "Yakulya ya murima",
+        "drinks": "Ma bebida",
+        "refreshing": "Ma bebida a otthotha",
+        "alcoholic": "Ma bebida a álcool",
+        "hot": "Othotha"
+      }
+    },
+    "drinksSection": {
+      "title": "Ma Bebida a Muthinto",
+      "description": "Sumos sa mitthaka, chás ni ma bebida wiira mwiire brinde: okhuma refresco ya maracujá mpaka 2M yoothotha.",
+      "search": "Othala",
+      "all": "Oothe",
+      "noResults": "Khaavo miholowa",
+      "results": "{count} ma bebida",
+      "page": "Epagina {count}",
+      "prev": "Ya khalai",
+      "next": "Ya murima",
+      "close": "Vala",
+      "viewRecipe": "Ona receita",
+      "photoSoon": "Foto enrowa",
+      "ingredients": "Mithinto sa oruma",
+      "steps": "Othapela",
+      "tip": "Masina",
+      "minutes": "{count} min",
+      "servings": "Anamwanano {count}",
+      "difficulty": {
+        "easy": "Yoolapela",
+        "medium": "Yaphiro",
+        "hard": "Yovila"
+      },
+      "categories": {
+        "seafood": "Mariscos",
+        "meat": "Nyama",
+        "curry": "Caril",
+        "vegetables": "Mithinto sa ntthaka",
+        "sides": "Yakulya ya othapela",
+        "snacks": "Yakulya vakani",
+        "sauces": "Molhos",
+        "desserts": "Yakulya ya murima",
+        "drinks": "Ma bebida",
+        "refreshing": "Ma bebida a otthotha",
+        "alcoholic": "Ma bebida a álcool",
+        "hot": "Othotha"
+      }
+    },
+    "mariscosSection": {
+      "title": "Yakulya ya Madiya",
+      "description": "Camarão, caranguejo, lagosta ni ipi: receitas sa ephare.",
+      "ingredients": "Mithinto sa oruma",
+      "steps": "Othapela",
+      "tip": "Masina",
+      "videos": "Mavideo",
+      "minutes": "{count} min",
+      "servings": "Anamwanano {count}",
+      "videoBy": "wa {creator}",
+      "difficulty": {
+        "easy": "Yoolapela",
+        "medium": "Yaphiro",
+        "hard": "Yovila"
+      },
+      "viewRecipe": "Ona receita",
+      "hasVideo": "Yina video",
+      "photoSoon": "Foto enrowa",
+      "close": "Vala"
+    },
+    "especiariasSection": {
+      "title": "Piri-piri ni Especiarias",
+      "description": "Ekhala ekumi ya nthowa ya especiarias: mithotho, mitthinto sa oruma ni othukana.",
+      "flavor": "Muthotho",
+      "uses": "Miteko",
+      "pairsWith": "Enathukana ni",
+      "dishes": "Yakulya",
+      "storage": "Othapela",
+      "region": "Ekhala",
+      "videos": "Mavideo",
+      "heat": "Othotha {level} mwa 5",
+      "videoBy": "wa {creator}",
+      "viewDetails": "Ona maaxikhuru",
+      "hasVideo": "Yina video",
+      "photoSoon": "Foto enrowa",
+      "close": "Vala"
+    },
+    "restaurantsSection": {
+      "title": "Restaurantes",
+      "description": "Restaurantes ni menu, mitheko, masaa ni epagina yawe. Ovuluwani mmosa wiira mwone yakulya."
     }
   },
   "Home": {
     "explore": {
-      "eyebrow": "Wuupuwela Moçambique",
-      "title": "Soorya {count} sinaaphwanelaka",
-      "subtitle": "Okhuma ku Tofo mpaka ilha sa khalai kumpoto, mirette sinene sa wiira muhoolele Moçambique — mmuhakhu mmoha.",
-      "readMore": "Hiiha ohiya"
+      "eyebrow": "Omwaana Moçambique",
+      "title": "{count} mithinto soolapela",
+      "subtitle": "Okhuma wa tubarões-baleia a Tofo mpaka eisiwa sa khale wa norte, mithinto mikulu wiira mwiireke visita Moçambique — yootthapeliwa muthinto mmosa.",
+      "readMore": "Osoma sinene"
     },
     "history": {
-      "title": "Malapo a Okhupi",
-      "subtitle": "Okhuma Nthowa na Mwala mpaka Moçambique wa Lelo, ni mikhalelo {count}.",
-      "readMore": "Hiiha ohiya"
+      "title": "Mwaano Vakani",
+      "subtitle": "Okhuma wa Idade da Pedra mpaka Moçambique ya olelo, mu {count} capítulos — resumo vakani antes ya omwaana kila ekhalla mu maaxikhuru.",
+      "readMore": "Osoma sinene"
     },
     "services": {
-      "eyebrow": "Wa nthu",
-      "title": "Mirette sa Murimu",
-      "description": "Nikalata, ovaha, ewoona ni mikhoro — wooniha mirette sa murimu ni olapo wa naana.",
-      "directions": "Nlakano",
-      "open": "Wuupula",
-      "seeAll": "Wona sonthe",
-      "exploreAll": "Wona mirette sonthe",
-      "open24h": "Maora 24",
-      "emergencyEyebrow": "Hathi",
-      "emergencyTitle": "Mwaakhwa othandiwa vano?",
-      "emergencyAll": "Wona manambala onthe",
-      "emergencyNote": "Manambala anaweya wiirihana. Wunnyeliha ni nlakano nawo.",
-      "call": "Hiiha"
+      "eyebrow": "Wa mwanamuthinto",
+      "title": "Masezerano a Público",
+      "description": "Mithinto, ekhalelo, esikola ni impostos — mwawe miteko sa público, mwone esina yoolapela ni mwiire nthowa mpaka wa epuro enasaka.",
+      "directions": "Ntoonyerya nthowa",
+      "open": "Ovula",
+      "seeAll": "Ona miteko soothe",
+      "exploreAll": "Mweere mwa Masezerano a Público oothe",
+      "open24h": "Masaa 24",
+      "emergencyEyebrow": "Emergências",
+      "emergencyTitle": "Munasaka othokoreryiwa vano?",
+      "emergencyAll": "Ona maweryana oothe",
+      "emergencyNote": "Nimero sinrowa othukana ni epuro wala operadora. Mwiireke confirmação mu mithinto sa oficiais.",
+      "call": "Teya"
     },
     "entertainment": {
-      "title": "Osivela",
-      "description": "Wooniha sinaaphwanelaka ewoona Moçambique.",
-      "explore": "Wona"
+      "title": "Othabisa",
+      "description": "Mweere mwa yoolapela mu Moçambique, okhuma wa concertos mpaka festivais, jogos ni filmes.",
+      "explore": "Mweere"
     }
   },
   "Topbar": {
-    "search": "Wooniha…",
-    "searchButton": "Wooniha"
+    "search": "Othala…",
+    "searchButton": "Othala"
   }
 }

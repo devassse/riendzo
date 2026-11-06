@@ -201,12 +201,12 @@ export default function RiendzoFooter() {
             </div>
 
             {/* Copy right and legal information */}
-            <div className="flex flex-col items-center justify-center gap-3 border-t border-[#00aefb]/50 bg-[#f2f7ff] px-4 py-4 text-center md:flex-row md:gap-8">
-
+            <div className="border-t border-[#00aefb]/50 bg-[#f2f7ff]">
+                {/* <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-4 text-center md:flex-row md:gap-8" style={{border:"1px dotted red"}}> */}
+                  <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-4 md:flex-row md:items-center md:gap-8">
                     <div className="text-xs text-[#0058b7]">
                         Riendzo - Todos os direitos reservados &copy; {currentYear}.
                     </div>
-
                     <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[#0058b7]">
                         <Link
                             href="/privacidade"
@@ -214,24 +214,28 @@ export default function RiendzoFooter() {
                         >
                             Privacidade
                         </Link>
-
                         <Link
                             href="/termos"
                             className="transition-colors hover:text-[#0058b7]"
                         >
                             Termos de Uso
                         </Link>
-
                         <span className="hidden h-3 w-px bg-white/10 sm:block" />
-
                         <span>
                             Desenvolvido com <span className="text-red-400">♥</span> por{' '}
-                            <a href='https://joaodevsonmucavel.vercel.app/' target="_blank" className="font-medium text-[#0058b7]/65 hover:text-[#0058b7]" style={{textDecoration:"underline"}}>
+                            <a
+                                href="https://joaodevsonmucavel.vercel.app/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-medium text-[#0058b7]/65 hover:text-[#0058b7] underline"
+                            >
                                 Keoma Software, Inc.
                             </a>
                         </span>
                     </div>
                 </div>
+            </div>
+            
         </footer>
     );
 }
