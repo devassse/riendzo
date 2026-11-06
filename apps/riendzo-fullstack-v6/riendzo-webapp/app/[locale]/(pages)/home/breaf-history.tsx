@@ -217,7 +217,7 @@ export default function BriefHistoryView({ entries, title, subtitle, readMore }:
             </div>
 
             {/* the register */}
-            <div className="mx-auto max-w-6xl px-6 py-4 sm:px-10">
+            <div className="mx-auto max-w-7xl px-6 py-4 sm:px-10">
                 {entries.map((entry, i) => (
                     <RegisterRow key={entry.href} entry={{ ...entry, icon: ICONS[i % ICONS.length] }} index={i} readMore={readMore} />
                 ))}
