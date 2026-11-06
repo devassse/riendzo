@@ -16,7 +16,7 @@ export default function SocialLinks({ size = 18, tone = "brand", className = "" 
     const color = tone === "light" ? "text-white/75 hover:text-[#00aefb]" : "text-[#0058b7] hover:bg-[#0058b7] hover:text-white";
     const pad = tone === "light" ? "" : "rounded-full border border-[#0058b7]/25 p-2 transition-colors";
     return (
-        <ul className={`flex items-center gap-3 ${className}`} aria-label="Redes sociais">
+        <ul className={`flex items-center gap-3 mt-1 ${className}`} aria-label="Redes sociais">
             {SOCIALS.map((s) => (
                 <li key={s.id}>
                     <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label} className={`inline-flex transition-colors ${color} ${pad}`}>
