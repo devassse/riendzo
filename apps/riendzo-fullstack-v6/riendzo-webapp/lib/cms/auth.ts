@@ -17,6 +17,7 @@ import { getEnvProfile, getUserById, verifyLogin, type OwnerRef, type Role } fro
 const COOKIE = "riendzo_admin";
 const MAX_AGE = 60 * 60 * 8;
 const isProd = process.env.NODE_ENV === "production";
+const secureCookie = process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") ?? isProd;
 
 export function authConfig() {
     const password = process.env.ADMIN_PASSWORD ?? (isProd ? "" : "riendzo-admin");
@@ -54,7 +55,7 @@ export async function createSession(uid: string, user: string) {
     const exp = Math.floor(Date.now() / 1000) + MAX_AGE;
     const payload = Buffer.from(JSON.stringify({ uid, u: user, exp })).toString("base64url");
     (await cookies()).set(COOKIE, `${payload}.${sign(payload, secret)}`, {
-        httpOnly: true, sameSite: "lax", secure: isProd, path: "/", maxAge: MAX_AGE,
+        httpOnly: true, sameSite: "lax", secure: secureCookie, path: "/", maxAge: MAX_AGE,
     });
 }
 
