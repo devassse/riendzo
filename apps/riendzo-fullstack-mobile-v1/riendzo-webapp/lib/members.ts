@@ -1,0 +1,233 @@
+/**
+ * Riendzo AI members (public registration) — server only.
+ * Stored in data/members/members.json. Passwords are scrypt-hashed.
+ */
+import path from "node:path";
+import crypto from "node:crypto";
+import { DATA_DIR, locked, readJson, writeJson } from "@/lib/cms/store";
+import { hashPassword, staffPasswordProblem, verifyPassword } from "@/lib/cms/password";
+
+export type Favorite = { collection: string; slug: string; at: string };
+
+export type Member = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email?: string;
+    /** digits only, with country code */
+    phone?: string;
+    passwordHash: string;
+    avatar?: string;
+    bio?: string;
+    province?: string;
+    birthYear?: number;
+    languages: string[];
+    /** Interests (music styles, cuisines, travel…): will feed the AI suggestions */
+    interests: string[];
+    /** Travel styles (several allowed) */
+    travelStyles?: string[];
+    /** @deprecated single style from before: read it through travelStyles */
+    travelStyle?: string;
+    favorites: Favorite[];
+    status: "active" | "suspended";
+    createdAt: string;
+    /**
+     * false = registered but the e-mail/phone was not confirmed yet (code by e-mail or SMS).
+     * Missing = accounts created before the verification existed: they count as verified.
+     */
+    verified?: boolean;
+    verifiedAt?: string;
+    verifiedVia?: "email" | "sms";
+    /** Premium subscription valid until this ISO date (set by the admin after the payment). Missing = free account. */
+    premiumUntil?: string;
+};
+export type PublicMember = Omit<Member, "passwordHash">;
+
+const FILE = path.join(DATA_DIR, "members", "members.json");
+const read = async () => (await readJson<Member[]>(FILE)) ?? [];
+const strip = ({ passwordHash: _h, ...m }: Member): PublicMember => m;
+
+/** Premium = subscription not expired yet. */
+export const isPremium = (m: { premiumUntil?: string }) => Boolean(m.premiumUntil && new Date(m.premiumUntil).getTime() > Date.now());
+
+/** Accounts that predate the verification (no flag) are verified. */
+export const isVerified = (m: { verified?: boolean }) => m.verified !== false;
+
+export const normalizePhone = (p: string) => {
+    let d = p.replace(/[^\d]/g, "");
+    if (/^8\d{8}$/.test(d)) d = `258${d}`;
+    return d;
+};
+
+export type RegisterInput = {
+    firstName: string; lastName: string; email: string; phone: string; password: string; confirm: string;
+};
+
+export function registerMember(i: RegisterInput) {
+    return locked(async () => {
+        const firstName = i.firstName.trim().slice(0, 50);
+        const lastName = i.lastName.trim().slice(0, 50);
+        if (!firstName || !lastName) return { ok: false as const, error: "Indique o nome e o apelido." };
+
+        // e-mail and phone are collected separately (both are needed: notifications by e-mail and SMS)
+        const email = i.email.trim().toLowerCase();
+        const phone = normalizePhone(i.phone);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 120) return { ok: false as const, error: "E-mail inválido." };
+        if (!/^\d{9,15}$/.test(phone)) return { ok: false as const, error: "Telefone inválido (ex.: 84 123 4567)." };
+
+        const problem = staffPasswordProblem(i.password);
+        if (problem) return { ok: false as const, error: problem };
+        if (i.password !== i.confirm) return { ok: false as const, error: "As palavras-passe não coincidem." };
+
+        let members = await read();
+        // An account that was never confirmed does not own its e-mail/phone: a typo at sign-up
+        // must not lock the right person out, so a new registration replaces it.
+        const clash = (m: Member) => m.email?.toLowerCase() === email || m.phone === phone;
+        members = members.filter((m) => !(clash(m) && m.verified === false));
+        if (members.some((m) => m.email?.toLowerCase() === email)) return { ok: false as const, error: "Já existe uma conta com este e-mail." };
+        if (members.some((m) => m.phone === phone)) return { ok: false as const, error: "Já existe uma conta com este telefone." };
+        const member: Member = {
+            id: crypto.randomUUID(), firstName, lastName, email, phone, passwordHash: hashPassword(i.password),
+            languages: [], interests: [], favorites: [], status: "active", createdAt: new Date().toISOString(),
+            verified: false,
+        };
+        members.push(member);
+        await writeJson(FILE, members);
+        return { ok: true as const, id: member.id };
+    });
+}
+
+export async function verifyMember(contact: string, password: string) {
+    const members = await read();
+    const c = contact.trim();
+    const m = c.includes("@") ? members.find((x) => x.email === c.toLowerCase()) : members.find((x) => x.phone === normalizePhone(c));
+    const ok = verifyPassword(password, m?.passwordHash);
+    return m && ok && m.status === "active" ? strip(m) : null;
+}
+
+export const getMemberById = async (id: string) => {
+    const m = (await read()).find((x) => x.id === id);
+    return m && m.status === "active" ? strip(m) : null;
+};
+
+/** Confirms the account after the code sent by e-mail or SMS was typed correctly. */
+export function markVerified(id: string, via: "email" | "sms") {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m) return false;
+        m.verified = true;
+        m.verifiedVia = via;
+        m.verifiedAt = new Date().toISOString();
+        await writeJson(FILE, members);
+        return true;
+    });
+}
+
+/** Premium for `months` more months (counted from today or from the current end date, whichever is later). months = 0 removes it. */
+export function setPremium(id: string, months: number) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m) return null;
+        if (months <= 0) { m.premiumUntil = undefined; }
+        else {
+            const from = isPremium(m) ? new Date(m.premiumUntil!) : new Date();
+            from.setMonth(from.getMonth() + Math.min(months, 36));
+            m.premiumUntil = from.toISOString();
+        }
+        await writeJson(FILE, members);
+        return m.premiumUntil ?? null;
+    });
+}
+
+export const listMembers = async () => (await read()).map(strip);
+
+export function updateMember(id: string, patch: Partial<Pick<Member, "firstName" | "lastName" | "avatar" | "bio" | "province" | "birthYear" | "languages" | "interests" | "travelStyle" | "travelStyles">>) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m) return false;
+        Object.assign(m, patch);
+        await writeJson(FILE, members);
+        return true;
+    });
+}
+
+/** Is this the member's password? (used to confirm sensitive actions such as deleting the account) */
+export async function checkMemberPassword(id: string, password: string) {
+    const m = (await read()).find((x) => x.id === id);
+    return Boolean(m && verifyPassword(password, m.passwordHash));
+}
+
+/** Removes the member record for good. The rest of the data is handled by lib/account-deletion.ts. */
+export function removeMember(id: string) {
+    return locked(async () => {
+        const members = await read();
+        if (!members.some((x) => x.id === id)) return false;
+        await writeJson(FILE, members.filter((x) => x.id !== id));
+        return true;
+    });
+}
+
+export function toggleFavorite(id: string, collection: string, slug: string) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m) return null;
+        const has = m.favorites.some((f) => f.collection === collection && f.slug === slug);
+        m.favorites = has
+            ? m.favorites.filter((f) => !(f.collection === collection && f.slug === slug))
+            : [{ collection, slug, at: new Date().toISOString() }, ...m.favorites].slice(0, 500);
+        await writeJson(FILE, members);
+        return !has;
+    });
+}
+
+export function setMemberStatus(id: string, status: Member["status"]) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (m) m.status = status;
+        await writeJson(FILE, members);
+    });
+}
+
+export function changeMemberPassword(id: string, current: string, next: string) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m || !verifyPassword(current, m.passwordHash)) return { ok: false as const, error: "A palavra-passe atual não está correta." };
+        const p = staffPasswordProblem(next);
+        if (p) return { ok: false as const, error: p };
+        m.passwordHash = hashPassword(next);
+        await writeJson(FILE, members);
+        return { ok: true as const };
+    });
+}
+
+/** Password recovery: sets a new password without asking for the current one (the e-mail link proves ownership). */
+export function setMemberPassword(id: string, next: string) {
+    return locked(async () => {
+        const members = await read();
+        const m = members.find((x) => x.id === id);
+        if (!m || m.status !== "active") return { ok: false as const, error: "Conta não encontrada." };
+        const p = staffPasswordProblem(next);
+        if (p) return { ok: false as const, error: p };
+        m.passwordHash = hashPassword(next);
+        await writeJson(FILE, members);
+        return { ok: true as const };
+    });
+}
+
+export async function findMemberByEmail(email: string) {
+    const mail = email.trim().toLowerCase();
+    const m = (await read()).find((x) => x.email === mail && x.status === "active");
+    return m ? strip(m) : null;
+}
+
+export async function findMemberByPhone(phone: string) {
+    const p = normalizePhone(phone);
+    const m = (await read()).find((x) => x.phone === p && x.status === "active");
+    return m ? strip(m) : null;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "riendzo-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Apps Android e iOS da Riendzo (Capacitor): abrem o site em produção dentro de uma app nativa.",
+  "scripts": {
+    "assets": "capacitor-assets generate --iconBackgroundColor \"#ffffff\" --iconBackgroundColorDark \"#0f1a30\" --splashBackgroundColor \"#ffffff\" --splashBackgroundColorDark \"#0f1a30\"",
+    "sync": "cap sync",
+    "android": "cap open android",
+    "ios": "cap open ios",
+    "doctor": "cap doctor"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "Navigation": {
+    "home": "Eniyerera",
+    "history": "Malapo",
+    "music": "Nimimo",
+    "tourism": "Oloka",
+    "gastronomy": "Yakulya",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "Malapo a Moçambique",
+    "ancient": "Malapo Akhalelo",
+    "colonial": "Nthamwene ya Ukoloni",
+    "modern": "Moçambique wa Lelo",
+    "sections": {
+      "realms": {
+        "title": "Mamwene ni Mwene",
+        "subtitle": "Wakhala nthowa na ilha, vaakhala mamwene ni mikhalelo mikhulu."
+      },
+      "ancient": {
+        "title": "Malapo Akhalelo",
+        "subtitle": "Wona malapo a khalai a Moçambique."
+      },
+      "colonial": {
+        "eyebrow": "Okhaliwa wa ukoloni · 1505 - 1975",
+        "title": "Nthamwene ya Ukoloni",
+        "subtitle": "Miyaha 450 ya omutumiha wa Potokeezi ku Moçambique.",
+        "footer": "Omala wa okhaliwa — 25 wa Juni 1975"
+      },
+      "independent": {
+        "title": "MALAPO A ONYIVALEIHA",
+        "subtitle": "Wona malapo a onyivaleiha a Moçambique — okhuma 1975 mpaka lelo.",
+        "footer": "Moçambique — malapo anakhuma"
+      }
+    }
+  },
+  "Hero": {
+    "title": "Malapo, Nthowa na Nturukhu",
+    "subtitle": "Yonthe ya Moçambique, okhala muthukumano mmoha.",
+    "description": "Riendzo enavanha malove, okhaliherya osyaka, muthukumano wa maana, oloka ni maarupelo a makina muthukumano mmoha wa dijitali.",
+    "bottomNote": "Pulatifomu ya Dijitali ya Osyaka Moçambique"
+  },
+  "Music": {
+    "title": "Risimu ra Mozambique",
+    "subtitle": "Mimpfumawulo, Matimu ni Vayimbeleri va Mozambique",
+    "description": "Kuma mimpfumawulo, vayimbeleri, ma-album ni matimu lama nga vumba ndhavuko wa risimu ra Mozambique.",
+    "artists": {
+      "label": "VAYIMBELERI",
+      "title": "Vayimbeleri va Mozambique",
+      "description": "Matimu ya vona, mintirho ni mintirho ya vutshila ya vayimbeleri va Mozambique."
+    },
+    "discographies": {
+      "label": "MINTIRHO",
+      "title": "Ma-album ni Discografia",
+      "description": "Kuma ma-album, ti-single ni mintirho ya risimu ya vayimbeleri."
+    },
+    "genres": {
+      "label": "MIMPfumawulo",
+      "title": "Tinxaka ta Risimu ni Mimpfumawulo",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house ni swin'wana."
+    },
+    "history": {
+      "label": "MATIMU",
+      "title": "Matimu ya Risimu",
+      "description": "Kuma ndlela leyi risimu ra Mozambique ri nga kula ha yona eka switukulwana swo hambana."
+    }
+  },
+  "Home": {
+    "explore": {
+      "eyebrow": "Wuupuwela Moçambique",
+      "title": "Soorya {count} sinaaphwanelaka",
+      "subtitle": "Okhuma ku Tofo mpaka ilha sa khalai kumpoto, mirette sinene sa wiira muhoolele Moçambique — mmuhakhu mmoha.",
+      "readMore": "Hiiha ohiya"
+    },
+    "history": {
+      "title": "Malapo a Okhupi",
+      "subtitle": "Okhuma Nthowa na Mwala mpaka Moçambique wa Lelo, ni mikhalelo {count}.",
+      "readMore": "Hiiha ohiya"
+    },
+    "services": {
+      "eyebrow": "Wa nthu",
+      "title": "Mirette sa Murimu",
+      "description": "Nikalata, ovaha, ewoona ni mikhoro — wooniha mirette sa murimu ni olapo wa naana.",
+      "directions": "Nlakano",
+      "open": "Wuupula",
+      "seeAll": "Wona sonthe",
+      "exploreAll": "Wona mirette sonthe",
+      "open24h": "Maora 24",
+      "emergencyEyebrow": "Hathi",
+      "emergencyTitle": "Mwaakhwa othandiwa vano?",
+      "emergencyAll": "Wona manambala onthe",
+      "emergencyNote": "Manambala anaweya wiirihana. Wunnyeliha ni nlakano nawo.",
+      "call": "Hiiha"
+    },
+    "entertainment": {
+      "title": "Osivela",
+      "description": "Wooniha sinaaphwanelaka ewoona Moçambique.",
+      "explore": "Wona"
+    }
+  },
+  "Topbar": {
+    "search": "Wooniha…",
+    "searchButton": "Wooniha"
+  }
+}

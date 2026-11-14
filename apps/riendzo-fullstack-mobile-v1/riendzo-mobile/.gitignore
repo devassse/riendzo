@@ -1,0 +1,12 @@
+node_modules/
+# resultados de compilação
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+ios/App/build/
+ios/App/Pods/
+ios/DerivedData/
+# copiados pelo `cap sync`
+android/app/src/main/assets/public/
+ios/App/App/public/
