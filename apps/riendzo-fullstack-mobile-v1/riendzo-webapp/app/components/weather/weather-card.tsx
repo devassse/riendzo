@@ -21,7 +21,7 @@ export default function WeatherCard() {
         <a href={WEATHER_URL} target="_blank" rel="noopener noreferrer" className={`${styles.card} ${styles.link}`} aria-label={`${t.weather} ${w.location}: ${w.temp}°C, ${label}. ${t.forecast}`} title={t.forecast}>
             <div className={styles.row}>
                 <span className={styles.temp}>{w.temp}°</span>
-                <WeatherIcon condition={w.condition} isDay={w.isDay} size={60} className={styles.icon} />
+                <WeatherIcon condition={w.condition} isDay={w.isDay} size={40} className={styles.icon} />
             </div>
             <p className={styles.cond}>{label}</p>
             <p className={styles.range}>

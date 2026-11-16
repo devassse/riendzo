@@ -1,9 +1,9 @@
 /* Hero weather card: compact and translucent so the hero video stays visible */
 .card {
   --wx-bg: #2b8fb4;
-  width: min(236px, 100%);
-  margin: -34px auto 14px;
-  padding: 11px 16px 10px;
+  width: min(146px, 100%);
+  margin: -60px auto 14px;
+  padding: 5px 12px 4px; 
   border-radius: 16px;
   text-align: left;
   color: #fff;
@@ -13,21 +13,25 @@
   backdrop-filter: blur(8px) saturate(1.2);
   box-shadow: 0 10px 26px -14px rgba(0, 30, 60, 0.55);
 }
+
 .row {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .temp {
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.03em;
 }
+
 .icon {
   flex-shrink: 0;
   filter: drop-shadow(0 4px 8px rgba(0, 30, 60, 0.25));
 }
+
 .card .cond,
 .card .range {
   margin: 0;
@@ -36,8 +40,16 @@
   font-weight: 700;
   line-height: 1.25;
 }
-.card .cond { margin-top: 6px; font-size: 16px; }
-.card .range { font-size: 13px; }
+
+.card .cond {
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.card .range {
+  font-size: 11px;
+}
+
 .card .place {
   margin: 4px 0 0;
   max-width: none;
@@ -46,9 +58,23 @@
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.82);
 }
-a.link { display: block; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-a.link:hover, a.link:focus-visible { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(0, 30, 60, 0.65); }
-a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+a.link {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a.link:hover,
+a.link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -12px rgba(0, 30, 60, 0.65);
+}
+
+a.link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
 
 /* Reserves the space while loading (no layout jump) */
 .skeleton {
@@ -56,8 +82,18 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   background: linear-gradient(135deg, rgba(28, 127, 166, 0.35), rgba(70, 174, 203, 0.35));
   animation: wxPulse 1.4s ease-in-out infinite;
 }
-@keyframes wxPulse { 50% { opacity: 0.55; } }
-@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+@keyframes wxPulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
 
 /* Fixed utility bar above the header */
 .bar {
@@ -70,6 +106,7 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   color: rgba(255, 255, 255, 0.72);
   font-size: 13px;
 }
+
 .inner {
   max-width: 1440px;
   height: 100%;
@@ -80,6 +117,7 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   justify-content: space-between;
   gap: 16px;
 }
+
 .left,
 .right {
   display: flex;
@@ -87,6 +125,7 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   gap: 20px;
   white-space: nowrap;
 }
+
 .weather {
   display: inline-flex;
   text-decoration: none;
@@ -95,15 +134,28 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   gap: 6px;
   color: rgba(255, 255, 255, 0.85);
 }
-.weather:hover, .weather:focus-visible { color: #00aefb; }
-.weatherIcon { color: #f5b942; --wx-bg: #050b1a; }
+
+.weather:hover,
+.weather:focus-visible {
+  color: #00aefb;
+}
+
+.weatherIcon {
+  color: #f5b942;
+  --wx-bg: #050b1a;
+}
+
 .right a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
 .right a:hover,
-.right a:focus-visible { color: #00aefb; }
+.right a:focus-visible {
+  color: #00aefb;
+}
+
 /* Search in the top bar */
 .search {
   display: flex;
@@ -114,7 +166,12 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   background: rgba(255, 255, 255, 0.06);
   transition: border-color 0.2s, background 0.2s;
 }
-.search:focus-within { border-color: #00aefb; background: rgba(255, 255, 255, 0.12); }
+
+.search:focus-within {
+  border-color: #00aefb;
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .search input {
   width: 190px;
   height: 100%;
@@ -125,7 +182,11 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   color: #fff;
   font-size: 12.5px;
 }
-.search input::placeholder { color: rgba(255, 255, 255, 0.55); }
+
+.search input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
 .search button {
   display: inline-flex;
   align-items: center;
@@ -137,7 +198,11 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
 }
-.search button:hover { color: #00aefb; }
+
+.search button:hover {
+  color: #00aefb;
+}
+
 /* Phones: the bar breaks into two lines (date + weather, then search + theme + social networks)
    instead of overflowing, and it scrolls away with the page so the header can stick to the top alone. */
 @media (max-width: 640px) {
@@ -145,12 +210,14 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
     position: static;
     height: auto;
   }
+
   .inner {
     height: auto;
     flex-wrap: wrap;
     row-gap: 6px;
     padding: 6px 12px;
   }
+
   .left,
   .right {
     width: 100%;
@@ -159,7 +226,20 @@ a.link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
     gap: 6px 14px;
     font-size: 12px;
   }
-  .right { justify-content: space-between; flex-wrap: nowrap; gap: 10px; }
-  .search { flex: 1 1 auto; min-width: 0; }
-  .search input { width: 100%; min-width: 0; }
+
+  .right {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .search {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .search input {
+    width: 100%;
+    min-width: 0;
+  }
 }

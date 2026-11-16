@@ -18,7 +18,7 @@ export default function SocialLinks({ size = 18, tone = "brand", className = "" 
     return (
         <ul className={`flex items-center gap-3 ${className}`} aria-label="Redes sociais">
             {SOCIALS.map((s) => (
-                <li key={s.id}>
+                <li className="flex" key={s.id}>
                     <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label} className={`inline-flex transition-colors ${color} ${pad}`}>
                         <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true"><path d={PATHS[s.id]} /></svg>
                     </a>

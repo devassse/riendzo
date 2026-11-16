@@ -51,7 +51,7 @@ export default function RiendzoTopbar() {
             </button>
           </form>
           <ThemeToggle tone="light" />
-          <SocialLinks size={15} tone="light" />
+          <SocialLinks size={17} tone="light" />
         </div>
       </div>
     </div>
