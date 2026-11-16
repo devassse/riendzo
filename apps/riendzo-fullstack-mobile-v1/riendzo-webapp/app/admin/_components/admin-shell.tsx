@@ -78,24 +78,11 @@ export default function AdminShell({
             <Link href="/admin" onClick={close} className={row(pathname === "/admin")}>
                 <I d={HOME} /> Dashboard
             </Link>
+
             <Link href="/admin/home" onClick={close} className={`${row(pathname === "/admin/home")} mt-1`}>
                 <I d={HOME} /> Home (página inicial)
             </Link>
-            <Link href="/admin/territorios" onClick={close} className={`${row(pathname === "/admin/territorios")} mt-1`}>
-                <I d={HOME} /> Divisão administrativa
-            </Link>
-            <Link href="/admin/textos" onClick={close} className={`${row(pathname === "/admin/textos")} mt-1`}>
-                <I d={HELP} /> Textos das páginas
-            </Link>
-            <Link href="/admin/linhas-do-tempo" onClick={close} className={`${row(pathname === "/admin/linhas-do-tempo")} mt-1`}>
-                <I d={HELP} /> Linhas do tempo
-            </Link>
-            <Link href="/admin/historia" onClick={close} className={`${row(pathname === "/admin/historia")} mt-1`}>
-                <I d={IMAGES} /> Aspeto da Cronologia
-            </Link>
-            <Link href="/admin/media" onClick={close} className={`${row(pathname === "/admin/media")} mt-1`}>
-                <I d={IMAGES} /> Biblioteca de media
-            </Link>
+            
             <Link href="/admin/locais-sugeridos" onClick={close} className={`${row(pathname.startsWith("/admin/locais-sugeridos"))} mt-1`}>
                 <I d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
                 <span className="flex-1">Locais sugeridos</span>
@@ -136,6 +123,27 @@ export default function AdminShell({
                     );
                 })}
             </div>
+
+            
+            <Link href="/admin/territorios" onClick={close} className={`${row(pathname === "/admin/territorios")} mt-1`}>
+                <I d={HOME} /> Divisão administrativa
+            </Link>
+            
+            <Link href="/admin/linhas-do-tempo" onClick={close} className={`${row(pathname === "/admin/linhas-do-tempo")} mt-1`}>
+                <I d={HELP} /> Linhas do tempo
+            </Link>
+
+            <Link href="/admin/textos" onClick={close} className={`${row(pathname === "/admin/textos")} mt-1`}>
+                <I d={HELP} /> Textos das páginas
+            </Link>
+
+            <Link href="/admin/media" onClick={close} className={`${row(pathname === "/admin/media")} mt-1`}>
+                <I d={IMAGES} /> Biblioteca de media
+            </Link>
+
+            <Link href="/admin/historia" onClick={close} className={`${row(pathname === "/admin/historia")} mt-1`}>
+                <I d={IMAGES} /> Aspeto da Cronologia
+            </Link>
 
             {role === "admin" && (
                 <div className="mt-1">

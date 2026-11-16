@@ -49,9 +49,6 @@ export default function RiendzoFooter() {
 
                         <p className="mt-6 text-sm font-semibold text-[#0058b7]">Siga-nos</p>
                         <SocialLinks className="mt-3" />
-
-                        <p className="mt-6 text-sm font-semibold text-[#0058b7]">Aplicações móveis</p>
-                        <AppBadges className="mt-3" />
                     </div>
 
                     {/* Explorar */}
@@ -214,6 +211,8 @@ export default function RiendzoFooter() {
                                 </Link>
                             </li>
                         </ul>
+
+                        <AppBadges className="mt-3" />
                     </div>
                 </div>
 

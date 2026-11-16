@@ -16,7 +16,7 @@ export default function AppBadges({ className = "" }: { className?: string }) {
             {BADGES.map((b) => (
                 <li key={b.label}>
                     <span className="relative block select-none" role="img" aria-label={`${b.label}: em breve`}>
-                        <Image src={b.src} alt="" width={b.w} height={b.h} sizes="150px" className="h-auto w-[150px] cursor-default" draggable={false} />
+                        <Image src={b.src} alt="" width={b.w} height={b.h} sizes="100px" className="h-auto w-[150px] cursor-default" draggable={false} />
                         <SoonTag />
                     </span>
                 </li>
