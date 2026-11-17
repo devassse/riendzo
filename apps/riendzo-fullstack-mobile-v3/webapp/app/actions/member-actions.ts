@@ -126,6 +126,25 @@ export async function sendMessageAction(_: FormState, fd: FormData): Promise<For
     return { ok: "Mensagem enviada. Obrigado!" };
 }
 
+export type ContactState = FormState & { values?: { name: string; email: string; phone: string; message: string } };
+
+/** Public contact form: e-mail and phone are separate fields (at least one is required). */
+export async function sendContactAction(_: ContactState, fd: FormData): Promise<ContactState> {
+    if (fd.get("website")) return { ok: "Mensagem enviada." }; // honeypot: pretend success
+    const values = { name: str(fd.get("name"), 80), email: str(fd.get("email"), 120).toLowerCase(), phone: str(fd.get("phone"), 30), message: str(fd.get("message"), 2000) };
+    const fail = (error: string): ContactState => ({ error, values }); // keeps what was typed
+    const who = await ip();
+    if (isLockedOut(`msg:${who}`)) return fail("Demasiadas mensagens. Tente mais tarde.");
+    if (!values.name || values.message.length < 5) return fail("Preencha o nome e a mensagem.");
+    if (!values.email && !values.phone) return fail("Indique pelo menos um contacto: e-mail ou telefone.");
+    if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email)) return fail("O e-mail não parece válido.");
+    const digits = values.phone.replace(/\D/g, "");
+    if (values.phone && (!/^[+\d\s().-]+$/.test(values.phone) || digits.length < 7 || digits.length > 15)) return fail("O telefone não parece válido.");
+    registerFailure(`msg:${who}`); // counts every message: max 5 / 15 min per IP
+    await addMessage({ name: values.name, contact: [values.email, values.phone].filter(Boolean).join(" · "), email: values.email || undefined, phone: values.phone || undefined, message: values.message });
+    return { ok: "Mensagem enviada. Obrigado!" };
+}
+
 export async function removeFavoriteAction(fd: FormData) {
     const m = await requireMember("/conta/favoritos");
     const collection = String(fd.get("collection") ?? ""), slug = String(fd.get("slug") ?? "");
