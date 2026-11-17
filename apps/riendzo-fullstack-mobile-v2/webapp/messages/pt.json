@@ -1,0 +1,516 @@
+{
+  "Navigation": {
+    "home": "Início",
+    "history": "História",
+    "music": "Música",
+    "tourism": "Turismo",
+    "gastronomy": "Gastronomia",
+    "portal": "Portal"
+  },
+  "History": {
+    "title": "História de Moçambique",
+    "ancient": "História Antiga",
+    "colonial": "Período Colonial",
+    "modern": "Moçambique Moderno",
+    "sections": {
+      "realms": {
+        "title": "Reinos e Impérios",
+        "subtitle": "Antes das caravelas, já existiam impérios, reinos e grandes centros comerciais."
+      },
+      "ancient": {
+        "title": "História Antiga",
+        "subtitle": "Explore a rica história antiga de Moçambique."
+      },
+      "colonial": {
+        "eyebrow": "Registo colonial · 1505 - 1975",
+        "title": "História Colonial",
+        "subtitle": "Quatro séculos e meio de administração portuguesa em Moçambique, da fortaleza da Ilha à independência.",
+        "footer": "Fim do registo — 25 de Junho de 1975"
+      },
+      "independent": {
+        "title": "HISTÓRIA INDEPENDENTE",
+        "subtitle": "Explore a rica história independente de Moçambique — de 1975 até hoje.",
+        "footer": "Moçambique — uma história em curso"
+      }
+    }
+  },
+  "Hero": {
+    "title": "História, Cultura e Serviços",
+    "subtitle": "Tudo Que É Moçambicano, Em Um Só Lugar.",
+    "description": "Riendzo combina conteúdo, descoberta, informação prática, turismo e inteligência artificial em uma única experiência digital.",
+    "bottomNote": "Plataforma Digital para Descobrir Moçambique"
+  },
+  "Music": {
+    "title": "Música Moçambicana",
+    "subtitle": "Sons, Histórias e Artistas de Moçambique",
+    "description": "Explore os ritmos, artistas, álbuns e histórias que moldaram a identidade musical de Moçambique.",
+    "artists": {
+      "label": "ARTISTAS",
+      "title": "Artistas Moçambicanos",
+      "description": "Biografias, carreiras e obras dos músicos moçambicanos."
+    },
+    "artistsSection": {
+      "title": "Artistas Moçambicanos",
+      "description": "Breves descrições dos artistas e músicos de Moçambique",
+      "songs": "Songs",
+      "viewProfile": "Ver Perfil",
+      "chips": {
+        "marrabenta": "Marrabenta",
+        "pandza": "Pandza",
+        "afroHouse": "Afro-House",
+        "hipHop": "Hip-Hop"
+      },
+      "filters": {
+        "all": "Todos",
+        "filters": "Filtros",
+        "results": "Resultados",
+        "search": "Pesquisar",
+        "noResults": "Sem Resultados"
+      }
+    },
+    "discographies": {
+      "label": "OBRAS",
+      "title": "Álbuns & Discografias",
+      "description": "Explore álbuns, singles e as principais obras musicais de cada artista."
+    },
+    "genres": {
+      "label": "RITMOS",
+      "title": "Géneros & Ritmos",
+      "description": "Marrabenta, Pandza, Timbila, Xigubo, Afro-house e muito mais."
+    },
+    "history": {
+      "label": "MEMÓRIA",
+      "title": "História da Música",
+      "description": "Descubra a evolução da música moçambicana através das gerações."
+    }
+  },
+  "catalog": {
+    "all": "Todos",
+    "search": "Pesquisar",
+    "noResults": "Sem resultados",
+    "results": "{count} resultados",
+    "page": "Página {count}",
+    "prev": "Anterior",
+    "next": "Seguinte",
+    "close": "Fechar",
+    "open": "Ver detalhes",
+    "photoSoon": "Foto em breve",
+    "tip": "Dica",
+    "categoriesAria": "Categorias",
+    "paginationAria": "Paginação",
+    "contact": "Contactos",
+    "whatsapp": "WhatsApp",
+    "call": "Ligar",
+    "sendEmail": "E-mail",
+    "website": "Website",
+    "openMap": "Ver no mapa",
+    "videos": "Vídeos",
+    "featured": "Patrocinado",
+    "gallery": "Ver fotografias",
+    "addFavorite": "Adicionar aos favoritos",
+    "removeFavorite": "Remover dos favoritos",
+    "directions": "Como chegar",
+    "openPage": "Abrir página completa",
+    "offersTitle": "Preços e ofertas",
+    "unavailable": "Indisponível",
+    "openNow": "Aberto agora",
+    "closingSoon": "A fechar",
+    "closed": "Fechado",
+    "opensAt": "Abre às {time}",
+    "open24h": "Aberto 24 horas",
+    "about": "Sobre",
+    "schedule": "Horário",
+    "location": "Localização",
+    "share": "Partilhar",
+    "scanQr": "Leia o QR Code para abrir esta página no telemóvel."
+  },
+  "tourism": {
+    "title": "Turismo",
+    "description": "Praias de sonho, parques cheios de vida selvagem, cidades históricas e roteiros prontos para planear a sua viagem a Moçambique.",
+    "keywords": {
+      "k1": "Praias",
+      "k2": "Safári",
+      "k3": "História",
+      "k4": "Aventura"
+    },
+    "hub": {
+      "title": "Explore Moçambique",
+      "description": "Escolha por onde começar: mar, natureza, património ou um roteiro completo.",
+      "cta": "Explorar"
+    },
+    "pages": {
+      "beaches": {
+        "label": "PRAIAS",
+        "title": "Praias & Ilhas",
+        "description": "Bazaruto, Tofo, Vilankulo, Ponta d'Ouro e outras costas para mergulhar, descansar e navegar."
+      },
+      "parks": {
+        "label": "NATUREZA",
+        "title": "Parques Nacionais",
+        "description": "Gorongosa, Niassa, Limpopo e outras áreas protegidas para safári e caminhadas."
+      },
+      "routes": {
+        "label": "ROTEIROS",
+        "title": "Roteiros Sugeridos",
+        "description": "Itinerários prontos, dia a dia, para cidades, praias e parques."
+      },
+      "lodging": {
+        "label": "ALOJAMENTO",
+        "title": "Alojamentos",
+        "description": "Hotéis, guest houses e lodges com quartos, fotografias e preços."
+      },
+      "guides": {
+        "label": "GUIAS",
+        "title": "Guias Turísticos",
+        "description": "Guias registados que pode contactar por telefone ou WhatsApp."
+      },
+      "transport": {
+        "label": "TRANSPORTES",
+        "title": "Transportes & Operadores",
+        "description": "Voos, autocarros, ferries e operadores turísticos."
+      },
+      "rentacar": {
+        "label": "RENT-A-CAR",
+        "title": "Rent-a-car",
+        "description": "Aluguer de viaturas: frota, fotografias, condições e preços."
+      }
+    }
+  },
+  "services": {
+    "title": "Serviços Públicos",
+    "description": "Informação clara sobre documentos, saúde, educação e impostos, para resolver o essencial com menos voltas.",
+    "keywords": {
+      "k1": "Documentos",
+      "k2": "Saúde",
+      "k3": "Educação",
+      "k4": "Impostos"
+    },
+    "hub": {
+      "title": "Como podemos ajudar?",
+      "description": "Guias práticos e passo a passo. Confirme sempre taxas e prazos junto das entidades oficiais.",
+      "cta": "Ver guia"
+    },
+    "pages": {
+      "documents": {
+        "label": "DOCUMENTOS",
+        "title": "Documentos & BI",
+        "description": "BI, passaporte, certidões, carta de condução e outros documentos essenciais."
+      },
+      "health": {
+        "label": "SAÚDE",
+        "title": "Saúde",
+        "description": "Unidades sanitárias, vacinação, prevenção e números de emergência."
+      },
+      "education": {
+        "label": "EDUCAÇÃO",
+        "title": "Educação",
+        "description": "Matrículas, calendário escolar, ensino superior e bolsas de estudo."
+      },
+      "taxes": {
+        "label": "IMPOSTOS",
+        "title": "Impostos & Taxas",
+        "description": "NUIT, e-Tributação, IRPS, IVA e orientações para pequenos negócios."
+      },
+      "banks": {
+        "label": "BANCOS",
+        "title": "Bancos",
+        "description": "Bancos, balcões, horários e como chegar."
+      },
+      "commerce": {
+        "label": "COMÉRCIO",
+        "title": "Mercados, Supermercados & Lojas",
+        "description": "Onde comprar, com horários, produtos e preços."
+      },
+      "fuel": {
+        "label": "COMBUSTÍVEL",
+        "title": "Bombas de Combustível",
+        "description": "Postos de abastecimento e serviços."
+      },
+      "emergency": {
+        "label": "EMERGÊNCIAS",
+        "title": "Emergências",
+        "description": "Bombeiros, polícia, ambulâncias e linhas de apoio."
+      },
+      "schools": {
+        "label": "ESCOLAS",
+        "title": "Escolas & Centros Literários",
+        "description": "Escolas, universidades, bibliotecas e centros culturais."
+      },
+      "comms": {
+        "label": "COMUNICAÇÕES",
+        "title": "Telefonia, TV & Rádio",
+        "description": "Operadoras de telefonia, televisões e rádios nacionais."
+      },
+      "general": {
+        "label": "GERAIS",
+        "title": "Serviços Gerais",
+        "description": "Canalizadores, eletricistas, mecânicos, limpeza e outros profissionais do dia a dia."
+      }
+    }
+  },
+  "entertainment": {
+    "title": "Entretenimento",
+    "description": "Cinema, festivais, desporto e cultura pop: o que fazer, ver e viver em Moçambique.",
+    "keywords": {
+      "k1": "Cinema",
+      "k2": "Festivais",
+      "k3": "Desporto",
+      "k4": "Cultura pop"
+    },
+    "hub": {
+      "title": "Em cena",
+      "description": "Descubra filmes, eventos, craques e jogos que fazem a cultura do país.",
+      "cta": "Explorar"
+    },
+    "pages": {
+      "cinema": {
+        "label": "CINEMA",
+        "title": "Cinema & Séries",
+        "description": "Realizadores, filmes e festivais do cinema moçambicano."
+      },
+      "events": {
+        "label": "EVENTOS",
+        "title": "Eventos",
+        "description": "Festivais, feiras e celebrações ao longo do ano."
+      },
+      "sports": {
+        "label": "DESPORTO",
+        "title": "Desporto",
+        "description": "Futebol, atletismo, basquetebol e desportos de mar."
+      },
+      "games": {
+        "label": "CULTURA POP",
+        "title": "Jogos & Cultura Pop",
+        "description": "Jogos tradicionais, moda, hip-hop, arte urbana e gíria."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Notícias explicadas, cultura, dicas de viagem e opinião: histórias para conhecer melhor Moçambique.",
+    "keywords": {
+      "k1": "Notícias",
+      "k2": "Cultura",
+      "k3": "Viagens",
+      "k4": "Opinião"
+    },
+    "hub": {
+      "title": "Ler e descobrir",
+      "description": "Escolha uma secção e mergulhe nas histórias da Riendzo.",
+      "cta": "Ler"
+    },
+    "pages": {
+      "news": {
+        "label": "NOTÍCIAS",
+        "title": "Últimas Notícias",
+        "description": "Explicadores sobre temas que marcam a atualidade moçambicana."
+      },
+      "culture": {
+        "label": "CULTURA",
+        "title": "Cultura",
+        "description": "Tradições, artes e personalidades que contam o país."
+      },
+      "travel": {
+        "label": "VIAGENS",
+        "title": "Viagens",
+        "description": "Dicas práticas para planear e viver a viagem."
+      },
+      "opinion": {
+        "label": "OPINIÃO",
+        "title": "Opinião",
+        "description": "Colunas e ideias sobre cultura, turismo, língua e futuro."
+      },
+      "creators": {
+        "label": "CRIADORES",
+        "title": "Criadores de Conteúdo",
+        "description": "Criadores nacionais de culinária, viagens, música e muito mais."
+      }
+    }
+  },
+  "gastronomy": {
+    "title": "Gastronomia",
+    "description": "Sabores de Moçambique: pratos tradicionais, mariscos, especiarias e bebidas de norte a sul.",
+    "timeline": {
+      "roots": "Raízes",
+      "coast": "Costa",
+      "spices": "Especiarias",
+      "fusion": "Fusão",
+      "today": "Hoje"
+    },
+    "dishes": {
+      "label": "PRATOS",
+      "title": "Receitas Tradicionais"
+    },
+    "ingredients": {
+      "label": "RESTAURANTES",
+      "title": "Restaurantes"
+    },
+    "drinks": {
+      "label": "BEBIDAS",
+      "title": "Bebidas Locais"
+    },
+    "recipes": {
+      "label": "RECEITAS",
+      "title": "Frutos do Mar"
+    },
+    "hub": {
+      "title": "Explore a mesa moçambicana",
+      "description": "Receitas, mariscos, especiarias e bebidas para cozinhar e descobrir.",
+      "cta": "Explorar"
+    },
+    "recipesSection": {
+      "title": "Receitas Tradicionais",
+      "description": "Matapa, xima, caril e muito mais: receitas passo a passo da cozinha moçambicana.",
+      "search": "Pesquisar",
+      "all": "Todas",
+      "noResults": "Sem resultados",
+      "results": "{count} receitas",
+      "page": "Página {count}",
+      "prev": "Anterior",
+      "next": "Seguinte",
+      "close": "Fechar",
+      "viewRecipe": "Ver receita",
+      "photoSoon": "Foto em breve",
+      "ingredients": "Ingredientes",
+      "steps": "Preparação",
+      "tip": "Dica",
+      "minutes": "{count} min",
+      "servings": "{count} pessoas",
+      "difficulty": {
+        "easy": "Fácil",
+        "medium": "Média",
+        "hard": "Difícil"
+      },
+      "categories": {
+        "seafood": "Mariscos",
+        "meat": "Carnes",
+        "curry": "Caril",
+        "vegetables": "Legumes",
+        "sides": "Acompanhamentos",
+        "snacks": "Petiscos",
+        "sauces": "Molhos",
+        "desserts": "Sobremesas",
+        "drinks": "Bebidas",
+        "refreshing": "Refrescos",
+        "alcoholic": "Alcoólicas",
+        "hot": "Quentes"
+      }
+    },
+    "drinksSection": {
+      "title": "Bebidas Locais",
+      "description": "Sumos tropicais, chás e bebidas para brindar: do refresco de maracujá à 2M bem gelada.",
+      "search": "Pesquisar",
+      "all": "Todas",
+      "noResults": "Sem resultados",
+      "results": "{count} bebidas",
+      "page": "Página {count}",
+      "prev": "Anterior",
+      "next": "Seguinte",
+      "close": "Fechar",
+      "viewRecipe": "Ver receita",
+      "photoSoon": "Foto em breve",
+      "ingredients": "Ingredientes",
+      "steps": "Preparação",
+      "tip": "Dica",
+      "minutes": "{count} min",
+      "servings": "{count} pessoas",
+      "difficulty": {
+        "easy": "Fácil",
+        "medium": "Média",
+        "hard": "Difícil"
+      },
+      "categories": {
+        "seafood": "Mariscos",
+        "meat": "Carnes",
+        "curry": "Caril",
+        "vegetables": "Legumes",
+        "sides": "Acompanhamentos",
+        "snacks": "Petiscos",
+        "sauces": "Molhos",
+        "desserts": "Sobremesas",
+        "drinks": "Bebidas",
+        "refreshing": "Refrescos",
+        "alcoholic": "Alcoólicas",
+        "hot": "Quentes"
+      }
+    },
+    "mariscosSection": {
+      "title": "Frutos do Mar",
+      "description": "Camarão, caranguejo, lagosta e peixe: receitas da costa.",
+      "ingredients": "Ingredientes",
+      "steps": "Preparação",
+      "tip": "Dica",
+      "videos": "Vídeos",
+      "minutes": "{count} min",
+      "servings": "{count} pessoas",
+      "videoBy": "por {creator}",
+      "difficulty": {
+        "easy": "Fácil",
+        "medium": "Média",
+        "hard": "Difícil"
+      },
+      "viewRecipe": "Ver receita",
+      "hasVideo": "Tem vídeo",
+      "photoSoon": "Foto em breve",
+      "close": "Fechar"
+    },
+    "especiariasSection": {
+      "title": "Piri-piri & Especiarias",
+      "description": "A herança viva da rota das especiarias: sabores, usos e combinações.",
+      "flavor": "Sabor",
+      "uses": "Usos",
+      "pairsWith": "Combina com",
+      "dishes": "Pratos",
+      "storage": "Conservação",
+      "region": "Região",
+      "videos": "Vídeos",
+      "heat": "Picância {level} de 5",
+      "videoBy": "por {creator}",
+      "viewDetails": "Ver detalhes",
+      "hasVideo": "Tem vídeo",
+      "photoSoon": "Foto em breve",
+      "close": "Fechar"
+    },
+    "restaurantsSection": {
+      "title": "Restaurantes",
+      "description": "Restaurantes com menu, preços, horários e página própria. Abra um para ver os pratos."
+    }
+  },
+  "Home": {
+    "explore": {
+      "eyebrow": "Explorar Moçambique",
+      "title": "{count} experiências imperdíveis",
+      "subtitle": "De tubarões-baleia em Tofo a ilhas históricas no norte, algumas das melhores razões para visitar Moçambique — reunidas num só lugar.",
+      "readMore": "Ler mais"
+    },
+    "history": {
+      "title": "Breve História",
+      "subtitle": "Da Idade da Pedra à Moçambique de hoje, em {count} capítulos — um resumo rápido antes de explorar cada era em detalhe.",
+      "readMore": "Ler mais"
+    },
+    "services": {
+      "eyebrow": "Para o cidadão",
+      "title": "Serviços Públicos",
+      "description": "Documentos, saúde, educação e impostos — encontre serviços públicos, consulte informações úteis e trace o caminho até à unidade que procura.",
+      "directions": "Como chegar",
+      "open": "Abrir",
+      "seeAll": "Ver todos os serviços",
+      "exploreAll": "Explorar todos os Serviços Públicos",
+      "open24h": "24 horas",
+      "emergencyEyebrow": "Emergências",
+      "emergencyTitle": "Precisa de ajuda agora?",
+      "emergencyAll": "Ver todos os contactos",
+      "emergencyNote": "Os números podem variar por zona ou operadora. Confirme nos canais oficiais.",
+      "call": "Ligar"
+    },
+    "entertainment": {
+      "title": "Entretenimento",
+      "description": "Descubra o que fazer em Moçambique, de concertos a festivais, de jogos a filmes.",
+      "explore": "Explorar"
+    }
+  },
+  "Topbar": {
+    "search": "Pesquisar…",
+    "searchButton": "Pesquisar"
+  }
+}

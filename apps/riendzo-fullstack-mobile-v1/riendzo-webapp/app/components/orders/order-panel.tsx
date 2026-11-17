@@ -3,13 +3,15 @@
 import { useActionState, useEffect, useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { placeOrderAction, type OrderState } from "@/app/actions/order-actions";
-import { MODES, type OrderKind } from "@/lib/order-types";
+import { KIND_TEXT, MODES, type OrderKind } from "@/lib/order-types";
 import { ORDER_ADD_EVENT } from "@/lib/order-events";
 
 export type PanelOffer = { group: string; name: string; description?: string; price?: number; priceNote?: string };
 export type PanelProps = {
     kind: OrderKind; collection: string; slug: string; offers: PanelOffer[]; currency: string; color: string;
     who: "guest" | "free" | "premium"; freeLeft: number; freeLimit: number; phone: string; next: string;
+    /** the establishment has no account yet: the Riendzo team receives the order and forwards it */
+    viaRiendzo?: boolean;
 };
 
 const input = "mt-1 w-full rounded-xl border border-[#0b1220]/15 bg-white px-3 py-2 text-sm outline-none focus:border-[#0370d6]";
@@ -30,6 +32,7 @@ export default function OrderPanel(p: PanelProps) {
     const [flash, setFlash] = useState("");
     const key = (o: PanelOffer) => `${o.group}||${o.name}`;
     const food = p.kind === "food";
+    const txt = KIND_TEXT[p.kind];
 
     const lines = useMemo(() => {
         if (food) return p.offers.filter((o) => qty[key(o)] > 0).map((o) => ({ group: o.group, name: o.name, qty: qty[key(o)] }));
@@ -39,6 +42,9 @@ export default function OrderPanel(p: PanelProps) {
     const total = food && p.offers.every((o) => !(qty[key(o)] > 0) || typeof o.price === "number")
         ? p.offers.reduce((n, o) => n + (qty[key(o)] > 0 ? o.price! * qty[key(o)] : 0), 0) : null;
     const groups = [...new Set(p.offers.map((o) => o.group))];
+    // earliest date the calendar offers (Maputo time), set after mount to avoid a server/browser mismatch
+    const [today, setToday] = useState<string>();
+    useEffect(() => { setToday(new Date().toLocaleDateString("sv-SE", { timeZone: "Africa/Maputo" })); }, []);
 
     // The details popup of an item asks to add it here ("Adicionar ao pedido" / "Solicitar reserva")
     useEffect(() => {
@@ -61,6 +67,7 @@ export default function OrderPanel(p: PanelProps) {
         return (
             <div className="rounded-2xl border border-[#0b1220]/10 bg-[#f6f8fc] p-4 text-sm">
                 <p>{food ? "Entre na sua conta Riendzo para fazer um pedido a este restaurante." : "Entre na sua conta Riendzo para pedir uma reserva."}</p>
+                <p className="mt-1 text-xs text-[#5b6478]">{food ? "Com o Premium acompanha cada pedido em tempo real." : "As reservas de quartos, viaturas e passeios são para membros Premium."}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                     <Link href={`/conta/entrar?next=${encodeURIComponent(p.next)}`} className="rounded-full bg-[#0054b5] px-4 py-2 font-medium text-white hover:opacity-90">Entrar</Link>
                     <Link href={`/conta/registar?next=${encodeURIComponent(p.next)}`} className="rounded-full border border-[#0b1220]/20 px-4 py-2 hover:bg-white">Criar conta grátis</Link>
@@ -68,7 +75,7 @@ export default function OrderPanel(p: PanelProps) {
             </div>
         );
     }
-    if (p.who === "free" && !food) return <Upsell><p>As <b>reservas de alojamento e viaturas</b> são para membros Premium, com acompanhamento do pedido em tempo real.</p></Upsell>;
+    if (p.who === "free" && !food) return <Upsell><p>As <b>reservas de alojamento, viaturas e passeios</b> são para membros Premium, com acompanhamento do pedido em tempo real.</p></Upsell>;
     if (p.who === "free" && p.freeLeft <= 0) return <Upsell><p>Já usou os seus <b>{p.freeLimit} pedidos gratuitos</b>. Subscreva o Premium para continuar a pedir e acompanhar cada pedido em tempo real.</p></Upsell>;
 
     return (
@@ -80,6 +87,12 @@ export default function OrderPanel(p: PanelProps) {
             {p.who === "free" && (
                 <p className="rounded-2xl bg-[#ffc14d]/25 px-4 py-3 text-xs text-[#6b4700]">
                     Conta gratuita: ainda pode fazer <b>{p.freeLeft} de {p.freeLimit}</b> pedidos. O restaurante vai <b>contactá-lo por telefone</b>. Com o <Link href="/conta/premium" className="font-medium underline">Premium</Link> acompanha o pedido em tempo real.
+                </p>
+            )}
+
+            {p.viaRiendzo && (
+                <p className="rounded-2xl bg-[#f3f8ff] px-4 py-3 text-xs text-[#0b4a99]">
+                    Este estabelecimento recebe os pedidos através da <b>equipa Riendzo</b>: confirmamos consigo assim que tivermos a resposta.
                 </p>
             )}
 
@@ -120,7 +133,7 @@ export default function OrderPanel(p: PanelProps) {
             ) : (
                 <div className="space-y-4">
                     <fieldset>
-                        <legend className="text-sm font-medium">{p.kind === "lodging" ? "Escolha o quarto" : "Escolha a viatura"} *</legend>
+                        <legend className="text-sm font-medium">{txt.pick} *</legend>
                         <div className="mt-2 space-y-2">
                             {p.offers.map((o) => (
                                 <label key={key(o)} className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#0b1220]/10 px-3 py-2.5 has-[:checked]:border-[#0054b5] has-[:checked]:bg-[#f3f8ff]">
@@ -132,9 +145,9 @@ export default function OrderPanel(p: PanelProps) {
                         </div>
                     </fieldset>
                     <div className="grid gap-3 sm:grid-cols-3">
-                        <label className="block text-xs font-medium">{p.kind === "lodging" ? "Entrada" : "Levantar"} *<input type="date" name="from" required className={input} /></label>
-                        <label className="block text-xs font-medium">{p.kind === "lodging" ? "Saída" : "Devolver"} *<input type="date" name="to" required className={input} /></label>
-                        {p.kind === "lodging" && <label className="block text-xs font-medium">Hóspedes<input type="number" name="guests" min={1} max={30} defaultValue={2} className={input} /></label>}
+                        <label className="block text-xs font-medium">{txt.from} *<input type="date" name="from" required min={today} className={input} /></label>
+                        {txt.to && <label className="block text-xs font-medium">{txt.to} *<input type="date" name="to" required min={today} className={input} /></label>}
+                        {txt.people && <label className="block text-xs font-medium">{txt.people}<input type="number" name="guests" min={1} max={p.kind === "tour" ? 50 : 30} defaultValue={2} className={input} /></label>}
                     </div>
                 </div>
             )}

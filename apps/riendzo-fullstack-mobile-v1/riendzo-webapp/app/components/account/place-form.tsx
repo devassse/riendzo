@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { savePlaceAction, type PlaceState } from "@/app/actions/place-actions";
 import { MAX_PHOTOS, PLACE_KINDS, type MemberPlace } from "@/lib/place-types";
 import Req, { RequiredNote } from "@/app/components/utils/req";
@@ -33,6 +33,20 @@ export default function PlaceForm({ place, provinces }: { place?: MemberPlace; p
     const [err, setErr] = useState("");
     const [gps, setGps] = useState("");
     const fileRef = useRef<HTMLInputElement>(null);
+    const errRef = useRef<HTMLParagraphElement>(null);
+
+    // React clears a form after a <form action> submit, even when saving fails. We submit by hand
+    // instead, so everything the person typed stays in place and they only fix what is wrong.
+    function submit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const submitter = (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+        const fd = new FormData(form);
+        if (submitter?.name) fd.set(submitter.name, submitter.value);
+        startTransition(() => action(fd));
+    }
+    // show the error where the buttons are (on phones the form is long)
+    useEffect(() => { if (state.error) errRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }, [state]);
 
     async function upload(files: FileList | null) {
         if (!files?.length) return;
@@ -62,8 +76,8 @@ export default function PlaceForm({ place, provinces }: { place?: MemberPlace; p
     }
 
     return (
-        <form action={action} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
-            {place && <input type="hidden" name="id" value={place.id} />}
+        <form onSubmit={submit} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
+            {(place?.id ?? state.id) && <input type="hidden" name="id" value={place?.id ?? state.id} />}
             {photos.map((p) => <input key={p} type="hidden" name="photos" value={p} />)}
 
             <div className={`${card} space-y-5`}>
@@ -143,7 +157,7 @@ export default function PlaceForm({ place, provinces }: { place?: MemberPlace; p
                 <div className={card}>
                     <h2 className="font-baloo text-lg font-bold">Guardar</h2>
                     <p className="mt-1 text-sm text-[#4b5568]">Guarde o local no seu perfil. Só você o vê, até decidir partilhá-lo.</p>
-                    {state.error && <p role="alert" className="mt-3 rounded-xl bg-[#e5533d]/10 px-3 py-2 text-xs text-[#b5311d]">{state.error}</p>}
+                    {state.error && <p ref={errRef} role="alert" className="mt-3 rounded-xl bg-[#e5533d]/10 px-3 py-2 text-xs text-[#b5311d]">{state.error}{state.id && !place && <span className="mt-1 block text-[#4b5568]">O local ficou guardado só para si. Complete o que falta e volte a sugerir.</span>}</p>}
                     <RequiredNote />
                     <button type="submit" name="intent" value="save" disabled={pending || busy} className="mt-3 w-full cursor-pointer rounded-full bg-[#0054b5] px-5 py-3 font-baloo text-sm font-medium text-white hover:opacity-90 disabled:opacity-60">{pending ? "A guardar…" : "Guardar só para mim"}</button>
                 </div>

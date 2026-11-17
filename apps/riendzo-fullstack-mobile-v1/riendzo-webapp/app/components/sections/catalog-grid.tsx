@@ -9,6 +9,8 @@ import type { CatalogItem, CatalogLabels } from "./catalog-types";
 import RichText from "./rich-text";
 import VideoEmbed from "./video-embed";
 import OffersView from "./offers-view";
+import { KIND_TEXT, ORDER_KINDS } from "@/lib/order-types";
+import { ORDER_PANEL_ID } from "@/lib/order-events";
 import ContactButtons from "./contact-buttons";
 import Lightbox from "./lightbox";
 import { HoursTable, OpenPill } from "./open-status";
@@ -372,6 +374,11 @@ export default function CatalogGrid({
                                         <div className="mt-5"><ContactButtons contact={selected.contact} location={selected.location} name={selected.title} labels={cl} color={selected.color} /></div>
                                     )}
 
+                                    {detailBase && collectionId && ORDER_KINDS[collectionId] && selected.offers?.some((g) => g.items.some((o) => o.available !== false)) && (
+                                        <Link href={`${detailBase}/${selected.slug}#${ORDER_PANEL_ID}`} className="mr-2 mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-baloo font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: selected.color }}>
+                                            {KIND_TEXT[ORDER_KINDS[collectionId]].cta} <span aria-hidden="true">→</span>
+                                        </Link>
+                                    )}
                                     {detailBase && (
                                         <Link href={`${detailBase}/${selected.slug}`} className="mt-4 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-baloo font-medium transition-colors hover:bg-[#0b1220]/5" style={{ borderColor: `${selected.color}88`, color: selected.color }}>
                                             {labels.openPage} <span aria-hidden="true">→</span>

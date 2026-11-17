@@ -37,8 +37,8 @@ const HELP = "M9.5 9a2.5 2.5 0 115 0c0 1.7-2.5 2-2.5 4M12 17h.01M12 3a9 9 0 100 
 const SEARCH = "M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.3-4.3";
 
 export default function AdminShell({
-    groups, user, role, avatar, drafts, unread, suggested = 0, subscriptions = 0, notices, children,
-}: { groups: NavGroup[]; user: string; role: string; avatar?: string; drafts: number; unread: number; /** places suggested by members waiting for review */ suggested?: number; /** new Premium subscriptions (admins only) */ subscriptions?: number; notices: Notice[]; children: React.ReactNode }) {
+    groups, user, role, avatar, drafts, unread, suggested = 0, subscriptions = 0, orders = 0, notices, children,
+}: { groups: NavGroup[]; user: string; role: string; avatar?: string; drafts: number; unread: number; /** places suggested by members waiting for review */ suggested?: number; /** new Premium subscriptions (admins only) */ subscriptions?: number; /** orders for establishments without an account, waiting for the team (admins only) */ orders?: number; notices: Notice[]; children: React.ReactNode }) {
     const pathname = usePathname();
     const [mobile, setMobile] = useState(false);
     const [openId, setOpenId] = useState<string | null>(null);
@@ -150,14 +150,14 @@ export default function AdminShell({
                     <button type="button" aria-expanded={openId === "admin-module"} onClick={() => setOpenId(openId === "admin-module" ? null : "admin-module")} className={`${row(pathname.startsWith("/admin/administrador") && openId !== "admin-module")} cursor-pointer`}>
                         <I d="M12 3l8 4v5c0 5-3.500 8-8 9-4.500-1-8-4-8-9V7zM9 12l2 2 4-4" />
                         <span className="flex-1">Administrador</span>
-                        {unread > 0 && <span className="rounded-full bg-[#e5533d] px-1.5 text-[10px] font-medium text-white">{unread}</span>}
+                        {unread + orders > 0 && <span className="rounded-full bg-[#e5533d] px-1.5 text-[10px] font-medium text-white">{unread + orders}</span>}
                         <svg viewBox="0 0 24 24" className={`h-4 w-4 transition-transform ${openId === "admin-module" ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 6l6 6-6 6" /></svg>
                     </button>
                     {(openId === "admin-module" || pathname.startsWith("/admin/administrador")) && (
                         <div className="ml-[2.1rem] mt-1 space-y-0.5 border-l border-white/20 pl-3">
-                            {[["listas", "Dados genéricos"], ["menus", "Menus e “Em breve”"], ["utilizadores", "Utilizadores"], ["membros", "Membros Riendzo AI"], ["subscricoes", "Subscrições Premium"], ["doacoes", "Doações"], ["mensagens", "Mensagens"], ["configuracoes", "Configurações"]].map(([k, l]) => {
+                            {[["listas", "Dados genéricos"], ["menus", "Menus e “Em breve”"], ["utilizadores", "Utilizadores"], ["membros", "Membros Riendzo AI"], ["pedidos", "Pedidos e reservas"], ["subscricoes", "Subscrições Premium"], ["doacoes", "Doações"], ["mensagens", "Mensagens"], ["configuracoes", "Configurações"]].map(([k, l]) => {
                                 const href = `/admin/administrador/${k}`;
-                                return <Link key={k} href={href} onClick={close} className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-[13px] ${pathname.startsWith(href) ? "bg-white/18 text-white" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>{l}{k === "mensagens" && unread > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{unread}</span>}</Link>;
+                                return <Link key={k} href={href} onClick={close} className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-[13px] ${pathname.startsWith(href) ? "bg-white/18 text-white" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>{l}{k === "mensagens" && unread > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{unread}</span>}{k === "pedidos" && orders > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{orders}</span>}</Link>;
                             })}
                         </div>
                     )}
@@ -219,7 +219,7 @@ export default function AdminShell({
                             { href: "/admin?status=draft", label: "Rascunhos por publicar", count: drafts },
                             { href: "/admin/locais-sugeridos", label: "Locais sugeridos por rever", count: suggested },
                             { href: "/admin/administrador/subscricoes", label: "Novas subscrições Premium", count: subscriptions },
-                            ...(role === "admin" ? [{ href: "/admin/administrador/mensagens", label: "Mensagens por ler", count: unread }] : []),
+                            ...(role === "admin" ? [{ href: "/admin/administrador/mensagens", label: "Mensagens por ler", count: unread }, { href: "/admin/administrador/pedidos", label: "Pedidos para encaminhar", count: orders }] : []),
                         ]}
                     />
 

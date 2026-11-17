@@ -1,0 +1,59 @@
+[
+  {
+    "at": "2026-11-16T10:46:08.263Z",
+    "user": "admin",
+    "action": "Aprovou um local sugerido",
+    "title": "Novo local"
+  },
+  {
+    "at": "2026-11-16T10:46:08.257Z",
+    "user": "admin",
+    "action": "Criou",
+    "collection": "tourism-beaches",
+    "slug": "novo-local",
+    "title": "Novo local"
+  },
+  {
+    "at": "2026-11-16T10:25:23.554Z",
+    "user": "Ashley Lenna Mucavel",
+    "action": "Subscreveu o Premium",
+    "title": "1 mês · 150 MT (simulado)"
+  },
+  {
+    "at": "2026-11-16T10:16:36.301Z",
+    "user": "admin",
+    "action": "Editou",
+    "collection": "history-colonial",
+    "slug": "a-chegada-dos-portugueses-1498",
+    "title": "A chegada dos portugueses (1498)"
+  },
+  {
+    "at": "2026-11-16T10:16:28.918Z",
+    "user": "admin",
+    "action": "Editou",
+    "collection": "history-colonial",
+    "slug": "chegada-dos",
+    "title": "A chegada dos portugueses (1498)"
+  },
+  {
+    "at": "2026-11-16T10:16:22.934Z",
+    "user": "admin",
+    "action": "Editou",
+    "collection": "history-colonial",
+    "slug": "chegada-dos-portugueses",
+    "title": "A chegada dos portugueses (1498)"
+  },
+  {
+    "at": "2026-11-16T10:06:15.235Z",
+    "user": "admin",
+    "action": "Editou",
+    "collection": "music-artists",
+    "slug": "g2",
+    "title": "G2"
+  },
+  {
+    "at": "2026-11-16T10:01:59.370Z",
+    "user": "admin",
+    "action": "Iniciou sessão"
+  }
+]

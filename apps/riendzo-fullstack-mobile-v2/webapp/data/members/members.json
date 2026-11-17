@@ -1,0 +1,43 @@
+[
+  {
+    "id": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "firstName": "Ashley Lenna",
+    "lastName": "Mucavel",
+    "email": "ashleylenna@gmail.com",
+    "phone": "258844559091",
+    "passwordHash": "scrypt$256eab0481df0ef57fc75dd917b0b06a$9893f336aed82f8f3905bfc1d6ed3234bb430b85e9d21eaef4296edd81b7eac0fa1078f3da5008b7a5b5cc952a53fc96c92dedb1ee3af0a52cb9a997b7ca2c91",
+    "languages": [],
+    "interests": [],
+    "favorites": [
+      {
+        "collection": "gastronomy-restaurants",
+        "slug": "exemplo-mar-e-sol",
+        "at": "2026-11-16T10:29:25.604Z"
+      }
+    ],
+    "status": "active",
+    "createdAt": "2026-11-16T10:22:55.360Z",
+    "verified": true,
+    "verifiedVia": "email",
+    "verifiedAt": "2026-11-16T10:24:12.393Z",
+    "travelStyles": [],
+    "avatar": "/api/media/2026/avatar-ae0213f7d237.png",
+    "premiumUntil": "2026-12-16T10:25:23.547Z"
+  },
+  {
+    "id": "3334f9cd-b56a-456e-adc3-3da9c6a35e87",
+    "firstName": "Joao Devson",
+    "lastName": "Mucavel",
+    "email": "joaodevsonm@gmail.com",
+    "phone": "258849900051",
+    "passwordHash": "scrypt$d98a300e95352082547098247b7a1e00$058dcdbf9aa72ab3b49e1375293e56642a6a51ddd6e016b268d16f66eb4ba35079a714557c85d0dfaa421e7e90b7a8175dd5ef41127a9ea2a394f030c9e5793d",
+    "languages": [],
+    "interests": [],
+    "favorites": [],
+    "status": "active",
+    "createdAt": "2026-11-16T18:25:29.604Z",
+    "verified": true,
+    "verifiedVia": "email",
+    "verifiedAt": "2026-11-16T18:25:37.078Z"
+  }
+]

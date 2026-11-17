@@ -1,0 +1,42 @@
+[
+  {
+    "id": "b8a0af3e-d6a1-4ff4-9a9e-3ed5e5202d51",
+    "memberId": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "name": "Casa de meu amigo Johnny",
+    "kind": "other",
+    "province": "Maputo",
+    "address": "Maputo, Matola, Nwamartibyana Q7",
+    "phone": "844559091",
+    "photos": [],
+    "notes": "Meu melhor amigo",
+    "status": "private",
+    "createdAt": "2026-11-16T10:36:59.056Z",
+    "updatedAt": "2026-11-16T10:42:37.046Z"
+  },
+  {
+    "id": "ce1f52a1-3a27-4b64-837e-7dd0c15a40e4",
+    "memberId": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "name": "Casa do Ivan",
+    "kind": "other",
+    "province": "Maputo",
+    "address": "Maputo, Matola, Nwamartibyana Q7",
+    "phone": "844559091",
+    "photos": [],
+    "notes": "Sempre me esqueço da tua casa bro.",
+    "status": "private",
+    "createdAt": "2026-11-16T10:41:59.527Z",
+    "updatedAt": "2026-11-16T10:41:59.527Z"
+  },
+  {
+    "id": "1dda0c26-5448-482c-835a-0e54a2d046bd",
+    "memberId": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "name": "Novo local",
+    "kind": "other",
+    "province": "Sofala",
+    "description": "Descricao do local para partilhar no Riendzo WebApp",
+    "photos": [],
+    "status": "private",
+    "createdAt": "2026-11-16T10:43:15.342Z",
+    "updatedAt": "2026-11-16T10:43:15.342Z"
+  }
+]

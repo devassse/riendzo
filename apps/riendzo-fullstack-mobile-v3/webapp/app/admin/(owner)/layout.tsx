@@ -1,0 +1,45 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/cms/auth";
+import { logoutAction } from "../actions";
+import { newCountFor } from "@/lib/orders";
+import { premiumPlacesOf } from "@/lib/place-premium";
+
+export const dynamic = "force-dynamic";
+
+/** Portal of an establishment owner: they only see and edit their own pages. */
+export default async function OwnerLayout({ children }: { children: React.ReactNode }) {
+    const s = await getSession();
+    if (!s) redirect("/admin/login");
+    if (s.role !== "owner") redirect("/admin");
+
+    // "Pedidos" only exists for Premium establishments (they answer and follow the orders); the others subscribe first
+    const premiumRefs = await premiumPlacesOf(s.ownerOf);
+    const fresh = await newCountFor(premiumRefs);
+
+    return (
+        <div className="min-h-screen bg-[#f3f6fb]">
+            <header className="bg-gradient-to-r from-[#00306e] via-[#0054b5] to-[#0370d6] text-white">
+                <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-4 sm:px-8">
+                    <Link href="/admin/meu-espaco" aria-label="Riendzo">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/brand/riendzo-logo-white.png" alt="Riendzo" className="w-36" /></Link>
+                    <span className="hidden text-sm text-white/80 sm:block">Portal do estabelecimento</span>
+                    <nav className="ml-auto flex flex-wrap items-center gap-1 text-sm">
+                        <Link href="/admin/meu-espaco" className="rounded-full px-4 py-2 hover:bg-white/15">O meu espaço</Link>
+                        {premiumRefs.length > 0 && <Link href="/admin/meu-espaco/pedidos" className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-white/15">Pedidos{fresh > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[11px] font-medium text-[#5a3b00]" aria-label={`${fresh} novos`}>{fresh}</span>}</Link>}
+                        <Link href="/admin/meu-espaco/premium" className="rounded-full px-4 py-2 hover:bg-white/15">{premiumRefs.length > 0 ? "⭐ Premium" : "Premium"}</Link>
+                        <Link href="/admin/meu-espaco/conta" className="rounded-full px-4 py-2 hover:bg-white/15">Conta</Link>
+                        <a href="/pt" target="_blank" rel="noopener noreferrer" className="rounded-full px-4 py-2 hover:bg-white/15">Ver site ↗</a>
+                        <span className="hidden items-center gap-2 px-3 text-white/90 md:flex">
+                            <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-white/20 font-baloo text-xs font-bold">
+                                {s.avatar /* eslint-disable-next-line @next/next/no-img-element */ ? <img src={s.avatar} alt="" className="h-full w-full object-cover" /> : s.name.slice(0, 2).toUpperCase()}
+                            </span>
+                            {s.name}
+                        </span>
+                        <form action={logoutAction}><button className="cursor-pointer rounded-full bg-white px-4 py-2 font-medium text-[#0054b5] hover:opacity-90">Sair</button></form>
+                    </nav>
+                </div>
+            </header>
+            <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8">{children}</main>
+        </div>
+    );
+}

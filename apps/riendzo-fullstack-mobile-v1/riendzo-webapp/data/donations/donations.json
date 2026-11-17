@@ -1,0 +1,16 @@
+[
+  {
+    "id": "d98f348c-d327-4d46-9cb3-9147bc117006",
+    "ref": "RDZC739D27FBB",
+    "currency": "MZN",
+    "method": "mpesa",
+    "status": "paid",
+    "createdAt": "2026-11-16T09:33:35.803Z",
+    "updatedAt": "2026-11-16T09:33:37.309Z",
+    "amount": 20,
+    "msisdn": "258844559091",
+    "simulated": true,
+    "providerCode": "SIMULADO",
+    "providerDesc": "Simulação (sem credenciais M-Pesa)"
+  }
+]

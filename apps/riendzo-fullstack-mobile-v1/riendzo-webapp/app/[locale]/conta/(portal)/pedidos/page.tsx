@@ -53,12 +53,12 @@ export default async function MyOrders({ searchParams }: { searchParams: Promise
 
             {!premium && (
                 <p className="mt-4 rounded-2xl bg-[#f3f8ff] px-4 py-3 text-sm text-[#0b4a99]">
-                    Conta gratuita: usou <b>{Math.min(used, FREE_ORDER_LIMIT)} de {FREE_ORDER_LIMIT}</b> pedidos. Com o Premium acompanha o progresso em tempo real, recebe notificações e pode reservar alojamentos e viaturas.
+                    Conta gratuita: usou <b>{Math.min(used, FREE_ORDER_LIMIT)} de {FREE_ORDER_LIMIT}</b> pedidos. Com o Premium acompanha o progresso em tempo real, recebe notificações e pode reservar alojamentos, viaturas e passeios.
                 </p>
             )}
 
             {orders.length === 0 ? (
-                <p className="mt-6 rounded-3xl border border-dashed border-[#0b1220]/20 bg-white p-10 text-center text-sm text-[#4b5568]">Ainda não fez pedidos. Abra a página de um restaurante e escolha os pratos.</p>
+                <p className="mt-6 rounded-3xl border border-dashed border-[#0b1220]/20 bg-white p-10 text-center text-sm text-[#4b5568]">Ainda não fez pedidos. Abra a página de um restaurante, alojamento, rent-a-car ou guia turístico e escolha o que quer.</p>
             ) : (
                 <ul className="mt-6 space-y-4">
                     {orders.map((o) => (
@@ -75,7 +75,7 @@ export default async function MyOrders({ searchParams }: { searchParams: Promise
                                 {o.lines.map((l) => <li key={`${l.group}-${l.name}`}>{l.qty > 1 ? `${l.qty}× ` : ""}{l.name}</li>)}
                             </ul>
                             <p className="mt-2 text-xs text-[#4b5568]">
-                                {o.mode && MODES[o.mode]}{o.address ? ` · ${o.address}` : ""}{o.from && o.to ? `${o.from.split("-").reverse().join("/")} → ${o.to.split("-").reverse().join("/")}${o.guests ? ` · ${o.guests} hóspede(s)` : ""}` : ""}
+                                {o.mode && MODES[o.mode]}{o.address ? ` · ${o.address}` : ""}{o.from ? `${o.from.split("-").reverse().join("/")}${o.to ? ` → ${o.to.split("-").reverse().join("/")}` : ""}${o.guests ? ` · ${o.guests} ${o.kind === "tour" ? "pessoa(s)" : "hóspede(s)"}` : ""}` : ""}
                                 {typeof o.total === "number" && <> · Total {money(o.total, o.currency)}</>}
                             </p>
 

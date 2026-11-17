@@ -1,17 +1,27 @@
 /**
- * Orders and reservations (restaurants, lodging, rent-a-car). Pure data: safe for client components.
+ * Orders and reservations (restaurants, lodging, rent-a-car, tour guides / operators). Pure data: safe for client components.
  *
- * Premium members: all three kinds, live progress and notifications.
+ * Premium members: every kind, live progress and notifications.
  * Free members: restaurants only, FREE_ORDER_LIMIT orders in total, a phone number is required
  * and the restaurant answers by phone (no live progress).
  */
-export type OrderKind = "food" | "lodging" | "car";
+export type OrderKind = "food" | "lodging" | "car" | "tour";
 
 /** Collections that accept orders → what kind of order. */
 export const ORDER_KINDS: Record<string, OrderKind> = {
     "gastronomy-restaurants": "food",
     "tourism-lodging": "lodging",
     "tourism-rentacar": "car",
+    "tourism-guides": "tour",
+    "tourism-transport": "tour",
+};
+
+/** Words used by the order panel and the buttons, per kind. */
+export const KIND_TEXT: Record<OrderKind, { cta: string; panel: string; add: string; pick: string; from: string; to?: string; people?: string }> = {
+    food: { cta: "Fazer pedido", panel: "Fazer um pedido", add: "Adicionar ao pedido", pick: "Escolha os pratos", from: "" },
+    lodging: { cta: "Reservar quarto", panel: "Pedir reserva", add: "Solicitar reserva", pick: "Escolha o quarto", from: "Entrada", to: "Saída", people: "Hóspedes" },
+    car: { cta: "Reservar viatura", panel: "Pedir reserva", add: "Solicitar reserva", pick: "Escolha a viatura", from: "Levantar", to: "Devolver" },
+    tour: { cta: "Reservar passeio", panel: "Pedir reserva", add: "Solicitar reserva", pick: "Escolha o passeio ou serviço", from: "Data", people: "Pessoas" },
 };
 
 export const FREE_ORDER_LIMIT = 2;
@@ -83,6 +93,8 @@ export type Order = {
     note?: string;
     phone: string;
     status: OrderStatus;
+    /** true = the establishment had no owner account: the Riendzo team receives and forwards the order */
+    viaRiendzo?: boolean;
     history: { status: OrderStatus; at: string }[];
     reason?: string;
     createdAt: string;

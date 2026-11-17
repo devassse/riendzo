@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 const PERKS = [
     ["🍽️", "Pedidos sem limite nos restaurantes", `Sem o limite de ${FREE_ORDER_LIMIT} pedidos da conta gratuita.`],
-    ["🛏️", "Reservas de alojamento e viaturas", "Peça quartos e rent-a-car diretamente no seu portal."],
+    ["🛏️", "Reservas de alojamento, viaturas e passeios", "Peça quartos, rent-a-car e passeios com guias diretamente no site ou no seu portal."],
     ["📡", "Progresso em tempo real", "Enviado → Em processamento → Pronto → Concluído, sem recarregar a página."],
     ["🔔", "Notificações", "Aviso no portal e por e-mail quando o estabelecimento recebe ou responde ao seu pedido."],
 ];

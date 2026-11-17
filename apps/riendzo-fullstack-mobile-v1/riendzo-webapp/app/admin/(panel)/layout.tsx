@@ -6,6 +6,7 @@ import { listMessages } from "@/lib/cms/inbox";
 import { recentNotices } from "@/lib/cms/notifications";
 import { countPending } from "@/lib/places";
 import { countNewSubscriptions } from "@/lib/subscriptions";
+import { countRiendzoNew } from "@/lib/orders";
 import AdminShell, { type NavGroup } from "../_components/admin-shell";
 
 export const dynamic = "force-dynamic";
@@ -33,7 +34,8 @@ export default async function PanelLayout({ children }: { children: React.ReactN
 
     const suggested = await countPending();
     const subscriptions = session.role === "admin" ? await countNewSubscriptions() : 0;
+    const orders = session.role === "admin" ? await countRiendzoNew() : 0;
     const notices = await recentNotices("staff", 10);
 
-    return <AdminShell groups={groups} user={session.name || session.user} role={session.role} avatar={session.avatar} drafts={drafts} unread={unread} suggested={suggested} subscriptions={subscriptions} notices={notices}>{children}</AdminShell>;
+    return <AdminShell groups={groups} user={session.name || session.user} role={session.role} avatar={session.avatar} drafts={drafts} unread={unread} suggested={suggested} subscriptions={subscriptions} orders={orders} notices={notices}>{children}</AdminShell>;
 }

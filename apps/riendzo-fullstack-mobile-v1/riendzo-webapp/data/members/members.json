@@ -1,0 +1,27 @@
+[
+  {
+    "id": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "firstName": "Ashley Lenna",
+    "lastName": "Mucavel",
+    "email": "ashleylenna@gmail.com",
+    "phone": "258844559091",
+    "passwordHash": "scrypt$256eab0481df0ef57fc75dd917b0b06a$9893f336aed82f8f3905bfc1d6ed3234bb430b85e9d21eaef4296edd81b7eac0fa1078f3da5008b7a5b5cc952a53fc96c92dedb1ee3af0a52cb9a997b7ca2c91",
+    "languages": [],
+    "interests": [],
+    "favorites": [
+      {
+        "collection": "gastronomy-restaurants",
+        "slug": "exemplo-mar-e-sol",
+        "at": "2026-11-16T10:29:25.604Z"
+      }
+    ],
+    "status": "active",
+    "createdAt": "2026-11-16T10:22:55.360Z",
+    "verified": true,
+    "verifiedVia": "email",
+    "verifiedAt": "2026-11-16T10:24:12.393Z",
+    "travelStyles": [],
+    "avatar": "/api/media/2026/avatar-ae0213f7d237.png",
+    "premiumUntil": "2026-12-16T10:25:23.547Z"
+  }
+]

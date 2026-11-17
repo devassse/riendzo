@@ -54,10 +54,11 @@ Depois de se registar, o membro tem de confirmar um código de 6 dígitos (e-mai
 ## Premium, pedidos e reservas
 
 - **Subscrição pelo próprio membro**: na página Premium, o botão **Subscrever** abre um popup por passos (plano → M-Pesa → número). O membro confirma o PIN no telemóvel e o Premium fica ativo automaticamente (soma os meses se já for Premium). Os planos e preços estão em `lib/premium-plans.ts`. O admin é avisado por e-mail e no sino (“Novas subscrições Premium”), e **Administrador → Subscrições Premium** lista os pagamentos. Se aparecer “Por confirmar” (o M-Pesa não respondeu), confirme no extrato e ative em Membros.
-- **Ativar o Premium à mão**: Administrador → Membros Riendzo AI → coluna *Premium* → escolha “+1/3/6/12 meses” → *Aplicar* (depois de confirmar o pagamento). “Remover” tira o Premium.
+- **Ativar o Premium à mão**: Administrador → Membros Riendzo AI → coluna *Premium* → escolha “+1/3/6/12 meses” → *Aplicar* (depois de confirmar o pagamento). Para **cancelar** o Premium de alguém: botão **Cancelar Premium** (em Membros ou em Subscrições Premium). A conta volta a gratuita de imediato e o membro recebe um e-mail.
 - **Conta gratuita**: só restaurantes, no máximo **2 pedidos** (os recusados pelo restaurante não contam). Tem de deixar um telefone; o restaurante contacta-o por telefone e o cliente não vê o progresso em tempo real.
-- **Premium**: restaurantes sem limite, reservas de alojamento e viaturas, progresso em tempo real (Enviado → Em processamento → Pronto → Concluído), aviso no sino e por e-mail.
-- **Um estabelecimento só recebe pedidos se tiver uma conta de proprietário** (Administrador → Utilizadores). Sem proprietário, a página não mostra o botão de pedir.
+- **Premium**: restaurantes sem limite, reservas de alojamento (quartos), viaturas (rent-a-car) e passeios/serviços (guias turísticos e transportes), progresso em tempo real (Enviado → Em processamento → Pronto → Concluído), aviso no sino e por e-mail.
+- **Todos os estabelecimentos com menu/quartos/viaturas/passeios aceitam pedidos**, no site e no Portal do membro. Com conta de proprietário (Administrador → Utilizadores), o pedido vai direto para o portal dele. **Sem proprietário**, o pedido chega à equipa em **Administrador → Pedidos e reservas** (separador “Para encaminhar”, com os contactos do estabelecimento): ligue ao estabelecimento e vá atualizando o estado para o cliente acompanhar.
+- **Listas do Administrador** (Membros, Utilizadores, Subscrições, Doações, Mensagens, Pedidos): têm pesquisa e paginação (20 por página) e filtros por estado/tipo.
 - **Portal do proprietário → Pedidos**: lista que se atualiza sozinha, com contador de novos. “Confirmar receção” põe o pedido “Em processamento”; depois “Pronto/Confirmar reserva” e “Concluir”; ou “Recusar” com motivo.
 - Os preços vêm sempre da página do estabelecimento. O pagamento da comida ou do quarto é feito diretamente ao estabelecimento.
 

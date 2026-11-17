@@ -103,11 +103,11 @@ function NewEstablishment() {
     );
 }
 
-export default function UsersManager({ users, options }: { users: PublicUser[]; options: Establishment[] }) {
+export default function UsersManager({ users, options, empty, footer }: { users: PublicUser[]; options: Establishment[]; /** text when a search finds nobody */ empty?: string; /** pagination under the list */ footer?: React.ReactNode }) {
     return (
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_26rem]">
             <section className="space-y-3">
-                {users.length === 0 && <p className="rounded-3xl border border-dashed border-[#0b1220]/20 bg-white p-8 text-center text-sm text-[#4b5568]">Ainda não há utilizadores. Crie o primeiro ao lado.</p>}
+                {users.length === 0 && <p className="rounded-3xl border border-dashed border-[#0b1220]/20 bg-white p-8 text-center text-sm text-[#4b5568]">{empty ?? "Ainda não há utilizadores. Crie o primeiro ao lado."}</p>}
                 {users.map((u) => (
                     <details key={u.id} className="rounded-3xl border border-[#0b1220]/8 bg-white p-4 shadow-sm">
                         <summary className="flex cursor-pointer list-none flex-wrap items-center gap-3 [&::-webkit-details-marker]:hidden">
@@ -122,6 +122,7 @@ export default function UsersManager({ users, options }: { users: PublicUser[]; 
                         </div>
                     </details>
                 ))}
+                {footer}
             </section>
             <aside className="h-fit rounded-3xl border border-[#0b1220]/8 bg-white p-6 shadow-sm xl:sticky xl:top-24">
                 <h2 className="font-baloo text-xl font-bold">Novo utilizador</h2>

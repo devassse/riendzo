@@ -85,7 +85,7 @@ export async function getPlaceOf(memberId: string, id: string) {
 
 /** Creates (id = null) or updates a place of the member. Pending and published places are locked. */
 export function savePlace(memberId: string, id: string | null, input: PlaceInput, suggest: boolean) {
-    return locked(async (): Promise<{ ok: true; id: string; status: PlaceStatus } | Fail> => {
+    return locked(async (): Promise<{ ok: true; id: string; status: PlaceStatus } | (Fail & { id?: string })> => {
         const c = clean(input);
         if (!c.ok) return c;
         const all = await read();
@@ -108,7 +108,8 @@ export function savePlace(memberId: string, id: string | null, input: PlaceInput
             const problem = submitProblem(place);
             if (problem) {
                 await writeJson(FILE, all); // the edits are kept even if it cannot be suggested yet
-                return { ok: false, error: problem };
+                // the id goes back to the form, so trying again updates this place instead of creating a copy
+                return { ok: false, error: problem, id: place.id };
             }
             place.status = "pending";
             place.submittedAt = now;

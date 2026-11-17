@@ -79,7 +79,7 @@ export default function MemberShell({ groups, name, avatar, locale, notices, pre
                 <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-[#0b1220]/8 bg-white/90 px-4 py-3 backdrop-blur sm:px-8">
                     <button type="button" aria-label="Abrir menu" onClick={() => setMobile(true)} className="cursor-pointer rounded-lg border border-[#0b1220]/15 px-3 py-2 text-sm lg:hidden">☰</button>
                     <div className="hidden md:block"><p className="font-baloo text-xl font-bold leading-tight">Riendzo AI</p><p className="text-xs text-[#4b5568]">A sua conta pessoal</p></div>
-                    <form action={`/${locale}/pesquisa`} role="search" className="ml-auto flex max-w-xl flex-1 items-center gap-3 rounded-2xl bg-[#eef2f8] px-4 py-2.5">
+                    <form action={`/${locale}/conta/pesquisa`} role="search" className="ml-auto flex max-w-xl flex-1 items-center gap-3 rounded-2xl bg-[#eef2f8] px-4 py-2.5">
                         <I d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.3-4.3" c="h-5 w-5 text-[#4b5568]" />
                         <input name="q" type="search" placeholder="Pesquisar em toda a plataforma…" aria-label="Pesquisar" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#6b7588]" />
                     </form>

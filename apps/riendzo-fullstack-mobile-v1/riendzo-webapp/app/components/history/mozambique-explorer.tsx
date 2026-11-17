@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { LANGUAGES, MAP, PROVINCES, TOTAL_POPULATION_2017, project } from "@/lib/data/mozambique";
-import { COUNTRY_PATH, LAKE_NIASSA_PATH, MAPUTO_CITY, PROVINCE_PATHS, PROVINCE_POLES } from "@/lib/data/mozambique-map";
+import { COUNTRY_PATH, LAKE_LABEL, LAKE_NIASSA_PATH, MAPUTO_CITY, PROVINCE_PATHS, PROVINCE_POLES } from "@/lib/data/mozambique-map";
 import { TERRITORY_KINDS, childrenOf, descendantsOf, kindOf, provinceParent, type Territory } from "@/lib/cms/territory-types";
 
 const nf = (n: number, d = 1) => n.toLocaleString("pt-PT", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -21,7 +21,7 @@ const CAPITALS: { id: string; name: string; at: [number, number] }[] = [
     { id: "gaza", name: "Xai-Xai", at: [33.64, -25.05] }, { id: "maputo-cidade", name: "Maputo", at: [32.57, -25.97] },
 ];
 
-/** Schematic map of Mozambique (not a cartographic source): sea, country, provinces, Lake Niassa. */
+/** Map of Mozambique: sea, country, provinces, Lake Niassa. */
 function MapSvg({ children, label, below }: { children?: React.ReactNode; label: string; below?: React.ReactNode }) {
     return (
         <svg viewBox={`0 0 ${MAP.width} ${MAP.height}`} role="group" aria-label={label} className="mx-auto h-auto w-full max-w-[26rem] overflow-hidden rounded-3xl">
@@ -31,11 +31,11 @@ function MapSvg({ children, label, below }: { children?: React.ReactNode; label:
             </defs>
             <rect width={MAP.width} height={MAP.height} fill="url(#moz-sea)" />
             <text transform={`translate(${MAP.width - 70} ${MAP.height * 0.74}) rotate(-90)`} textAnchor="middle" fontSize="15" fontStyle="italic" letterSpacing="7" fill="#2b6cb0" opacity="0.55">OCEANO ÍNDICO</text>
-            <text transform={`translate(${MAP.width * 0.58} ${MAP.height * 0.45}) rotate(-72)`} textAnchor="middle" fontSize="10" fontStyle="italic" letterSpacing="2" fill="#2b6cb0" opacity="0.5">Canal de Moçambique</text>
+            <text transform={`translate(${MAP.width * 0.72} ${MAP.height * 0.51}) rotate(-72)`} textAnchor="middle" fontSize="10" fontStyle="italic" letterSpacing="2" fill="#2b6cb0" opacity="0.5">Canal de Moçambique</text>
             <path d={COUNTRY_PATH} fill="#fff" stroke="#0b1220" strokeOpacity="0.35" strokeWidth="3" strokeLinejoin="round" filter="url(#moz-shadow)" />
             {below}
             <path d={LAKE_NIASSA_PATH} fill="#38bdf8" stroke="#0b6bbd" strokeWidth="1.5" strokeOpacity="0.5" />
-            <text transform="translate(176 130) rotate(-84)" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#0b5fa8">Lago Niassa</text>
+            <text transform={`translate(${LAKE_LABEL[0]} ${LAKE_LABEL[1]}) rotate(-84)`} textAnchor="middle" fontSize="9" fontStyle="italic" fill="#0b5fa8">Lago Niassa</text>
             {children}
         </svg>
     );
@@ -142,7 +142,7 @@ export function ProvinceExplorer({ territories = [] }: { territories?: Territory
     return (
         <div className="grid gap-8 lg:grid-cols-[minmax(0,26rem)_1fr]">
             <div>
-                <MapSvg label="Mapa esquemático das províncias de Moçambique" below={<Provinces tone="color" sel={sel} onSelect={setSel} />}>
+                <MapSvg label="Mapa das províncias de Moçambique" below={<Provinces tone="color" sel={sel} onSelect={setSel} />}>
                     {/* names */}
                     {Object.entries(PROVINCE_POLES).map(([id, [x, y]]) => (
                         <text key={id} x={x} y={y + 4} textAnchor="middle" fontSize={id === "maputo-provincia" || id === "manica" ? 10 : 13} fontWeight="800" fill="#fff" stroke="#0b1220" strokeOpacity="0.55" strokeWidth="3" paintOrder="stroke" pointerEvents="none">{SHORT[id] ?? PROVINCES.find((p) => p.id === id)?.name}</text>
@@ -159,7 +159,7 @@ export function ProvinceExplorer({ territories = [] }: { territories?: Territory
                         );
                     })}
                 </MapSvg>
-                <p className="mt-2 text-center text-[11px] text-[#5b6478]">Mapa esquemático: toque numa província para ver os detalhes. Pontos: capitais provinciais.</p>
+                <p className="mt-2 text-center text-[11px] text-[#5b6478]">Toque numa província para ver os detalhes. Pontos: capitais provinciais.</p>
             </div>
 
             <div>

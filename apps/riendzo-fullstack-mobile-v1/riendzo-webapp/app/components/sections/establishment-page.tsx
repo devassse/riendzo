@@ -22,7 +22,7 @@ import { brandGradient } from "@/lib/color";
 import { getMember } from "@/lib/members-auth";
 import { isPremium } from "@/lib/members";
 import { canReceiveOrders, freeOrdersUsed } from "@/lib/orders";
-import { FREE_ORDER_LIMIT, ORDER_KINDS } from "@/lib/order-types";
+import { FREE_ORDER_LIMIT, KIND_TEXT, ORDER_KINDS } from "@/lib/order-types";
 import OrderPanel, { type PanelProps } from "@/app/components/orders/order-panel";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://riendzo.co.mz").replace(/\/$/, "");
@@ -61,11 +61,12 @@ export default async function EstablishmentPage({ collection, slug, embedded = f
     const gallery = (item.images ?? []).map((src) => ({ src, caption: item.title }));
     const c = item.contact;
 
-    // Orders / reservations: only where the establishment has an owner account to receive them
+    // Orders / reservations: dishes, rooms, cars, tours… When the establishment has no owner account
+    // yet, the order still goes through and the Riendzo team forwards it (BackOffice > Pedidos e reservas).
     let order: PanelProps | null = null;
     const orderKind = ORDER_KINDS[collection];
     const orderOffers = (item.offers ?? []).flatMap((g) => g.items.filter((o) => o.available !== false).map((o) => ({ group: g.title, name: o.name, description: o.description, price: o.price, priceNote: o.priceNote })));
-    if (orderKind && orderOffers.length && (await canReceiveOrders(collection, item.slug))) {
+    if (orderKind && orderOffers.length) {
         const m = await getMember();
         const premium = m ? isPremium(m) : false;
         order = {
@@ -73,6 +74,7 @@ export default async function EstablishmentPage({ collection, slug, embedded = f
             who: !m ? "guest" : premium ? "premium" : "free",
             freeLeft: m && !premium ? Math.max(0, FREE_ORDER_LIMIT - (await freeOrdersUsed(m.id))) : 0, freeLimit: FREE_ORDER_LIMIT,
             phone: m?.phone ? `+${m.phone}` : "",
+            viaRiendzo: !(await canReceiveOrders(collection, item.slug)),
             next: embedded ? `/conta/explorar/${collection}/${item.slug}` : `${def.publicPath}/${item.slug}`,
         };
     }
@@ -113,6 +115,11 @@ export default async function EstablishmentPage({ collection, slug, embedded = f
                     <p className="mt-4 max-w-2xl text-lg text-[#d9dfec]">{item.summary}</p>
                     {hasSchedule(item.hours) && <div className="mt-5"><OpenPill hours={item.hours} size="md" /></div>}
                     <div className="mt-6"><ContactButtons contact={c} location={item.location} name={item.title} labels={labels} color={item.color} /></div>
+                    {order && (
+                        <a href={`#${ORDER_PANEL_ID}`} className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 font-baloo text-sm font-medium shadow-lg transition-transform hover:-translate-y-0.5" style={{ color: item.color }}>
+                            {order.kind === "food" ? "🍽️" : order.kind === "lodging" ? "🛏️" : order.kind === "car" ? "🚗" : "🧭"} {KIND_TEXT[order.kind].cta}
+                        </a>
+                    )}
                 </div>
             </header>
 
@@ -148,13 +155,13 @@ export default async function EstablishmentPage({ collection, slug, embedded = f
                             <Card title={def.offers?.title ?? t("offersTitle")}>
                                 <OffersView
                                     offers={item.offers} currency={item.currency} color={item.color} unavailable={t("unavailable")} collectionId={collection}
-                                    request={order ? (order.kind === "food" ? "Adicionar ao pedido" : "Solicitar reserva") : undefined}
-                                    tagsLabel={orderKind === "food" ? "Ingredientes" : orderKind === "lodging" ? "Comodidades" : orderKind === "car" ? "Características" : "Detalhes"}
+                                    request={order ? KIND_TEXT[order.kind].add : undefined}
+                                    tagsLabel={orderKind === "food" ? "Ingredientes" : orderKind === "lodging" ? "Comodidades" : orderKind === "car" ? "Características" : orderKind === "tour" ? "Inclui" : "Detalhes"}
                                 />
                             </Card>
                         ) : null}
 
-                        {order && <div id={ORDER_PANEL_ID} className="scroll-mt-24"><Card title={order.kind === "food" ? "Fazer um pedido" : "Pedir reserva"}><OrderPanel {...order} /></Card></div>}
+                        {order && <div id={ORDER_PANEL_ID} className="scroll-mt-24"><Card title={KIND_TEXT[order.kind].panel}><OrderPanel {...order} /></Card></div>}
 
                         {gallery.length > 0 && <Card title={t("gallery")}><GalleryGrid images={gallery} alt={item.title} /></Card>}
                         {item.posts?.length ? <Card title={def.postsLabel ?? "Publicações"}><PostsFeed posts={item.posts} color={item.color} /></Card> : null}

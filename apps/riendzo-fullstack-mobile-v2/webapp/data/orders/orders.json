@@ -1,0 +1,87 @@
+[
+  {
+    "id": "71a4760e-9ce7-45ce-b924-0fa870a3d797",
+    "code": "#573B73",
+    "memberId": "3334f9cd-b56a-456e-adc3-3da9c6a35e87",
+    "customerName": "Joao Devson Mucavel",
+    "tier": "premium",
+    "kind": "car",
+    "collection": "tourism-rentacar",
+    "slug": "exemplo-rent-sul",
+    "place": "Exemplo · Rent-a-Car Sul",
+    "lines": [
+      {
+        "name": "Toyota Starlet (ou similar)",
+        "group": "Económicos",
+        "qty": 1,
+        "price": 2500,
+        "priceNote": "por dia"
+      }
+    ],
+    "currency": "MZN",
+    "phone": "258849900051",
+    "status": "processing",
+    "history": [
+      {
+        "status": "sent",
+        "at": "2026-11-16T18:32:31.669Z"
+      },
+      {
+        "status": "processing",
+        "at": "2026-11-16T18:33:15.604Z"
+      }
+    ],
+    "createdAt": "2026-11-16T18:32:31.669Z",
+    "updatedAt": "2026-11-16T18:33:15.604Z",
+    "viaRiendzo": true,
+    "from": "2026-11-17",
+    "to": "2026-11-18",
+    "guests": 1,
+    "total": 2500
+  },
+  {
+    "id": "25357c50-db44-46ce-b76a-9967b202a921",
+    "code": "#962352",
+    "memberId": "3334f9cd-b56a-456e-adc3-3da9c6a35e87",
+    "customerName": "Joao Devson Mucavel",
+    "tier": "premium",
+    "kind": "food",
+    "collection": "gastronomy-restaurants",
+    "slug": "exemplo-mar-e-sol",
+    "place": "Exemplo · Restaurante Mar & Sol",
+    "lines": [
+      {
+        "name": "Rissóis de camarão",
+        "group": "Entradas",
+        "qty": 1,
+        "price": 250
+      }
+    ],
+    "currency": "MZN",
+    "phone": "258844559091",
+    "status": "done",
+    "history": [
+      {
+        "status": "sent",
+        "at": "2026-11-16T18:31:19.478Z"
+      },
+      {
+        "status": "processing",
+        "at": "2026-11-16T18:33:56.203Z"
+      },
+      {
+        "status": "ready",
+        "at": "2026-11-16T18:34:28.254Z"
+      },
+      {
+        "status": "done",
+        "at": "2026-11-16T18:34:38.936Z"
+      }
+    ],
+    "createdAt": "2026-11-16T18:31:19.478Z",
+    "updatedAt": "2026-11-16T18:34:38.936Z",
+    "viaRiendzo": true,
+    "mode": "pickup",
+    "total": 250
+  }
+]

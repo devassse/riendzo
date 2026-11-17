@@ -1,0 +1,38 @@
+[
+  {
+    "id": "a7bf9f20-f0d2-4f5b-90d0-784f0f37baf5",
+    "ref": "RDZPFC39DBF604",
+    "method": "mpesa",
+    "status": "paid",
+    "createdAt": "2026-11-16T18:25:53.336Z",
+    "updatedAt": "2026-11-16T18:25:54.848Z",
+    "memberId": "3334f9cd-b56a-456e-adc3-3da9c6a35e87",
+    "memberName": "Joao Devson Mucavel",
+    "planId": "12m",
+    "months": 12,
+    "amount": 1400,
+    "msisdn": "258849900051",
+    "simulated": true,
+    "providerCode": "SIMULADO",
+    "providerDesc": "Simulação (sem credenciais M-Pesa)",
+    "premiumUntil": "2027-11-16T18:25:54.846Z"
+  },
+  {
+    "id": "510668aa-bd41-438f-8fac-3c4711c239f1",
+    "ref": "RDZP1995185F3B",
+    "method": "mpesa",
+    "status": "paid",
+    "createdAt": "2026-11-16T10:25:22.041Z",
+    "updatedAt": "2026-11-16T10:25:23.550Z",
+    "memberId": "20185df4-432c-41b9-a553-1f6b93ba9ec7",
+    "memberName": "Ashley Lenna Mucavel",
+    "planId": "1m",
+    "months": 1,
+    "amount": 150,
+    "msisdn": "258844559091",
+    "simulated": true,
+    "providerCode": "SIMULADO",
+    "providerDesc": "Simulação (sem credenciais M-Pesa)",
+    "premiumUntil": "2026-12-16T10:25:23.547Z"
+  }
+]

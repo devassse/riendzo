@@ -33,11 +33,12 @@ export const freeOrdersUsed = async (memberId: string) =>
 export async function createOrder(member: PublicMember, premium: boolean, i: OrderInput) {
     const kind = ORDER_KINDS[i.collection];
     if (!kind) return { ok: false, error: "Este estabelecimento não aceita pedidos." } satisfies Fail;
-    if (!premium && kind !== "food") return { ok: false, error: "As reservas de alojamento e viaturas são para membros Premium." } satisfies Fail;
+    if (!premium && kind !== "food") return { ok: false, error: "As reservas de alojamento, viaturas e passeios são para membros Premium." } satisfies Fail;
 
     const item = (await getItem(i.collection, i.slug)) as CatalogItem | undefined;
     if (!item || item.status === "draft") return { ok: false, error: "Estabelecimento não encontrado." } satisfies Fail;
-    if (!(await canReceiveOrders(i.collection, i.slug))) return { ok: false, error: "Este estabelecimento ainda não recebe pedidos pela Riendzo." } satisfies Fail;
+    // Without an owner account the order still goes through: the Riendzo team receives it and contacts the establishment
+    const viaRiendzo = !(await canReceiveOrders(i.collection, i.slug));
 
     // The lines must exist in the menu / rooms / vehicles; the price is read from there
     const find = (group: string, name: string): { item: OfferItem; group: string } | null => {
@@ -68,7 +69,7 @@ export async function createOrder(member: PublicMember, premium: boolean, i: Ord
         id: crypto.randomUUID(), code: `#${crypto.randomBytes(3).toString("hex").toUpperCase()}`,
         memberId: member.id, customerName: `${member.firstName} ${member.lastName}`.trim(),
         tier: premium ? "premium" : "free", kind, collection: i.collection, slug: i.slug, place: item.title,
-        lines, currency: item.currency ?? "MZN", phone, status: "sent", history: [], createdAt: "", updatedAt: "",
+        lines, currency: item.currency ?? "MZN", phone, status: "sent", history: [], createdAt: "", updatedAt: "", viaRiendzo: viaRiendzo || undefined,
         note: str(i.note, 500) || undefined,
     };
 
@@ -82,6 +83,16 @@ export async function createOrder(member: PublicMember, premium: boolean, i: Ord
         }
         const priced = lines.every((l) => typeof l.price === "number");
         if (priced) order.total = Math.round(lines.reduce((n, l) => n + l.price! * l.qty, 0) * 100) / 100;
+    } else if (kind === "tour") {
+        // a guided tour / transport service: one date and the number of people
+        const from = str(i.from, 10);
+        if (!DATE.test(from)) return { ok: false, error: "Indique a data." } satisfies Fail;
+        if (from < todayMaputo()) return { ok: false, error: "A data já passou." } satisfies Fail;
+        order.from = from;
+        const g = Math.round(Number(i.guests));
+        order.guests = g >= 1 && g <= 50 ? g : 1;
+        const l = lines[0];
+        if (typeof l.price === "number") order.total = Math.round(l.price * (/pessoa|pax|cada/i.test(l.priceNote ?? "") ? order.guests : 1) * 100) / 100;
     } else {
         const from = str(i.from, 10), to = str(i.to, 10);
         if (!DATE.test(from) || !DATE.test(to)) return { ok: false, error: "Indique as datas." } satisfies Fail;
@@ -111,6 +122,10 @@ export async function createOrder(member: PublicMember, premium: boolean, i: Ord
         return { ok: true, order } as const;
     });
 }
+
+/** Every order (Riendzo team), newest first. */
+export const listAllOrders = async () => read();
+export const countRiendzoNew = async () => (await read()).filter((o) => o.viaRiendzo && o.status === "sent").length;
 
 export async function listOrdersOf(memberId: string) {
     return (await read()).filter((o) => o.memberId === memberId);

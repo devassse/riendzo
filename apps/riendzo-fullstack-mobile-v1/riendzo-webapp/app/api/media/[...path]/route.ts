@@ -32,6 +32,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ path: st
         // File names contain a random suffix, so they never change
         "Cache-Control": "public, max-age=31536000, immutable",
         "X-Content-Type-Options": "nosniff",
+        // play/show in the page, never offered as a file download
+        "Content-Disposition": "inline",
     };
 
     const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get("range") ?? "");

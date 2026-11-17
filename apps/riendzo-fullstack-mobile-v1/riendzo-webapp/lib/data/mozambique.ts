@@ -90,7 +90,7 @@ export const OUTLINE: [number, number][] = [
  * Projection to the SVG drawing in mozambique-map.ts (calibrated to Mozambique's real coordinates,
  * so places and language areas given as [longitude, latitude] land where they should).
  */
-export const MAP = { width: MAP_SIZE.width, height: MAP_SIZE.height, /** pixels per degree */ scale: 42 };
+export const MAP = { width: MAP_SIZE.width, height: MAP_SIZE.height, /** pixels per degree */ scale: FRAME.width / (FRAME.lon[1] - FRAME.lon[0]) };
 export const project = ([lon, lat]: [number, number]) => ({
     x: FRAME.offset + ((lon - FRAME.lon[0]) / (FRAME.lon[1] - FRAME.lon[0])) * FRAME.width,
     y: FRAME.offset + ((FRAME.lat[0] - lat) / (FRAME.lat[0] - FRAME.lat[1])) * FRAME.height,

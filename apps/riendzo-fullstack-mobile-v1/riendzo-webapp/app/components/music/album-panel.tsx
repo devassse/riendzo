@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Album } from "@/lib/cms/artist-types";
 import { youtubeId } from "@/lib/cms/sanitize";
 import SidePanel from "./side-panel";
-import { KaraokeLines, KaraokeOverlay, useAudioTime } from "./karaoke";
+import { AudioBar, KaraokeOverlay, LyricsPopup } from "./karaoke";
 import { isSynced } from "@/lib/cms/lrc";
 
 export type AlbumRef = { album: Album; artistName: string; artistSlug?: string; color: string };
@@ -42,7 +42,7 @@ export function AlbumPanel({ data, onClose, labels }: {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [current, setCurrent] = useState<number | null>(null);
     const [playing, setPlaying] = useState(false);
-    const [lyricsOpen, setLyricsOpen] = useState(true);
+    const [lyricsOpen, setLyricsOpen] = useState(false);
 
     const tracks = data?.album.tracks ?? [];
     const playable = (i: number) => Boolean(tracks[i]?.audioUrl || tracks[i]?.youtubeUrl);
@@ -60,10 +60,8 @@ export function AlbumPanel({ data, onClose, labels }: {
         setCurrent(null);
         setPlaying(false);
         setKaraoke(false);
+        setLyricsOpen(false);
     };
-
-    // a new track opens with its lyrics visible
-    useEffect(() => { setLyricsOpen(true); }, [current]);
 
     const toggle = (i: number) => {
         const t = tracks[i];
@@ -102,10 +100,13 @@ export function AlbumPanel({ data, onClose, labels }: {
     const [karaoke, setKaraoke] = useState(false);
     const lyrics = cur?.lyrics;
     const hasAudio = Boolean(cur?.audioUrl);
-    const time = useAudioTime(audioRef, playing && hasAudio);
-    const seek = (t: number) => { if (audioRef.current) { audioRef.current.currentTime = t; if (audioRef.current.paused) void audioRef.current.play(); } };
-    const toggleAudio = () => { const a = audioRef.current; if (!a) return; if (a.paused) void a.play(); else a.pause(); };
-    useEffect(() => { if (current === null) setKaraoke(false); }, [current]);
+    // No playback clock here: the lyrics popup and the player bar keep their own, so this panel
+    // does not re-render while the song plays (that is what made the page jump).
+    const seek = useCallback((t: number) => { const a = audioRef.current; if (a) { a.currentTime = t; if (a.paused) void a.play(); } }, []);
+    const toggleAudio = useCallback(() => { const a = audioRef.current; if (!a) return; if (a.paused) void a.play(); else a.pause(); }, []);
+    const closeLyrics = useCallback(() => setLyricsOpen(false), []);
+    const closeKaraoke = useCallback(() => setKaraoke(false), []);
+    useEffect(() => { if (current === null) { setKaraoke(false); setLyricsOpen(false); } }, [current]);
 
     return (
         <SidePanel open={Boolean(data)} onClose={close} label={data?.album.title ?? "Álbum"} closeLabel={L.close}>
@@ -156,31 +157,34 @@ export function AlbumPanel({ data, onClose, labels }: {
                                 <button type="button" onClick={closePlayer} className="flex-none cursor-pointer rounded-full border border-[#0b1220]/20 px-3 py-1 text-xs font-medium text-[#0b1220] hover:bg-white">✕ Fechar faixa</button>
                             </div>
                         )}
-                        {/* Player */}
-                        <audio ref={audioRef} controls className={`mt-4 w-full ${cur?.audioUrl ? "" : "hidden"}`} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={next} preload="none" />
+                        {/* Player: our own controls (no "Download" option); the <audio> element itself is hidden */}
+                        <audio ref={audioRef} className="hidden" controlsList="nodownload noplaybackrate" onContextMenu={(e) => e.preventDefault()} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={next} preload="none" />
+                        {hasAudio && (
+                            <div className="mt-4 rounded-2xl border border-[#0b1220]/10 px-3 py-2.5">
+                                <AudioBar audioRef={audioRef} playing={playing} color={color} onToggle={toggleAudio} />
+                            </div>
+                        )}
                         {yt && (
                             <div className="mt-4 aspect-video overflow-hidden rounded-2xl bg-[#0b1220]">
                                 <iframe src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0`} title={cur?.title} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" className="h-full w-full border-0" />
                             </div>
                         )}
-                        {lyrics?.length && lyricsOpen ? (
-                            <section className="mt-6" aria-label="Letra">
-                                <div className="flex flex-wrap items-center justify-between gap-2">
-                                    <h4 className="font-baloo text-lg font-medium">Letra {isSynced(lyrics) && hasAudio && <span className="ml-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase text-[#05210a]" style={{ backgroundColor: color }}>Karaoke</span>}</h4>
-                                    <button type="button" onClick={() => setLyricsOpen(false)} className="cursor-pointer rounded-full border border-[#0b1220]/20 px-3 py-1 text-xs font-medium hover:bg-[#0b1220]/5">Esconder letra</button>
-                                    {isSynced(lyrics) && hasAudio && (
-                                        <button type="button" onClick={() => { setKaraoke(true); if (audioRef.current?.paused) void audioRef.current.play(); }} className="cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-baloo font-medium hover:bg-[#0b1220]/5" style={{ borderColor: `${color}88`, color }}>🎤 Ecrã inteiro</button>
-                                    )}
-                                </div>
-                                <div className="mt-3 rounded-2xl border border-[#0b1220]/10 bg-[#f8f9fc] p-4">
-                                    <KaraokeLines lines={hasAudio ? lyrics : lyrics.map((l) => ({ text: l.text }))} time={time} duration={audioRef.current?.duration} color={color} onSeek={hasAudio ? seek : undefined} />
-                                </div>
-                                {isSynced(lyrics) && hasAudio && <p className="mt-2 text-[11px] text-[#5b6478]">Toque num verso para saltar para esse momento.</p>}
-                            </section>
+                        {cur && lyrics?.length ? (
+                            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3" style={{ backgroundColor: `${color}12` }}>
+                                <p className="text-sm text-[#0b1220]">
+                                    <span className="font-baloo font-medium">♪ Letra disponível</span>
+                                    {isSynced(lyrics) && hasAudio && <span className="ml-2 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase text-[#05210a]" style={{ backgroundColor: color }}>Karaoke</span>}
+                                </p>
+                                <button type="button" onClick={() => { setLyricsOpen(true); const a = audioRef.current; if (hasAudio && a?.paused) void a.play(); }} aria-haspopup="dialog" className="cursor-pointer rounded-full px-4 py-1.5 font-baloo text-sm font-medium text-white shadow" style={{ backgroundColor: color }}>
+                                    🎤 Acompanhar letra
+                                </button>
+                            </div>
                         ) : null}
-                        {lyrics?.length && !lyricsOpen ? <button type="button" onClick={() => setLyricsOpen(true)} className="mt-4 cursor-pointer rounded-full border border-[#0b1220]/20 px-4 py-1.5 text-xs font-medium hover:bg-[#0b1220]/5">♪ Mostrar letra</button> : null}
                         {cur && (
-                            <KaraokeOverlay open={karaoke && Boolean(lyrics?.length)} onClose={() => setKaraoke(false)} title={cur.title} artist={data.artistName} lines={lyrics ?? []} time={time} duration={audioRef.current?.duration} color={color} playing={playing} onToggle={toggleAudio} onSeek={seek} />
+                            <LyricsPopup open={lyricsOpen && !karaoke && Boolean(lyrics?.length)} onClose={closeLyrics} onFullScreen={() => setKaraoke(true)} title={cur.title} artist={data.artistName} lines={lyrics ?? []} audioRef={audioRef} hasAudio={hasAudio} color={color} playing={playing} onToggle={toggleAudio} onSeek={seek} />
+                        )}
+                        {cur && (
+                            <KaraokeOverlay open={karaoke && Boolean(lyrics?.length)} onClose={closeKaraoke} title={cur.title} artist={data.artistName} lines={lyrics ?? []} audioRef={audioRef} color={color} playing={playing} onToggle={toggleAudio} onSeek={seek} />
                         )}
                         <p className="mt-4 text-[11px] leading-relaxed text-[#5b6478]">{L.rights}</p>
                     </div>

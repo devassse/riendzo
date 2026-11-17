@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getMember } from "@/lib/members-auth";
 import { isPremium, listMembers } from "@/lib/members";
-import { ownersOf } from "@/lib/cms/users";
+import { getEnvProfile, listUsers, ownersOf } from "@/lib/cms/users";
 import { sendMail } from "@/lib/mailer";
 import { cancelOrder, createOrder } from "@/lib/orders";
 import { getCollection } from "@/lib/cms/collections";
@@ -30,14 +30,22 @@ export async function placeOrderAction(_: OrderState, fd: FormData): Promise<Ord
     });
     if (!r.ok) return { error: r.error };
 
-    // Tell the establishment (best effort: the Pedidos page also refreshes by itself)
+    // Tell the establishment, or the Riendzo team when it has no owner account (best effort: the Pedidos pages also refresh by themselves)
     try {
-        for (const o of await ownersOf(collection, slug)) {
-            if (o.email) await sendMail({ to: o.email, subject: `Novo pedido ${r.order.code} | ${r.order.place}`, text: `Recebeu um novo pedido ${r.order.code} de ${r.order.customerName} (${r.order.phone}).\n\nAbra o seu portal: Pedidos.\n\nRiendzo` });
+        if (r.order.viaRiendzo) {
+            const staff = [(await getEnvProfile()).email, ...(await listUsers()).filter((u) => u.role === "admin" && u.active && u.email).map((u) => u.email)];
+            for (const to of [...new Set(staff.filter(Boolean) as string[])]) {
+                await sendMail({ to, subject: `Pedido para encaminhar ${r.order.code} | ${r.order.place}`, text: `${r.order.place} ainda não tem conta na Riendzo.\nNovo pedido ${r.order.code} de ${r.order.customerName} (+${r.order.phone}).\n\nBackOffice > Administrador > Pedidos e reservas.\n\nRiendzo` });
+            }
+        } else {
+            for (const o of await ownersOf(collection, slug)) {
+                if (o.email) await sendMail({ to: o.email, subject: `Novo pedido ${r.order.code} | ${r.order.place}`, text: `Recebeu um novo pedido ${r.order.code} de ${r.order.customerName} (${r.order.phone}).\n\nAbra o seu portal: Pedidos.\n\nRiendzo` });
+            }
         }
     } catch { /* never block the customer */ }
 
     revalidatePath("/conta/pedidos");
+    revalidatePath("/admin/administrador/pedidos");
     redirect(`/conta/pedidos?novo=${encodeURIComponent(r.order.code.slice(1))}`);
 }
 

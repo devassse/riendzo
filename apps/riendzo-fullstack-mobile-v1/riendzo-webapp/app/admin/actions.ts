@@ -13,7 +13,7 @@ import { addMany, deleteTerritory, saveTerritory, type TerritoryInput } from "@/
 import { saveTimeline, type TimelineEvent as TLEvent } from "@/lib/cms/timelines";
 import { saveIntro } from "@/lib/cms/page-intros";
 import { saveCommsSettings } from "@/lib/cms/comms-settings";
-import { sendMailResult } from "@/lib/mailer";
+import { sendMail, sendMailResult } from "@/lib/mailer";
 import { sendSms } from "@/lib/sms";
 import { saveHistoryTheme, type HistoryTheme } from "@/lib/cms/history-theme";
 import { getHomeFlagged, markFlagsManaged, saveHeroVideo, saveHomeConfig, toggleExperience, type ExperienceRef, type HomeHeading } from "@/lib/cms/home";
@@ -22,7 +22,7 @@ import { deleteMedia as removeMedia } from "@/lib/cms/store";
 import { getList, saveList } from "@/lib/cms/lists";
 import { saveMenuFlags } from "@/lib/cms/menus";
 import { changeOwnPassword, createUser, deleteUser, renameOwnerRefs, saveProfile, updateUser, type OwnerRef, type Role } from "@/lib/cms/users";
-import { setMemberStatus, setPremium } from "@/lib/members";
+import { isPremium, listMembers, setMemberStatus, setPremium } from "@/lib/members";
 import { deleteMessage, markMessage } from "@/lib/cms/inbox";
 import type { CatalogItem } from "@/app/components/sections/catalog-types";
 
@@ -265,6 +265,24 @@ export async function setPremiumAction(fd: FormData) {
     await setPremium(String(fd.get("id")), months);
     await store.logActivity({ user: s.user, action: months ? `Ativou Premium (+${months} meses)` : "Removeu o Premium" });
     revalidatePath("/admin/administrador/membros");
+}
+
+/** Cancels a member's Premium right away (the account goes back to free). The member is told by e-mail. */
+export async function cancelPremiumAction(fd: FormData) {
+    const s = await requireAdmin(["admin"]);
+    const id = String(fd.get("id") ?? "");
+    const m = (await listMembers()).find((x) => x.id === id);
+    if (!m || !isPremium(m)) return;
+    await setPremium(id, 0);
+    const reason = String(fd.get("reason") ?? "").trim().slice(0, 300);
+    await store.logActivity({ user: s.user, action: `Cancelou o Premium de ${m.firstName} ${m.lastName}`.trim() });
+    if (m.email) {
+        try {
+            await sendMail({ to: m.email, subject: "A sua subscrição Premium foi cancelada | Riendzo", text: `Olá ${m.firstName},\n\nA sua subscrição Premium na Riendzo foi cancelada e a conta voltou a ser gratuita.${reason ? `\nMotivo: ${reason}` : ""}\n\nSe tiver dúvidas, responda a este e-mail ou use a página Contactos.\n\nRiendzo` });
+        } catch { /* courtesy only */ }
+    }
+    revalidatePath("/admin/administrador/membros");
+    revalidatePath("/admin/administrador/subscricoes");
 }
 
 export async function markMessageAction(fd: FormData) {
