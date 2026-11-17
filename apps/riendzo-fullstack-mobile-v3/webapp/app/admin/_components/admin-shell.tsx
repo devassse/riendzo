@@ -157,7 +157,8 @@ export default function AdminShell({
                         <div className="ml-[2.1rem] mt-1 space-y-0.5 border-l border-white/20 pl-3">
                             {[["listas", "Dados genéricos"], ["menus", "Menus e “Em breve”"], ["utilizadores", "Utilizadores"], ["membros", "Membros Riendzo AI"], ["subscricoes", "Subscrições Premium"], ["doacoes", "Doações"], ["mensagens", "Mensagens"], ["configuracoes", "Configurações"]].map(([k, l]) => {
                                 const href = `/admin/administrador/${k}`;
-                                return <Link key={k} href={href} onClick={close} className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-[13px] ${pathname.startsWith(href) ? "bg-white/18 text-white" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>{l}{k === "mensagens" && unread > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{unread}</span>}{k === "pedidos" && orders > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{orders}</span>}</Link>;
+                                return <Link key={k} href={href} onClick={close} className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-[13px] ${pathname.startsWith(href) ? "bg-white/18 text-white" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>{l}{k === "mensagens" && unread > 0 && <span className="rounded-full bg-[#ffc14d] px-1.5 text-[10px] font-medium text-[#5a3b00]">{unread}</span>}
+                                </Link>;
                             })}
                         </div>
                     )}

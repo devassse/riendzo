@@ -17,7 +17,7 @@ services:
       retries: 10
 
   api:
-    build: ./riendzo-api
+    build: ./api
     restart: unless-stopped
     depends_on:
       db:
@@ -42,7 +42,7 @@ services:
 
   web:
     build:
-      context: ./riendzo-webapp
+      context: ./webapp
       args:
         NEXT_PUBLIC_SITE_URL: ${SITE_URL}
         NEXT_PUBLIC_SOCIAL_FACEBOOK: ${SOCIAL_FACEBOOK:-}
@@ -53,6 +53,8 @@ services:
         NEXT_PUBLIC_SOCIAL_X: ${SOCIAL_X:-}
         NEXT_PUBLIC_SOCIAL_LINKEDIN: ${SOCIAL_LINKEDIN:-}
     restart: unless-stopped
+    ports:
+      - "3001:3000"
     depends_on:
       api:
         condition: service_healthy
