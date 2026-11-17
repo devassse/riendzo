@@ -7,13 +7,15 @@ import { getMemberById, isVerified, type PublicMember } from "@/lib/members";
 const COOKIE = "riendzo_member";
 const MAX_AGE = 60 * 60 * 24 * 30;
 const isProd = process.env.NODE_ENV === "production";
+const cookieSecure =
+  isProd && process.env.COOKIE_SECURE !== "false";
 
 export async function createMemberSession(id: string) {
     const { secret } = authConfig();
     const exp = Math.floor(Date.now() / 1000) + MAX_AGE;
     const payload = Buffer.from(JSON.stringify({ m: id, exp })).toString("base64url");
     (await cookies()).set(COOKIE, `${payload}.${sign(payload, secret)}`, {
-        httpOnly: true, sameSite: "lax", secure: isProd, path: "/", maxAge: MAX_AGE,
+        httpOnly: true, sameSite: "lax", secure: cookieSecure, path: "/", maxAge: MAX_AGE,
     });
 }
 

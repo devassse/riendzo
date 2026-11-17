@@ -60,6 +60,7 @@ services:
         condition: service_healthy
     environment:
       NODE_ENV: production
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
       NEXT_PUBLIC_SITE_URL: ${SITE_URL}
       RIENDZO_API_URL: http://api:4000
       RIENDZO_API_KEY: ${SERVICE_API_KEY}
