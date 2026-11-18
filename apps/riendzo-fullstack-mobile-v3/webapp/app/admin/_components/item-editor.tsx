@@ -117,11 +117,11 @@ export default function ItemEditor(p: EditorProps) {
         const payload = isRecipe
             ? { ...r, status: st, minutes: Number(r.minutes), servings: Number(r.servings), ingredients: lines(r.ingredientsText), steps: lines(r.stepsText) }
             : {
-                  ...c, status: st, meta: lines(c.metaText),
-                  keywords: c.keywordsText.split(/[,\n]/).map((k) => k.trim()).filter(Boolean),
-                  blocks: c.blocks.map((b) => ({ kind: b.kind, heading: b.heading, items: lines(b.text) })),
-                  link: { label: c.linkLabel, href: c.linkHref }, location: { lat: c.lat, lng: c.lng },
-              };
+                ...c, status: st, meta: lines(c.metaText),
+                keywords: c.keywordsText.split(/[,\n]/).map((k) => k.trim()).filter(Boolean),
+                blocks: c.blocks.map((b) => ({ kind: b.kind, heading: b.heading, items: lines(b.text) })),
+                link: { label: c.linkLabel, href: c.linkHref }, location: { lat: c.lat, lng: c.lng },
+            };
         start(async () => {
             const res = await saveItemAction(p.collectionId, p.originalSlug, payload);
             if (res.ok) goBack(p.backHref);
@@ -321,10 +321,10 @@ export default function ItemEditor(p: EditorProps) {
                     )}
                     {!owner && p.experience && p.originalSlug && !isRecipe && <ExperienceToggle collection={p.collectionId} slug={p.originalSlug} initial={p.experience.on} />}
                     <RequiredNote />
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-col flex-wrap gap-2">
                         <button type="submit" disabled={pending} className="cursor-pointer rounded-full bg-[#0054b5] px-5 py-2.5 font-baloo text-sm font-medium text-white hover:opacity-90 disabled:opacity-60">{pending ? "A guardar…" : "Guardar"}</button>
                         {!owner && <button type="button" disabled={pending} onClick={() => submit("draft")} className="cursor-pointer rounded-full border border-[#0b1220]/20 px-4 py-2.5 text-sm font-medium hover:bg-[#0b1220]/5 disabled:opacity-60">Guardar como rascunho</button>}
-                        <Link href={p.backHref} className="rounded-full px-4 py-2.5 text-sm text-[#5b6478] hover:text-[#0b1220]">Cancelar</Link>
+                        <Link href={p.backHref} className="rounded-full px-4 py-2.5 text-sm text-[#F44336] hover:text-[#9b3c36]">Cancelar</Link>
                     </div>
                     {p.publicHref && (
                         <div className="space-y-1.5 border-t border-[#0b1220]/10 pt-3 text-sm">

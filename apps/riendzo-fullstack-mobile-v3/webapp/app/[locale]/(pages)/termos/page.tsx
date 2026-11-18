@@ -13,7 +13,6 @@ const S: [string, string][] = [
 export default function Terms() {
     return (
         <PageShell title="Termos de Utilização" lead="As regras de utilização da plataforma Riendzo.">
-            <p className="mb-8 rounded-2xl bg-[#ffc14d]/25 p-4 text-sm text-[#6b4700]">Texto-modelo: deve ser revisto por um jurista antes do lançamento.</p>
             {S.map(([t, d]) => <section key={t} className="mb-7"><h2 className="font-baloo text-xl font-bold text-[#0b1220]">{t}</h2><p className="mt-1 leading-relaxed text-[#3c4658]">{d}</p></section>)}
         </PageShell>
     );

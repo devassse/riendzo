@@ -76,8 +76,9 @@ export default function DonateForm() {
                 <p className="text-5xl" aria-hidden="true">💙</p>
                 <h2 className="mt-2 mb-4 font-baloo text-2xl font-bold text-[#1c6e0a]">Obrigado pela sua doação!</h2>
                 <p className="mt-1 text-[#2c5a1d]">
-                    O teu apoio significa muito para a nossa equipa! Cada contribuição ajuda-nos a continuar a desenvolver o Riendzo, valorizar a nossa cultura e aproximar ainda mais as pessoas das nossas raízes.
-                    
+                    O teu apoio significa muito para a nossa equipa! 
+                    <br />
+                    Cada contribuição ajuda-nos a continuar a desenvolver o Riendzo, valorizar a nossa cultura e aproximar ainda mais as pessoas das nossas raízes.
                     <br /><br />
                     <b>Obrigado por fazeres parte desta iniciativa!</b>
                     
