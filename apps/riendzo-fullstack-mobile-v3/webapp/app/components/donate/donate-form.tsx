@@ -176,7 +176,7 @@ export default function DonateForm() {
                                 lineHeight: 1.5,
                             }}
                         >
-                            Pagamento automático em breve. Por agora, a doação é feita por transferência M-Pesa: mostramos-lhe o número e o valor.
+                            Pagamento automático em breve. Por agora, a doação é feita por transferência M-Pesa: mostramos-lhe o número e o nome <em>cifrado</em>.
                         </p>
                     </div>
 
