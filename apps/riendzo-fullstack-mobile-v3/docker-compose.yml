@@ -75,11 +75,13 @@ services:
       MPESA_PUBLIC_KEY: ${MPESA_PUBLIC_KEY:-}
       MPESA_SERVICE_PROVIDER_CODE: ${MPESA_SERVICE_PROVIDER_CODE:-}
       MPESA_ENV: ${MPESA_ENV:-sandbox}
+      DONATE_MANUAL_MPESA_NUMBER: ${DONATE_MANUAL_MPESA_NUMBER:-}
+      DONATE_MANUAL_MPESA_NAME: ${DONATE_MANUAL_MPESA_NAME:-}
     volumes:
       # conteúdo editado no BackOffice (data/cms) e ficheiros carregados (data/uploads)
       - webdata:/app/data
 
-  # Uncomment After Buying Domain and Configuring DNS, don't forget Volumes
+  # Uncomment After Buying Domain and Configuring DNS and HTTPS, don't forget Volumes
   # caddy:
   #   image: caddy:2-alpine
   #   restart: unless-stopped
