@@ -19,6 +19,10 @@ export type Donation = {
     transactionId?: string;
     memberId?: string;
     simulated?: boolean;
+    /** manual transfer: the donor sent the money to our M-Pesa number and told us (not confirmed by the API) */
+    manual?: boolean;
+    /** optional name the donor gave so we can thank them */
+    donorName?: string;
     createdAt: string;
     updatedAt: string;
 };
@@ -30,7 +34,7 @@ export const DONATION_PRESETS = [10, 20, 50, 100] as const;
 const FILE = path.join(DATA_DIR, "donations", "donations.json");
 const read = async () => (await readJson<Donation[]>(FILE)) ?? [];
 
-export function createDonation(d: Pick<Donation, "amount" | "msisdn" | "memberId" | "simulated">) {
+export function createDonation(d: Pick<Donation, "amount" | "msisdn" | "memberId" | "simulated" | "manual" | "donorName">) {
     return locked(async () => {
         const all = await read();
         const now = new Date().toISOString();

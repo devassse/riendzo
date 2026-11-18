@@ -21,7 +21,7 @@ export default async function Donations({ searchParams }: { searchParams: Promis
     const unknown = everything.filter((d) => d.status === "unknown").length;
     const all = everything
         .filter((d) => (estado ? d.status === estado : true))
-        .filter((d) => matches(q, d.msisdn, d.ref, d.transactionId, d.amount, d.providerDesc));
+        .filter((d) => matches(q, d.msisdn, d.ref, d.transactionId, d.amount, d.providerDesc, d.donorName));
     const pg = paginate(all, page);
     return (
         <div className="mx-auto max-w-6xl">
@@ -41,9 +41,9 @@ export default async function Donations({ searchParams }: { searchParams: Promis
                             <tr key={d.id} className="border-t border-[#0b1220]/8">
                                 <td className="px-4 py-3">{new Date(d.createdAt).toLocaleString("pt-PT", { timeZone: "Africa/Maputo" })}</td>
                                 <td className="px-4 py-3 font-medium">{d.amount.toLocaleString("pt-PT")} MT</td>
-                                <td className="px-4 py-3">+{d.msisdn}</td>
+                                <td className="px-4 py-3">{d.msisdn ? `+${d.msisdn}` : "—"}{d.donorName && <span className="block text-xs text-[#4b5568]">{d.donorName}</span>}</td>
                                 <td className="px-4 py-3 font-mono text-xs">{d.ref}{d.transactionId ? ` · ${d.transactionId}` : ""}</td>
-                                <td className="px-4 py-3"><span className={`rounded-full px-2.5 py-0.5 text-xs ${LABEL[d.status][1]}`}>{LABEL[d.status][0]}</span>{d.simulated && <span className="ml-1 text-[10px] text-[#8a5a00]">simulado</span>}</td>
+                                <td className="px-4 py-3"><span className={`rounded-full px-2.5 py-0.5 text-xs ${LABEL[d.status][1]}`}>{LABEL[d.status][0]}</span>{d.simulated && <span className="ml-1 text-[10px] text-[#8a5a00]">simulado</span>}{d.manual && <span className="ml-1 text-[10px] text-[#0b4a99]">manual</span>}</td>
                                 <td className="px-4 py-3 text-xs text-[#4b5568]">{d.providerCode ? `${d.providerCode}: ` : ""}{d.providerDesc ?? ""}</td>
                             </tr>
                         ))}

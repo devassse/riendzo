@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { donateAction, type DonateState } from "@/app/actions/donate-actions";
+import { useActionState, useEffect, useState, useTransition } from "react";
+import { donateAction, manualDonationAction, type DonateState } from "@/app/actions/donate-actions";
 
 const input = "mt-1.5 w-full rounded-xl border border-[#0b1220]/15 bg-white px-4 py-3 text-sm outline-none focus:border-[#0370d6]";
 const AMOUNTS = [10, 20, 50, 100] as const;
@@ -19,10 +19,44 @@ export default function DonateForm() {
     // Reference of the donation whose thank-you message was already closed (by the timer or the button)
     const [closedRef, setClosedRef] = useState<string | null>(null);
     const [left, setLeft] = useState(THANKS_SECONDS);
+    // "Other" amount is controlled: the form resets itself after each submit and the manual panel needs the value
+    const [other, setOther] = useState("");
+    // Manual M-Pesa transfer (offered when online payments are not active yet)
+    const [manualHidden, setManualHidden] = useState(false);
+    const [manualDone, setManualDone] = useState<{ ref: string; amount: number } | null>(null);
+    const [donorName, setDonorName] = useState("");
+    const [manualError, setManualError] = useState<string | null>(null);
+    const [copied, setCopied] = useState(false);
+    const [sending, startSending] = useTransition();
 
     const refNow = state.ref ?? "";
     const thanks = state.status === "paid" && !pending && refNow !== closedRef;
-    const close = () => { setClosedRef(refNow); setChoice("20"); setLeft(THANKS_SECONDS); };
+    const close = () => { setClosedRef(refNow); setChoice("20"); setOther(""); setLeft(THANKS_SECONDS); };
+
+    const manual = state.code === "inactive" ? state.manual : undefined;
+    const showManual = !!manual && !pending && !manualHidden;
+    const manualAmount = Math.round(Number(choice === "other" ? other.replace(",", ".") : choice));
+    const manualAmountOk = Number.isFinite(manualAmount) && manualAmount >= 10 && manualAmount <= 100000;
+    // A new online attempt brings the panel back (if it was closed after a manual donation)
+    useEffect(() => { if (pending) setManualHidden(false); }, [pending]);
+
+    const copyNumber = async () => {
+        if (!manual) return;
+        try {
+            await navigator.clipboard.writeText(manual.phone.replace(/\D/g, ""));
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch { /* clipboard blocked: the number is on screen anyway */ }
+    };
+    const sent = () => {
+        setManualError(null);
+        startSending(async () => {
+            const r = await manualDonationAction(manualAmount, donorName);
+            if (r.ok) setManualDone({ ref: r.ref, amount: r.amount });
+            else setManualError(r.message);
+        });
+    };
+    const closeManual = () => { setManualDone(null); setManualHidden(true); setDonorName(""); setManualError(null); setChoice("20"); setOther(""); };
 
     // Countdown of the thank-you message: one tick per second...
     useEffect(() => {
@@ -35,6 +69,24 @@ export default function DonateForm() {
         if (thanks && left === 0) close();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [thanks, left]);
+
+    if (manualDone) {
+        return (
+            <div role="status" className="rounded-3xl bg-[#35be12]/12 p-8 text-center">
+                <p className="text-5xl" aria-hidden="true">💙</p>
+                <h2 className="mt-2 mb-4 font-baloo text-2xl font-bold text-[#1c6e0a]">Obrigado pela sua doação!</h2>
+                <p className="mt-1 text-[#2c5a1d]">
+                    O teu apoio significa muito para a nossa equipa! Cada contribuição ajuda-nos a continuar a desenvolver o Riendzo, valorizar a nossa cultura e aproximar ainda mais as pessoas das nossas raízes.
+                    
+                    <br /><br />
+                    <b>Obrigado por fazeres parte desta iniciativa!</b>
+                    
+                </p>
+                <p className="mt-3 text-xs text-[#4b5568]">Referência: {manualDone.ref}</p>
+                <button type="button" onClick={closeManual} className="mt-4 cursor-pointer rounded-full border border-[#1c6e0a]/40 px-5 py-2 text-sm font-medium text-[#1c6e0a] hover:bg-white">Fechar</button>
+            </div>
+        );
+    }
 
     if (thanks) {
         return (
@@ -73,7 +125,7 @@ export default function DonateForm() {
                 </div>
                 {choice === "other" && (
                     <label className="mt-3 block text-xs font-medium">Valor em MT (mínimo 10)
-                        <input name="other" type="number" inputMode="numeric" min={10} max={100000} step={1} required autoFocus placeholder="Ex.: 250" className={input} />
+                        <input name="other" type="number" inputMode="numeric" min={10} max={100000} step={1} required autoFocus placeholder="Ex.: 250" value={other} onChange={(e) => setOther(e.target.value)} className={input} />
                     </label>
                 )}
             </fieldset>
@@ -104,9 +156,59 @@ export default function DonateForm() {
                 <p role="alert" className={`rounded-2xl px-4 py-3 text-sm ${state.status === "unknown" ? "bg-[#ffc14d]/25 text-[#6b4700]" : "bg-[#e5533d]/10 text-[#b5311d]"}`}>{state.message}</p>
             )}
 
-            <button type="submit" disabled={pending} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60">
+            <button type="submit" disabled={pending || showManual} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60">
                 {pending ? "A aguardar confirmação…" : "Efetuar Pagamento"}
             </button>
+
+            {showManual && manual && (
+                <section aria-labelledby="manual-title" className="space-y-4 border-t border-[#0b1220]/8 pt-6">
+                    <div>
+                        <p
+                            data-dc-tpl="21"
+                            style={{
+                                margin: 0,
+                                padding: '12px 14px',
+                                borderRadius: 12,
+                                background: 'rgb(244, 246, 249)',
+                                color: 'rgb(74, 88, 112)',
+                                fontSize: 13,
+                                lineHeight: 1.5,
+                            }}
+                        >
+                            Pagamento automático em breve. Por agora, a doação é feita por transferência M-Pesa: mostramos-lhe o número e o valor.
+                        </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#0b1220]/15 p-4">
+                        <p className="text-sm text-[#5b6478]">Enviar por M-Pesa para</p>
+                        <p className="mt-1 font-baloo text-3xl font-bold text-[#0b1220]">{manual.phone}</p>
+                        {manual.name && <p className="mt-1 text-sm text-[#4b5568]">Nome que aparece: <b>{manual.name}</b></p>}
+                        <button type="button" onClick={copyNumber} className="mt-3 w-full cursor-pointer rounded-full border border-[#0054b5] px-5 py-2.5 text-sm font-semibold text-[#0054b5] hover:bg-[#0054b5]/5">
+                            {copied ? "Número copiado ✓" : "Copiar número"}
+                        </button>
+                    </div>
+
+                    <ol className="list-decimal space-y-1 pl-6 text-sm text-[#1f2937]">
+                        <li>Marque <b>*150#</b></li>
+                        <li>Escolha <b>Transferir dinheiro</b></li>
+                        <li>M-Pesa (Sem Taxas)</li>
+                        <li>Insira o número</li>
+                        <li>Insira o valor</li>
+                        <li>Confirme com o seu PIN M-Pesa</li>
+                        <li>Já está!</li>
+                    </ol>
+
+                    <label className="block text-xs font-medium">Opcional: diga-nos o seu nome para lhe agradecermos.
+                        <input type="text" value={donorName} onChange={(e) => setDonorName(e.target.value)} maxLength={80} autoComplete="name" placeholder="O seu nome" className={input} />
+                    </label>
+
+                    {manualError && <p role="alert" className="rounded-2xl bg-[#e5533d]/10 px-4 py-3 text-sm text-[#b5311d]">{manualError}</p>}
+
+                    <button type="button" onClick={sent} disabled={!manualAmountOk || sending} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60">
+                        {sending ? "A registar…" : "Já enviei"}
+                    </button>
+                </section>
+            )}
         </form>
     );
 }
