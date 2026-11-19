@@ -77,6 +77,8 @@ services:
       MPESA_ENV: ${MPESA_ENV:-sandbox}
       DONATE_MANUAL_MPESA_NUMBER: ${DONATE_MANUAL_MPESA_NUMBER:-}
       DONATE_MANUAL_MPESA_NAME: ${DONATE_MANUAL_MPESA_NAME:-}
+      SUBSCRIBE_MANUAL_MPESA_NUMBER: ${SUBSCRIBE_MANUAL_MPESA_NUMBER:-}
+      SUBSCRIBE_MANUAL_MPESA_NAME: ${SUBSCRIBE_MANUAL_MPESA_NAME:-}
     volumes:
       # conteúdo editado no BackOffice (data/cms) e ficheiros carregados (data/uploads)
       - webdata:/app/data

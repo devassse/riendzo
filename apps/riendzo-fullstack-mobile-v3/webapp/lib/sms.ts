@@ -31,17 +31,20 @@ export async function sendSms(to: string, text: string): Promise<SendResult> {
             return { ok: false, error: j?.message ?? `Twilio respondeu ${res.status}.` };
         }
         if (sms.provider === "africastalking" && sms.atUsername && sms.atApiKey) {
-            const host = sms.atUsername === "sandbox" ? "api.sandbox.africastalking.com" : "api.africastalking.com";
-            const form = new URLSearchParams({ username: sms.atUsername, to: number, message: body });
+            // "Sandbox" / " sandbox " também contam como sandbox (antes ia para o servidor de produção e dava 401)
+            const username = sms.atUsername.trim();
+            const host = username.toLowerCase() === "sandbox" ? "api.sandbox.africastalking.com" : "api.africastalking.com";
+            const form = new URLSearchParams({ username: username.toLowerCase() === "sandbox" ? "sandbox" : username, to: number, message: body });
             if (sms.atSender) form.set("from", sms.atSender);
             const res = await fetch(`https://${host}/version1/messaging`, {
                 method: "POST",
-                headers: { apiKey: sms.atApiKey, Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" },
+                headers: { apiKey: sms.atApiKey.trim(), Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" },
                 body: form, signal: AbortSignal.timeout(10_000),
             });
             const j = (await res.json().catch(() => null)) as { SMSMessageData?: { Recipients?: { status?: string }[]; Message?: string } } | null;
             const status = j?.SMSMessageData?.Recipients?.[0]?.status;
             if (res.ok && (!status || status === "Success")) return { ok: true };
+            if (res.status === 401) return { ok: false, error: `Africa's Talking recusou as credenciais (401). Servidor usado: ${host}. O utilizador "${username}" e a chave têm de ser do mesmo ambiente (sandbox ou produção).` };
             return { ok: false, error: status ?? j?.SMSMessageData?.Message ?? `Africa's Talking respondeu ${res.status}.` };
         }
         if (process.env.NODE_ENV !== "production") console.log(`\n[sms:dev] Para: ${number}\n${body}\n`);
