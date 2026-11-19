@@ -24,6 +24,7 @@ import { saveMenuFlags } from "@/lib/cms/menus";
 import { changeOwnPassword, createUser, deleteUser, renameOwnerRefs, saveProfile, updateUser, type OwnerRef, type Role } from "@/lib/cms/users";
 import { isPremium, listMembers, setMemberStatus, setPremium } from "@/lib/members";
 import { setPlacePremium } from "@/lib/place-premium";
+import { getSubPayment, updateSubPayment } from "@/lib/subscriptions";
 import { deleteMessage, markMessage } from "@/lib/cms/inbox";
 import type { CatalogItem } from "@/app/components/sections/catalog-types";
 
@@ -267,6 +268,54 @@ export async function setPremiumAction(fd: FormData) {
     await store.logActivity({ user: s.user, action: months ? `Ativou Premium (+${months} meses)` : "Removeu o Premium" });
     revalidatePath("/admin/administrador/membros");
     revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/premium-utilizadores");
+}
+
+/**
+ * Aprova um pedido de Premium por transferência manual: o administrador confirmou o valor no extrato M-Pesa.
+ * Só agora o Premium é ativado (soma os meses ao fim do Premium atual, se ainda estiver ativo).
+ */
+export async function approveSubscriptionAction(fd: FormData) {
+    const s = await requireAdmin(["admin"]);
+    const pay = await getSubPayment(String(fd.get("id") ?? ""));
+    // só pedidos ainda por decidir (a aprovação é feita uma única vez: evita somar os meses duas vezes)
+    if (!pay || !(pay.status === "pending" || pay.status === "unknown")) return;
+    const until = pay.place ? await setPlacePremium(pay.place.collection, pay.place.slug, pay.months) : await setPremium(pay.memberId, pay.months);
+    await updateSubPayment(pay.id, { status: "paid", premiumUntil: until ?? undefined, decidedAt: new Date().toISOString(), decidedBy: s.user });
+    await store.logActivity({ user: s.user, action: pay.place ? `Aprovou o Premium de ${pay.place.title}` : `Aprovou o Premium de ${pay.memberName}`, title: `${pay.months} ${pay.months === 1 ? "mês" : "meses"} · ${pay.amount} MT` });
+    const to = pay.email ?? (pay.place ? undefined : (await listMembers()).find((m) => m.id === pay.memberId)?.email);
+    if (to) {
+        try {
+            await sendMail({ to, subject: pay.place ? `O Premium de ${pay.place.title} está ativo | Riendzo` : "O seu Premium Riendzo está ativo", text: `Olá ${pay.memberName},\n\nConfirmámos o seu pagamento de ${pay.amount} MT e aprovámos o seu pedido. ${pay.place ? `${pay.place.title} é agora Premium: já recebe e acompanha os pedidos no portal (Pedidos).` : "O seu Premium está ativo."}\nPremium ativo até ${until ? new Date(until).toLocaleDateString("pt-PT") : "-"}. Quando terminar, a conta volta automaticamente ao plano gratuito.\n\nObrigado!\nRiendzo` });
+        } catch { /* courtesy only */ }
+    }
+    refreshSite();
+    revalidatePath("/admin/administrador/premium-utilizadores");
+    revalidatePath("/admin/administrador/premium-estabelecimentos");
+    revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/membros");
+    revalidatePath("/admin/meu-espaco/premium");
+}
+
+/** Recusa um pedido de Premium por transferência manual (o valor não foi encontrado, está errado…). O cliente é avisado. */
+export async function rejectSubscriptionAction(fd: FormData) {
+    const s = await requireAdmin(["admin"]);
+    const pay = await getSubPayment(String(fd.get("id") ?? ""));
+    if (!pay || !(pay.status === "pending" || pay.status === "unknown")) return;
+    const reason = String(fd.get("reason") ?? "").trim().slice(0, 300);
+    await updateSubPayment(pay.id, { status: "rejected", rejectReason: reason || undefined, decidedAt: new Date().toISOString(), decidedBy: s.user });
+    await store.logActivity({ user: s.user, action: pay.place ? `Recusou o pedido de Premium de ${pay.place.title}` : `Recusou o pedido de Premium de ${pay.memberName}` });
+    const to = pay.email ?? (pay.place ? undefined : (await listMembers()).find((m) => m.id === pay.memberId)?.email);
+    if (to) {
+        try {
+            await sendMail({ to, subject: "O seu pedido de Premium não foi aprovado | Riendzo", text: `Olá ${pay.memberName},\n\nNão foi possível aprovar o seu pedido de Premium (${pay.amount} MT, ref. ${pay.ref}).${reason ? `\nMotivo: ${reason}` : "\nNão encontrámos a transferência no extrato M-Pesa."}\n\nSe já enviou o valor, responda a este e-mail ou use a página Contactos com a referência e o comprovativo.\n\nRiendzo` });
+        } catch { /* courtesy only */ }
+    }
+    revalidatePath("/admin/administrador/premium-utilizadores");
+    revalidatePath("/admin/administrador/premium-estabelecimentos");
+    revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/premium-estabelecimentos");
+    revalidatePath("/admin/meu-espaco/premium");
 }
 
 /** Premium of an establishment (after a confirmed payment, or as a courtesy): +N months, 0 = remove. */
@@ -279,6 +328,7 @@ export async function setPlacePremiumAction(fd: FormData) {
     await setPlacePremium(collection, slug, months);
     await store.logActivity({ user: s.user, action: months ? `Ativou o Premium de um estabelecimento (+${months} meses)` : "Removeu o Premium de um estabelecimento", title: slug });
     revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/premium-estabelecimentos");
     revalidatePath("/admin/meu-espaco/premium");
 }
 
@@ -291,6 +341,7 @@ export async function cancelPlacePremiumAction(fd: FormData) {
     await setPlacePremium(collection, slug, 0);
     await store.logActivity({ user: s.user, action: "Cancelou o Premium de um estabelecimento", title: slug });
     revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/premium-estabelecimentos");
     revalidatePath("/admin/meu-espaco/premium");
 }
 
@@ -310,6 +361,7 @@ export async function cancelPremiumAction(fd: FormData) {
     }
     revalidatePath("/admin/administrador/membros");
     revalidatePath("/admin/administrador/subscricoes");
+    revalidatePath("/admin/administrador/premium-utilizadores");
 }
 
 export async function markMessageAction(fd: FormData) {

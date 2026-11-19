@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { subscribePlacePremiumAction, subscribePremiumAction, type SubscribeState } from "@/app/actions/subscribe-actions";
+import { requestManualPremiumAction, subscribePlacePremiumAction, subscribePremiumAction, type SubscribeState } from "@/app/actions/subscribe-actions";
 import { PREMIUM_PLANS, saving } from "@/lib/premium-plans";
 
 const input = "mt-1.5 w-full rounded-xl border border-[#0b1220]/15 bg-white px-4 py-3 text-sm outline-none focus:border-[#0370d6]";
@@ -37,11 +37,35 @@ function Flow({ phone, onDone, busy, place }: { phone: string; onDone: () => voi
     const [plan, setPlan] = useState("");
     const [method, setMethod] = useState("");
     const [left, setLeft] = useState(DONE_SECONDS);
+    // Transferência manual (aparece quando o pagamento automático falha ou não está ativo): o pedido fica "pendente" até o administrador aprovar
+    const [manualDone, setManualDone] = useState<{ ref: string; amount: number; label: string } | null>(null);
+    const [sender, setSender] = useState("");
+    const [manualError, setManualError] = useState<string | null>(null);
+    const [copied, setCopied] = useState(false);
+    const [sending, startSending] = useTransition();
     const chosen = PREMIUM_PLANS.find((p) => p.id === plan);
     const paid = state.status === "paid" && !pending;
-    // While the PIN is awaited the popup cannot be closed (Esc / click outside / ✕)
-    useEffect(() => { busy.current = pending; return () => { busy.current = false; }; }, [pending, busy]);
-    const step: 1 | 2 | 3 = paid ? 3 : !plan ? 1 : method !== "mpesa" ? 2 : 3;
+    const manual = state.manual && state.status && state.status !== "paid" && !pending ? state.manual : undefined;
+    // While the PIN is awaited (or the request is being saved) the popup cannot be closed (Esc / click outside / ✕)
+    useEffect(() => { busy.current = pending || sending; return () => { busy.current = false; }; }, [pending, sending, busy]);
+    const step: 1 | 2 | 3 = paid || manualDone ? 3 : !plan ? 1 : method !== "mpesa" ? 2 : 3;
+
+    const copyNumber = async () => {
+        if (!manual) return;
+        try {
+            await navigator.clipboard.writeText(manual.phone.replace(/\D/g, ""));
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch { /* clipboard blocked: the number is on screen anyway */ }
+    };
+    const sent = () => {
+        setManualError(null);
+        startSending(async () => {
+            const r = await requestManualPremiumAction({ plan, collection: place?.collection, slug: place?.slug, sender });
+            if (r.ok) setManualDone({ ref: r.ref, amount: r.amount, label: r.label });
+            else setManualError(r.message);
+        });
+    };
 
     useEffect(() => {
         if (!paid) return;
@@ -49,6 +73,22 @@ function Flow({ phone, onDone, busy, place }: { phone: string; onDone: () => voi
         return () => clearInterval(id);
     }, [paid]);
     useEffect(() => { if (paid && left <= 0) onDone(); }, [paid, left, onDone]);
+
+    if (manualDone) {
+        return (
+            <div role="status" className="space-y-3 p-8 text-center">
+                <p className="text-5xl" aria-hidden="true">⏳</p>
+                <h2 className="font-baloo text-2xl font-bold text-[#7a5200]">Pedido enviado!</h2>
+                <p className="inline-block rounded-full bg-[#ffc14d]/30 px-4 py-1 text-sm font-medium text-[#7a5200]">Estado: pendente de aprovação</p>
+                <p className="text-sm text-[#4b5568]">
+                    Vamos confirmar a transferência de <b>{mt(manualDone.amount)}</b> ({manualDone.label}) {place ? <>para <b>{place.title}</b></> : null} e aprovar o pedido.
+                    O Premium só fica ativo depois da aprovação e será avisado por e-mail.
+                </p>
+                <p className="text-xs text-[#4b5568]">Referência: {manualDone.ref}</p>
+                <button type="button" onClick={onDone} className="cursor-pointer rounded-full bg-[#0054b5] px-6 py-2.5 font-baloo text-sm font-medium text-white hover:opacity-90">Concluir</button>
+            </div>
+        );
+    }
 
     if (paid) {
         return (
@@ -78,7 +118,7 @@ function Flow({ phone, onDone, busy, place }: { phone: string; onDone: () => voi
                     <h2 id="sub-title" className="font-baloo text-2xl font-bold">{place ? `Premium de ${place.title}` : "Subscrever o Premium"}</h2>
                     <div className="mt-2"><Steps step={step} /></div>
                 </div>
-                <button type="button" onClick={onDone} disabled={pending} aria-label="Fechar" className="h-9 w-9 flex-none cursor-pointer rounded-full text-lg text-[#4b5568] hover:bg-[#eef2f8] disabled:opacity-30">✕</button>
+                <button type="button" onClick={onDone} disabled={pending || sending} aria-label="Fechar" className="h-9 w-9 flex-none cursor-pointer rounded-full text-lg text-[#4b5568] hover:bg-[#eef2f8] disabled:opacity-30">✕</button>
             </div>
 
             {/* 1 · Plan */}
@@ -134,11 +174,48 @@ function Flow({ phone, onDone, busy, place }: { phone: string; onDone: () => voi
                         </div>
                     )}
                     {state.status && !pending && (
-                        <p role="alert" className={`rounded-2xl px-4 py-3 text-sm ${state.status === "unknown" ? "bg-[#ffc14d]/25 text-[#6b4700]" : "bg-[#e5533d]/10 text-[#b5311d]"}`}>{state.message}</p>
+                        <p role="alert" className={`rounded-2xl px-4 py-3 text-sm ${state.code === "inactive" ? "bg-[#f4f6f9] text-[#4a5870]" : state.status === "unknown" ? "bg-[#ffc14d]/25 text-[#6b4700]" : "bg-[#e5533d]/10 text-[#b5311d]"}`}>{state.message}</p>
                     )}
-                    <button type="submit" disabled={pending} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60">
+                    <button type="submit" disabled={pending || !!manual} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60">
                         {pending ? "A aguardar confirmação…" : "Efetuar Pagamento"}
                     </button>
+
+                    {manual && (
+                        <section aria-labelledby="manual-title" className="space-y-4 border-t border-[#0b1220]/8 pt-6">
+                            <p id="manual-title" className="rounded-xl bg-[#f4f6f9] px-3.5 py-3 text-[13px] leading-relaxed text-[#4a5870]">
+                                Pagamento automático em breve. Por agora, o Premium é pedido por <b>transferência M-Pesa</b>: envie o valor abaixo, toque em <b>Já enviei</b> e o pedido fica <b>pendente</b> até o administrador o aprovar.
+                            </p>
+
+                            <div className="rounded-2xl border border-[#0b1220]/15 p-4">
+                                <p className="text-sm text-[#5b6478]">Enviar <b>{mt(chosen.price)}</b> por M-Pesa para</p>
+                                <p className="mt-1 font-baloo text-3xl font-bold text-[#0b1220]">{manual.phone}</p>
+                                {manual.name && <p className="mt-1 text-sm text-[#4b5568]">Nome que aparece: <b>{manual.name}</b></p>}
+                                <button type="button" onClick={copyNumber} className="mt-3 w-full cursor-pointer rounded-full border border-[#0054b5] px-5 py-2.5 text-sm font-semibold text-[#0054b5] hover:bg-[#0054b5]/5">
+                                    {copied ? "Número copiado ✓" : "Copiar número"}
+                                </button>
+                            </div>
+
+                            <ol className="list-decimal space-y-1 pl-6 text-sm text-[#1f2937]">
+                                <li>Marque <b>*150#</b></li>
+                                <li>Escolha <b>Transferir dinheiro</b></li>
+                                <li>M-Pesa (Sem Taxas)</li>
+                                <li>Insira o número</li>
+                                <li>Insira o valor: <b>{mt(chosen.price)}</b></li>
+                                <li>Confirme com o seu PIN M-Pesa</li>
+                                <li>Volte aqui e toque em <b>Já enviei</b></li>
+                            </ol>
+
+                            <label className="block text-xs font-medium">Opcional: número de onde enviou (ajuda-nos a encontrar o pagamento).
+                                <input type="tel" inputMode="tel" value={sender} onChange={(e) => setSender(e.target.value)} maxLength={20} placeholder="84 123 4567" className={input} />
+                            </label>
+
+                            {manualError && <p role="alert" className="rounded-2xl bg-[#e5533d]/10 px-4 py-3 text-sm text-[#b5311d]">{manualError}</p>}
+
+                            <button type="button" onClick={sent} disabled={sending} className="w-full cursor-pointer rounded-full bg-[#0054b5] px-6 py-3.5 font-baloo text-base font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60">
+                                {sending ? "A registar…" : "Já enviei"}
+                            </button>
+                        </section>
+                    )}
                 </div>
             )}
         </form>

@@ -3,7 +3,13 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { DATA_DIR, locked, readJson, writeJson } from "@/lib/cms/store";
 
-export type SubStatus = "pending" | "paid" | "failed" | "unknown";
+/**
+ * pending  = pedido manual à espera de aprovação do administrador (o Premium ainda NÃO está ativo)
+ * paid     = pago e Premium ativo (M-Pesa confirmou, ou o administrador aprovou)
+ * rejected = pedido manual recusado pelo administrador
+ * failed / unknown = tentativa automática que falhou / sem resposta do M-Pesa
+ */
+export type SubStatus = "pending" | "paid" | "failed" | "unknown" | "rejected";
 export type SubPayment = {
     id: string;
     /** reference sent to the provider (letters and digits) */
@@ -23,8 +29,16 @@ export type SubPayment = {
     providerDesc?: string;
     transactionId?: string;
     simulated?: boolean;
+    /** transferência manual: o cliente enviou o dinheiro para o nosso número M-Pesa e pediu a ativação (aguarda aprovação) */
+    manual?: boolean;
+    /** e-mail de quem pediu, para o avisar da decisão */
+    email?: string;
     /** the member's Premium end date after this payment */
     premiumUntil?: string;
+    /** aprovação / recusa do administrador */
+    decidedAt?: string;
+    decidedBy?: string;
+    rejectReason?: string;
     createdAt: string;
     updatedAt: string;
 };
@@ -34,7 +48,7 @@ const FILE = path.join(DIR, "payments.json");
 const SEEN = path.join(DIR, "seen.json");
 const read = async () => (await readJson<SubPayment[]>(FILE)) ?? [];
 
-export function createSubPayment(d: Pick<SubPayment, "memberId" | "memberName" | "place" | "planId" | "months" | "amount" | "msisdn" | "simulated">) {
+export function createSubPayment(d: Pick<SubPayment, "memberId" | "memberName" | "place" | "planId" | "months" | "amount" | "msisdn" | "simulated" | "manual" | "email"> & Partial<Pick<SubPayment, "status">>) {
     return locked(async () => {
         const all = await read();
         const now = new Date().toISOString();
@@ -45,7 +59,7 @@ export function createSubPayment(d: Pick<SubPayment, "memberId" | "memberName" |
     });
 }
 
-export function updateSubPayment(id: string, patch: Partial<Pick<SubPayment, "status" | "providerCode" | "providerDesc" | "transactionId" | "premiumUntil">>) {
+export function updateSubPayment(id: string, patch: Partial<Pick<SubPayment, "status" | "providerCode" | "providerDesc" | "transactionId" | "premiumUntil" | "decidedAt" | "decidedBy" | "rejectReason">>) {
     return locked(async () => {
         const all = await read();
         const p = all.find((x) => x.id === id);
@@ -59,7 +73,31 @@ export const listSubPayments = read;
 
 /** A payment of this member still waiting for the PIN (avoids double charges from a double click). */
 export async function hasRecentPending(memberId: string) {
-    return (await read()).some((p) => p.memberId === memberId && p.status === "pending" && Date.now() - Date.parse(p.createdAt) < 3 * 60_000);
+    return (await read()).some((p) => p.memberId === memberId && p.status === "pending" && !p.manual && Date.now() - Date.parse(p.createdAt) < 3 * 60_000);
+}
+
+/** Quem/o quê é subscrito: um estabelecimento ("collection/slug") ou um membro. */
+export const subjectOf = (p: Pick<SubPayment, "memberId" | "place">) => (p.place ? `place:${p.place.collection}/${p.place.slug}` : `member:${p.memberId}`);
+
+/** O pedido manual por aprovar deste membro / estabelecimento (no máximo um de cada vez). */
+export async function pendingRequestOf(subject: string) {
+    return (await read()).find((p) => p.status === "pending" && p.manual && subjectOf(p) === subject);
+}
+
+/** Todos os pedidos manuais por aprovar (os mais antigos primeiro, para serem tratados por ordem). */
+export async function listPendingRequests(kind?: "member" | "place") {
+    return (await read())
+        .filter((p) => p.status === "pending" && p.manual && (kind === "place" ? p.place : kind === "member" ? !p.place : true))
+        .reverse();
+}
+
+export async function countPendingPremium() {
+    const all = await listPendingRequests();
+    return { users: all.filter((p) => !p.place).length, places: all.filter((p) => p.place).length };
+}
+
+export async function getSubPayment(id: string) {
+    return (await read()).find((p) => p.id === id);
 }
 
 /* "New" for the staff = paid (or waiting to be confirmed) after the last time the Subscrições page was opened */

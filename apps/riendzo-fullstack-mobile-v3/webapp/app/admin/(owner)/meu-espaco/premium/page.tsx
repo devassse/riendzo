@@ -4,13 +4,14 @@ import { getItem, titleOf } from "@/lib/cms/store";
 import { placePremiumUntil } from "@/lib/place-premium";
 import { ORDER_KINDS } from "@/lib/order-types";
 import { PREMIUM_PLANS } from "@/lib/premium-plans";
+import { pendingRequestOf, subjectOf } from "@/lib/subscriptions";
 import SubscribeDialog from "@/app/components/premium/subscribe-dialog";
 
 export const dynamic = "force-dynamic";
 
 const mt = (n: number) => `${n.toLocaleString("pt-PT")} MT`;
 
-/** The owner upgrades each establishment to Premium (same steps as the member's Premium: plan → M-Pesa → PIN). */
+/** The owner upgrades each establishment to Premium (same steps as the member's Premium: plan → M-Pesa → (transferência manual + aprovação do administrador)). */
 export default async function OwnerPremium() {
     const s = (await getSession())!;
     // M-Pesa numbers only prefill when they look like one
@@ -21,7 +22,8 @@ export default async function OwnerPremium() {
         const item = await getItem(r.collection, r.slug);
         if (!item) return null;
         const until = await placePremiumUntil(r.collection, r.slug);
-        return { ...r, title: titleOf(item), label: getCollection(r.collection)?.label ?? r.collection, until, active: Boolean(until && new Date(until).getTime() > Date.now()) };
+        const pending = await pendingRequestOf(subjectOf({ memberId: `owner:${s.userId}`, place: { ...r, title: "" } }));
+        return { ...r, pending, title: titleOf(item), label: getCollection(r.collection)?.label ?? r.collection, until, active: Boolean(until && new Date(until).getTime() > Date.now()) };
     }))).filter((x): x is NonNullable<typeof x> => Boolean(x));
 
     return (
@@ -45,10 +47,13 @@ export default async function OwnerPremium() {
                                     ? <span className="rounded-full bg-[#ffc14d]/40 px-3 py-1 text-xs text-[#6b4700]">⭐ Premium até {new Date(p.until!).toLocaleDateString("pt-PT")}</span>
                                     : <span className="rounded-full bg-[#eef2f8] px-3 py-1 text-xs text-[#4b5568]">{p.until ? `Premium expirou em ${new Date(p.until).toLocaleDateString("pt-PT")}` : "Sem Premium"}</span>}
                             </p>
+                            {p.pending && <p className="mt-2 rounded-2xl bg-[#ffc14d]/25 px-3 py-2 text-xs text-[#6b4700]">⏳ Pedido pendente de aprovação ({p.pending.months} {p.pending.months === 1 ? "mês" : "meses"} · {mt(p.pending.amount)} · ref. {p.pending.ref}). O Premium fica ativo assim que o administrador aprovar.</p>}
                             <p className="mt-3 text-xs text-[#5b6478]">Planos: {PREMIUM_PLANS.map((x) => `${x.label} ${mt(x.price)}`).join(" · ")}</p>
-                            <div className="mt-4">
-                                <SubscribeDialog phone={phone} renew={p.active} place={{ collection: p.collection, slug: p.slug, title: p.title }} />
-                            </div>
+                            {!p.pending && (
+                                <div className="mt-4">
+                                    <SubscribeDialog phone={phone} renew={p.active} place={{ collection: p.collection, slug: p.slug, title: p.title }} />
+                                </div>
+                            )}
                         </li>
                     ))}
                 </ul>

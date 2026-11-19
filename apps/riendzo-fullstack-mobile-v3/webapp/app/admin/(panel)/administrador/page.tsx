@@ -4,19 +4,23 @@ import { listMessages } from "@/lib/cms/inbox";
 import { listMembers } from "@/lib/members";
 import { listUsers } from "@/lib/cms/users";
 import { getAllLists } from "@/lib/cms/lists";
+import { countPendingPremium } from "@/lib/subscriptions";
 import { mailConfigured } from "@/lib/mailer";
 import { smsConfigured } from "@/lib/sms";
 
 export default async function AdminHub() {
     await requireAdmin(["admin"]);
     const [lists, users, members, messages] = await Promise.all([getAllLists(), listUsers(), listMembers(), listMessages()]);
+    const pp = await countPendingPremium();
     const [mail, sms] = await Promise.all([mailConfigured(), smsConfigured()]);
     const cards = [
         ["listas", "📋", "Dados genéricos", `${lists.length} listas`, "Províncias, estilos musicais, categorias de receitas, tipos de alojamento…"],
         ["menus", "🧭", "Menus e “Em breve”", "marcas do site", "Marque menus e submenus como “Em breve” enquanto trabalha neles."],
         ["utilizadores", "👥", "Utilizadores", `${users.length} contas`, "Administradores, editores e proprietários de estabelecimentos."],
         ["membros", "🤖", "Membros Riendzo AI", `${members.length} membros`, "Pessoas registadas no site: ver e suspender contas."],
-        ["subscricoes", "⭐", "Subscrições Premium", "Pagamentos", "Subscrições Premium pagas por M-Pesa e o seu estado."],
+        ["premium-utilizadores", "⭐", "Premium · Utilizadores", `${pp.users} por aprovar`, "Pedidos de Premium dos membros: aprovar, recusar, prolongar e ver quem está ativo ou expirado."],
+        ["premium-estabelecimentos", "🏪", "Premium · Estabelecimentos", `${pp.places} por aprovar`, "Pedidos de Premium dos estabelecimentos: aprovar, recusar, prolongar e ver o estado."],
+        ["subscricoes", "💳", "Pagamentos Premium", "Histórico", "Todos os pagamentos e pedidos de Premium (M-Pesa e transferência manual)."],
         ["doacoes", "💙", "Doações", "M-Pesa", "Doações recebidas pelo site e o seu estado."],
         ["mensagens", "✉️", "Mensagens", `${messages.filter((m) => !m.read).length} por ler`, "Mensagens enviadas pelo formulário de contactos."],
         ["configuracoes", "⚙️", "Configurações", `${mail ? "e-mail ativo" : "e-mail por configurar"} · ${sms ? "SMS ativo" : "SMS por configurar"}`, "Envio de e-mails e SMS: recuperação de palavra-passe e notificações."],

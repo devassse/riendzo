@@ -1,0 +1,30 @@
+[
+  {
+    "id": "53bd927d-3a8d-49d6-ae5f-592e91624509",
+    "ref": "RDZA6C0DB6252",
+    "currency": "MZN",
+    "method": "mpesa",
+    "status": "paid",
+    "createdAt": "2026-11-18T12:46:19.647Z",
+    "updatedAt": "2026-11-18T12:46:21.150Z",
+    "amount": 20,
+    "msisdn": "258844559091",
+    "simulated": true,
+    "providerCode": "SIMULADO",
+    "providerDesc": "Simulação (sem credenciais M-Pesa)"
+  },
+  {
+    "id": "e5126644-ef97-4d2f-aae1-b994cf89b7ca",
+    "ref": "RDZCBF2830C0B",
+    "currency": "MZN",
+    "method": "mpesa",
+    "status": "paid",
+    "createdAt": "2026-11-18T12:45:35.678Z",
+    "updatedAt": "2026-11-18T12:45:37.188Z",
+    "amount": 20,
+    "msisdn": "258844559091",
+    "simulated": true,
+    "providerCode": "SIMULADO",
+    "providerDesc": "Simulação (sem credenciais M-Pesa)"
+  }
+]

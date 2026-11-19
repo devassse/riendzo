@@ -5,7 +5,7 @@ import type { Artist } from "@/lib/cms/artist-types";
 import { listMessages } from "@/lib/cms/inbox";
 import { recentNotices } from "@/lib/cms/notifications";
 import { countPending } from "@/lib/places";
-import { countNewSubscriptions } from "@/lib/subscriptions";
+import { countNewSubscriptions, countPendingPremium } from "@/lib/subscriptions";
 import AdminShell, { type NavGroup } from "../_components/admin-shell";
 
 export const dynamic = "force-dynamic";
@@ -33,7 +33,8 @@ export default async function PanelLayout({ children }: { children: React.ReactN
 
     const suggested = await countPending();
     const subscriptions = session.role === "admin" ? await countNewSubscriptions() : 0;
+    const premiumPending = session.role === "admin" ? await countPendingPremium() : { users: 0, places: 0 };
     const notices = await recentNotices("staff", 10);
 
-    return <AdminShell groups={groups} user={session.name || session.user} role={session.role} avatar={session.avatar} drafts={drafts} unread={unread} suggested={suggested} subscriptions={subscriptions} notices={notices}>{children}</AdminShell>;
+    return <AdminShell groups={groups} user={session.name || session.user} role={session.role} avatar={session.avatar} drafts={drafts} unread={unread} suggested={suggested} subscriptions={subscriptions} premiumPending={premiumPending} notices={notices}>{children}</AdminShell>;
 }
