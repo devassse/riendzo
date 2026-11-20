@@ -15,6 +15,7 @@ export default async function ReceitasSection() {
         ingredients: t("ingredients"),
         steps: t("steps"),
         tip: t("tip"),
+        videos: t("videos"),
         // raw templates, filled in on the client: "{count} ..."
         minutes: t.raw("minutes") as string,
         servings: t.raw("servings") as string,

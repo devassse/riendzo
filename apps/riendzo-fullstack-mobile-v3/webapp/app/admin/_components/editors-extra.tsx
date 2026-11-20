@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DAYS, type CatalogContact, type CatalogPost, type CatalogVideo, type DayKey, type GeoPoint, type OfferGroup, type OfferItem, type OpeningHours } from "@/app/components/sections/catalog-types";
 import { DAY_LABELS } from "@/lib/cms/hours";
 import { inMozambique, osmEmbedUrl, parseCoordinates, validPoint, mapUrl } from "@/lib/cms/geo";
@@ -112,6 +112,33 @@ export function LocationEditor({ value, onChange }: { value: { lat: string; lng:
 
 /* ----------------------------------- Offers ----------------------------------- */
 
+/**
+ * Comma-separated tags. Keeps the raw text while typing, so a comma (or a space after it)
+ * isn't swallowed before the next word is written; the list is only re-formatted on blur.
+ */
+function TagsInput({ value, onChange, placeholder, className }: { value: string[]; onChange: (v: string[]) => void; placeholder?: string; className?: string }) {
+    const parse = (t: string) => t.split(",").map((x) => x.trim()).filter(Boolean);
+    const [text, setText] = useState(value.join(", "));
+    const joined = value.join("\u0000");
+
+    // the list changed from outside (e.g. items reordered): show it
+    useEffect(() => {
+        setText((cur) => (parse(cur).join("\u0000") === joined ? cur : value.join(", ")));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [joined]);
+
+    return (
+        <input
+            className={className}
+            value={text}
+            placeholder={placeholder}
+            aria-label="Etiquetas"
+            onChange={(e) => { setText(e.target.value); onChange(parse(e.target.value)); }}
+            onBlur={() => setText(value.join(", "))}
+        />
+    );
+}
+
 const emptyItem = (): OfferItem => ({ name: "", available: true });
 
 export function OffersEditor({ value, onChange, groupLabel, itemLabel, labels }: { value: OfferGroup[]; onChange: (v: OfferGroup[]) => void; groupLabel: string; itemLabel: string; labels: HighlightLabels }) {
@@ -139,7 +166,7 @@ export function OffersEditor({ value, onChange, groupLabel, itemLabel, labels }:
                                     <input className={inputClass} value={it.priceNote ?? ""} placeholder="por noite, por dia…" onChange={(e) => setItem(gi, ii, { priceNote: e.target.value })} aria-label="Nota do preço" />
                                 </div>
                                 <textarea rows={2} className={`${inputClass} mt-3`} value={it.description ?? ""} placeholder="Descrição" onChange={(e) => setItem(gi, ii, { description: e.target.value })} aria-label="Descrição" />
-                                <input className={`${inputClass} mt-3`} value={(it.tags ?? []).join(", ")} placeholder="Ingredientes, comodidades ou características (separados por vírgulas)" onChange={(e) => setItem(gi, ii, { tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })} aria-label="Etiquetas" />
+                                <TagsInput className={`${inputClass} mt-3`} value={it.tags ?? []} placeholder="Ingredientes, comodidades ou características (separados por vírgulas)" onChange={(tags) => setItem(gi, ii, { tags })} />
                                 <details className="mt-3">
                                     <summary className="cursor-pointer text-xs font-medium text-[#0054b5]">Fotografias ({it.images?.length ?? 0})</summary>
                                     <div className="mt-3"><ImagesEditor value={it.images ?? []} onChange={(images) => setItem(gi, ii, { images })} /></div>

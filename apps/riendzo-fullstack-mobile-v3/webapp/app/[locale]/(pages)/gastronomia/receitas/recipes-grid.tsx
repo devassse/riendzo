@@ -6,6 +6,8 @@ import { createPortal } from "react-dom";
 import type { Category } from "./recipe-categories";
 import { matchText, tokens } from "@/lib/search";
 import Highlight from "@/app/components/utils/highlight";
+import RichText from "@/app/components/sections/rich-text";
+import VideoEmbed from "@/app/components/sections/video-embed";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -51,6 +53,7 @@ export type RecipesGridLabels = {
     ingredients: string;
     steps: string;
     tip: string;
+    videos?: string;
     /** e.g. "{count} min" */
     minutes: string;
     /** e.g. "{count} pessoas" */
@@ -596,6 +599,9 @@ export default function RecipesGrid({
                                     <Meta recipe={selected} labels={labels} />
                                 </div>
 
+                                {/* Full description (rich text: formatted text, images, YouTube) */}
+                                {selected.body ? <RichText html={selected.body} className="mt-6" /> : null}
+
                                 {/* Ingredients */}
                                 <h4 className="mt-8 font-baloo text-lg font-medium text-[#0b1220]">
                                     {labels.ingredients}
@@ -634,6 +640,11 @@ export default function RecipesGrid({
                                         </li>
                                     ))}
                                 </ol>
+
+                                {/* Videos (YouTube links added in the BackOffice) */}
+                                {selected.videos?.length ? (
+                                    <VideoEmbed videos={selected.videos} color={selected.color} title={labels.videos} />
+                                ) : null}
 
                                 {/* Tip */}
                                 {selected.tip && (
