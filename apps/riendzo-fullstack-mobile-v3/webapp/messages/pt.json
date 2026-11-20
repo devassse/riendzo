@@ -374,8 +374,9 @@
       "ingredients": "Ingredientes",
       "steps": "Preparação",
       "tip": "Dica",
+      "videos": "Vídeos",
       "minutes": "{count} min",
-      "servings": "{count} pessoas",
+      "servings": "Sugestão para {count} pessoas",
       "difficulty": {
         "easy": "Fácil",
         "medium": "Média",
@@ -413,7 +414,7 @@
       "steps": "Preparação",
       "tip": "Dica",
       "minutes": "{count} min",
-      "servings": "{count} pessoas",
+      "servings": "Sugestão para {count} pessoas",
       "difficulty": {
         "easy": "Fácil",
         "medium": "Média",
@@ -442,7 +443,7 @@
       "tip": "Dica",
       "videos": "Vídeos",
       "minutes": "{count} min",
-      "servings": "{count} pessoas",
+      "servings": "Sugestão para {count} pessoas",
       "videoBy": "por {creator}",
       "difficulty": {
         "easy": "Fácil",

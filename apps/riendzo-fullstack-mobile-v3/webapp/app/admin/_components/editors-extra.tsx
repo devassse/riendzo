@@ -139,6 +139,9 @@ function TagsInput({ value, onChange, placeholder, className }: { value: string[
     );
 }
 
+/** "noite", "dia" and "pessoa" are read by lib/orders.ts to work out the total: keep those words. */
+const PRICE_NOTES = ["por noite", "por dia", "por pessoa"];
+
 const emptyItem = (): OfferItem => ({ name: "", available: true });
 
 export function OffersEditor({ value, onChange, groupLabel, itemLabel, labels }: { value: OfferGroup[]; onChange: (v: OfferGroup[]) => void; groupLabel: string; itemLabel: string; labels: HighlightLabels }) {
@@ -160,10 +163,20 @@ export function OffersEditor({ value, onChange, groupLabel, itemLabel, labels }:
                     <div className="mt-3 space-y-3">
                         {g.items.map((it, ii) => (
                             <div key={ii} className="rounded-xl border border-[#0b1220]/10 bg-white p-3">
-                                <div className="grid gap-3 sm:grid-cols-[1fr_8rem_9rem]">
-                                    <input className={inputClass} value={it.name} placeholder={`Nome do(a) ${itemLabel.toLowerCase()}`} onChange={(e) => setItem(gi, ii, { name: e.target.value })} aria-label="Nome" />
-                                    <input className={inputClass} inputMode="decimal" value={it.price ?? ""} placeholder="Preço" onChange={(e) => setItem(gi, ii, { price: e.target.value === "" ? undefined : (e.target.value as unknown as number) })} aria-label="Preço" />
-                                    <input className={inputClass} value={it.priceNote ?? ""} placeholder="por noite, por dia…" onChange={(e) => setItem(gi, ii, { priceNote: e.target.value })} aria-label="Nota do preço" />
+                                <div className="grid gap-3 sm:grid-cols-[1fr_8rem_10rem]">
+                                    <label className="block text-xs font-medium">Nome do(a) {itemLabel.toLowerCase()}
+                                        <input className={`${inputClass} !mt-1`} value={it.name} placeholder={`Nome do(a) ${itemLabel.toLowerCase()}`} onChange={(e) => setItem(gi, ii, { name: e.target.value })} />
+                                    </label>
+                                    <label className="block text-xs font-medium">Preço
+                                        <input type="number" min={0} step="any" inputMode="decimal" className={`${inputClass} !mt-1`} value={it.price ?? ""} placeholder="0" onChange={(e) => setItem(gi, ii, { price: e.target.value === "" ? undefined : Number(e.target.value) })} />
+                                    </label>
+                                    <label className="block text-xs font-medium">Preço por
+                                        <select className={`${inputClass} !mt-1`} value={it.priceNote ?? ""} onChange={(e) => setItem(gi, ii, { priceNote: e.target.value || undefined })}>
+                                            <option value="">Sem indicação</option>
+                                            {PRICE_NOTES.map((n) => <option key={n} value={n}>{n}</option>)}
+                                            {it.priceNote && !PRICE_NOTES.includes(it.priceNote) && <option value={it.priceNote}>{it.priceNote}</option>}
+                                        </select>
+                                    </label>
                                 </div>
                                 <textarea rows={2} className={`${inputClass} mt-3`} value={it.description ?? ""} placeholder="Descrição" onChange={(e) => setItem(gi, ii, { description: e.target.value })} aria-label="Descrição" />
                                 <TagsInput className={`${inputClass} mt-3`} value={it.tags ?? []} placeholder="Ingredientes, comodidades ou características (separados por vírgulas)" onChange={(tags) => setItem(gi, ii, { tags })} />

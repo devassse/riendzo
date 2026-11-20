@@ -228,7 +228,7 @@ export default function ItemEditor(p: EditorProps) {
                     <Card title="Preparação">
                         <div className="grid gap-4 sm:grid-cols-3">
                             <Field required label="Tempo (min)" error={errors.minutes}><input type="number" min={1} className={inputClass} value={r.minutes} onChange={(e) => patchR({ minutes: e.target.value })} /></Field>
-                            <Field required label="Pessoas" error={errors.servings}><input type="number" min={1} className={inputClass} value={r.servings} onChange={(e) => patchR({ servings: e.target.value })} /></Field>
+                            <Field required label="Sugestão para X Pessoas" error={errors.servings}><input type="number" min={1} className={inputClass} value={r.servings} onChange={(e) => patchR({ servings: e.target.value })} /></Field>
                             <Field label="Dificuldade"><select className={inputClass} value={r.difficulty} onChange={(e) => patchR({ difficulty: e.target.value as RecipeDraft["difficulty"] })}><option value="easy">Fácil</option><option value="medium">Média</option><option value="hard">Difícil</option></select></Field>
                         </div>
                         <Field required label="Ingredientes" error={errors.ingredients} hint="Um por linha."><textarea rows={7} className={inputClass} value={r.ingredientsText} onChange={(e) => patchR({ ingredientsText: e.target.value })} /></Field>
