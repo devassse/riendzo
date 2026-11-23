@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { getPublishedItems } from "@/lib/cms/store";
 import { getList } from "@/lib/cms/lists";
 import RecipesGrid, { type Recipe, type RecipesGridLabels } from "../receitas/recipes-grid";
+import { recipeFavorites } from "../receitas/recipe-favorites";
 
 export default async function MariscosSection() {
     const t = await getTranslations("gastronomy.mariscosSection");
@@ -9,6 +10,7 @@ export default async function MariscosSection() {
     const c = await getTranslations("gastronomy.drinksSection");
     const categoryList = await getList("recipe-categories");
     const recipes = await getPublishedItems<Recipe>("gastronomy-seafood");
+    const fav = await recipeFavorites("gastronomy-seafood");
 
     const labels: RecipesGridLabels = {
         ingredients: t("ingredients"),
@@ -40,7 +42,7 @@ export default async function MariscosSection() {
                     <p className="mt-4 text-base leading-relaxed text-[#5b6478]">{t("description")}</p>
                 </header>
 
-                <RecipesGrid recipes={recipes} labels={labels} />
+                <RecipesGrid recipes={recipes} labels={{ ...labels, ...fav.labels }} favorites={fav.favorites} />
             </div>
         </section>
     );

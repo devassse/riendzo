@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import type { Category } from "./recipe-categories";
 import { matchText, tokens } from "@/lib/search";
 import Highlight from "@/app/components/utils/highlight";
 import RichText from "@/app/components/sections/rich-text";
 import VideoEmbed from "@/app/components/sections/video-embed";
+import { toggleFavoriteAction } from "@/app/actions/member-actions";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -39,6 +41,9 @@ export type Recipe = {
     updatedAt?: string;
 };
 
+/** What the heart needs: the collection, the member's favourites ("collection:slug") and whether anyone is signed in. */
+export type RecipeFavorites = { collectionId: string; keys: string[]; loggedIn: boolean; loginHref?: string };
+
 export type RecipesGridLabels = {
     all: string;
     searchPlaceholder: string;
@@ -54,6 +59,8 @@ export type RecipesGridLabels = {
     steps: string;
     tip: string;
     videos?: string;
+    addFavorite?: string;
+    removeFavorite?: string;
     /** e.g. "{count} min" */
     minutes: string;
     /** e.g. "{count} pessoas" */
@@ -162,25 +169,37 @@ function Meta({ recipe, labels }: { recipe: Recipe; labels: RecipesGridLabels })
     );
 }
 
+const Heart = ({ on }: { on: boolean }) => (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill={on ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 20s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.500-7 10-7 10z" />
+    </svg>
+);
+
 function RecipeCard({
     recipe,
     labels,
     onOpen,
     query,
+    favorite,
+    onFavorite,
 }: {
     query?: string;
     recipe: Recipe;
     labels: RecipesGridLabels;
     onOpen: (recipe: Recipe, trigger: HTMLElement) => void;
+    favorite?: boolean;
+    onFavorite?: () => void;
 }) {
     const cover = recipe.images?.[0];
 
+    // the heart is a sibling of the card button (a button inside a button isn't valid HTML)
     return (
+        <div className="relative">
         <button
             type="button"
             onClick={(e) => onOpen(recipe, e.currentTarget)}
             aria-haspopup="dialog"
-            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-3xl border border-[#0b1220]/10 bg-white text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-[#0b1220]/25 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="group relative flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-[#0b1220]/10 bg-white text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-[#0b1220]/25 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ outlineColor: recipe.color }}
         >
             {/* Cover */}
@@ -245,16 +264,48 @@ function RecipeCard({
                 style={{ backgroundColor: recipe.color }}
             />
         </button>
+        {onFavorite && (
+            <button
+                type="button"
+                onClick={onFavorite}
+                aria-pressed={favorite}
+                aria-label={favorite ? labels.removeFavorite : labels.addFavorite}
+                className="absolute right-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/95 shadow-sm transition-transform hover:scale-110"
+                style={{ color: favorite ? "#e5533d" : "#4b5568" }}
+            >
+                <Heart on={Boolean(favorite)} />
+            </button>
+        )}
+        </div>
     );
 }
 
 export default function RecipesGrid({
     recipes,
     labels,
+    favorites,
 }: {
     recipes: Recipe[];
     labels: RecipesGridLabels;
+    /** omit to hide the heart */
+    favorites?: RecipeFavorites;
 }) {
+    const router = useRouter();
+    const [, startFav] = useTransition();
+    const [favs, setFavs] = useState<Set<string>>(() => new Set(favorites?.keys ?? []));
+    const isFav = (r: Recipe) => favs.has(`${favorites?.collectionId}:${r.slug}`);
+    const toggleFav = favorites
+        ? (r: Recipe) => {
+              if (!favorites.loggedIn) {
+                  router.push(`${favorites.loginHref ?? "/conta/entrar"}?next=${encodeURIComponent(window.location.pathname)}`);
+                  return;
+              }
+              const key = `${favorites.collectionId}:${r.slug}`;
+              setFavs((s) => { const n = new Set(s); if (n.has(key)) n.delete(key); else n.add(key); return n; });
+              startFav(async () => { await toggleFavoriteAction(favorites.collectionId, r.slug); });
+          }
+        : undefined;
+
     // `selected` stays set while the panel slides out, so content doesn't vanish mid-animation
     const [selected, setSelected] = useState<Recipe | null>(null);
     const [open, setOpen] = useState(false);
@@ -318,6 +369,19 @@ export default function RecipesGrid({
     const close = useCallback(() => {
         setOpen(false);
         triggerRef.current?.focus();
+    }, []);
+
+    // Search results and "Favoritos" link here with ?item=<slug>
+    useEffect(() => {
+        const slug = new URLSearchParams(window.location.search).get("item");
+        const r = slug ? recipes.find((x) => x.slug === slug) : null;
+        if (r) {
+            setPage(Math.floor(recipes.indexOf(r) / PAGE_SIZE) + 1);
+            setSelected(r);
+            setActiveImg(0);
+            setOpen(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Escape to close, lock body scroll, focus management
@@ -405,6 +469,8 @@ export default function RecipesGrid({
                             recipe={recipe}
                             labels={labels}
                             onOpen={openRecipe}
+                            favorite={isFav(recipe)}
+                            onFavorite={toggleFav ? () => toggleFav(recipe) : undefined}
                         />
                     ))}
                 </div>
@@ -530,6 +596,20 @@ export default function RecipesGrid({
                                         <path d="M6 6l12 12M18 6L6 18" />
                                     </svg>
                                 </button>
+
+                                {/* Favourite */}
+                                {toggleFav && (
+                                    <button
+                                        type="button"
+                                        onClick={() => toggleFav(selected)}
+                                        aria-pressed={isFav(selected)}
+                                        aria-label={isFav(selected) ? labels.removeFavorite : labels.addFavorite}
+                                        className="absolute right-[3.75rem] top-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2"
+                                        style={{ color: isFav(selected) ? "#e5533d" : "#0b1220", outlineColor: selected.color }}
+                                    >
+                                        <Heart on={isFav(selected)} />
+                                    </button>
+                                )}
                             </div>
 
                             {/* Thumbnails */}

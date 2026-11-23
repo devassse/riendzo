@@ -6,6 +6,7 @@ import CatalogSection from "@/app/components/sections/catalog-section";
 import ArtistsDirectory from "@/app/components/music/artists-directory";
 import AlbumsExplorer from "@/app/components/music/albums-explorer";
 import RecipesGrid, { type Recipe, type RecipesGridLabels } from "@/app/[locale]/(pages)/gastronomia/receitas/recipes-grid";
+import { recipeFavorites } from "@/app/[locale]/(pages)/gastronomia/receitas/recipe-favorites";
 import type { CatalogItem } from "@/app/components/sections/catalog-types";
 import type { Artist } from "@/lib/cms/artist-types";
 import { getCollection } from "@/lib/cms/collections";
@@ -71,7 +72,7 @@ export default async function Explore({ params }: { params: Promise<{ collection
             )}
             {def.kind === "recipe" && (
                 <Section title={def.label} description={def.description}>
-                    <RecipesGrid recipes={await getPublishedItems<Recipe>(collection)} labels={await recipeLabels(collection === "gastronomy-drinks" ? "gastronomy.drinksSection" : "gastronomy.recipesSection")} />
+                    <RecipesGrid recipes={await getPublishedItems<Recipe>(collection)} labels={{ ...(await recipeLabels(collection === "gastronomy-drinks" ? "gastronomy.drinksSection" : "gastronomy.recipesSection")), ...(await recipeFavorites(collection)).labels }} favorites={(await recipeFavorites(collection)).favorites} />
                 </Section>
             )}
         </Shell>

@@ -5,11 +5,13 @@ import RecipesGrid, {
     type Recipe,
     type RecipesGridLabels,
 } from "../receitas/recipes-grid";
+import { recipeFavorites } from "../receitas/recipe-favorites";
 
 export default async function BebidasSection() {
     const t = await getTranslations("gastronomy.drinksSection");
     const categoryList = await getList("recipe-categories");
     const recipes = await getPublishedItems<Recipe>("gastronomy-drinks");
+    const fav = await recipeFavorites("gastronomy-drinks");
 
     const labels: RecipesGridLabels = {
         ingredients: t("ingredients"),
@@ -49,7 +51,7 @@ export default async function BebidasSection() {
                     </p>
                 </header>
 
-                <RecipesGrid recipes={recipes} labels={labels} />
+                <RecipesGrid recipes={recipes} labels={{ ...labels, ...fav.labels }} favorites={fav.favorites} />
             </div>
         </section>
     );
